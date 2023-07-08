@@ -1,9 +1,11 @@
-import { PrismaClient, Prisma } from "@prisma/client";
+import { PrismaClient, Prisma, Role } from "@prisma/client";
 import { Request, Response } from "express";
 
 const prisma = new PrismaClient();
 const usersRouter = require("express").Router();
+const jwt = require("jsonwebtoken");
 import bcrypt from "bcrypt";
+const config = require("../utils/config");
 
 usersRouter.get("/", async (req: Request, res: Response) => {
   try {
@@ -47,6 +49,64 @@ usersRouter.post("/register", async (req: Request, res: Response) => {
       return res.status(500).json({ message: "User registration failed" });
     }
   }
+});
+
+usersRouter.post("/login", async (req: Request, res: Response) => {
+  const { email, password } = req.body;
+
+  if (!email || !password)
+    return res.status(401).json({ message: "invalid username or password" });
+
+  try {
+    const user = await prisma.user.findUnique({
+      where: {
+        email: email,
+      },
+    });
+    const passwordCorrect =
+      user === null ? false : await bcrypt.compare(password, user.passwordHash);
+
+    if (!(user && passwordCorrect)) {
+      return res.status(401).json({
+        message: "invalid username or password",
+      });
+    }
+
+    const role = user.roles;
+
+    const userForToken = {
+      username: user.username,
+      id: user.id,
+    };
+
+    const accessToken = jwt.sign(userForToken, config.ACCESS_TOKEN_SECRET, {
+      expiresIn: "1d",
+    });
+
+    const refreshToken = jwt.sign(
+      { username: user.username },
+      config.REFRESH_TOKEN_SECRET,
+      { expiresIn: "7d" }
+    );
+
+    const updateUser = await prisma.user.update({
+      where: {
+        email: email,
+      },
+      data: {
+        refreshToken: refreshToken,
+      },
+    });
+
+    res.cookie("jwt", refreshToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+      maxAge: 24 * 60 * 60 * 1000,
+    });
+
+    res.status(200).send({ role, accessToken });
+  } catch (err) {}
 });
 
 module.exports = usersRouter;
