@@ -15,11 +15,14 @@ usersRouter.get("/", async (req: Request, res: Response) => {
 });
 
 usersRouter.post("/register", async (req: Request, res: Response) => {
-  const { email, username, password } = req.body;
+  const { email, username, password, confirmPassword } = req.body;
 
   if (!email || !username || !password) {
     return res.status(400).json({ message: "Missing registration details" });
   }
+
+  if (password !== confirmPassword)
+    return res.status(400).json({ message: "Passwords do not match" });
 
   const saltRounds = 10;
   const passwordHash = await bcrypt.hash(password, saltRounds);

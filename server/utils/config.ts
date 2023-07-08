@@ -2,4 +2,6 @@ require("dotenv").config();
 
 const PORT = process.env.PORT;
 
-module.exports = { PORT };
+const allowedOrigins = ["http://localhost:3000"];
+
+module.exports = { PORT, allowedOrigins };
