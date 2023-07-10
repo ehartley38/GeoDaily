@@ -7,6 +7,8 @@ import useAuth from "./hooks/useAuth";
 import { SignOut } from "./components/SignOut";
 import { Layout } from "./components/Layout";
 import { PersistLogin } from "./components/PersistLogin";
+import { Unauthorized } from "./components/Unauthorized";
+import { Missing } from "./components/Missing";
 
 const App = () => {
   const { auth } = useAuth();
@@ -19,6 +21,7 @@ const App = () => {
           {/* Public routes */}
           <Route path="register" element={<Register />} />
           <Route path="login" element={<Login />} />
+          <Route path="unauthorized" element={<Unauthorized />} />
 
           {/* Private routes */}
           <Route element={<PersistLogin />}>
@@ -28,6 +31,8 @@ const App = () => {
               </Route>
             </Route>
           </Route>
+
+          <Route path="*" element={<Missing />} />
         </Route>
       </Routes>
     </>

@@ -1,6 +1,8 @@
 const logger = require("./logger");
 const config = require("../utils/config");
 const jwt = require("jsonwebtoken");
+const { PrismaClient } = require("@prisma/client");
+const prisma = new PrismaClient();
 
 // Log details of each request to the console
 const requestLogger = (request, response, next) => {
@@ -31,10 +33,21 @@ const verifyJWT = (request, response, next) => {
   // console.log(token);
   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, async (err, decoded) => {
     if (err) return response.sendStatus(403).json({ error: "Invalid token" }); //invalid token
-    if (!user) {
-      return response.status(403).json({ error: "user invalid" });
+
+    try {
+      const user = await prisma.user.findUnique({
+        where: {
+          id: decoded.id,
+        },
+      });
+
+      if (!user) {
+        return response.status(403).json({ error: "user invalid" });
+      }
+      request.user = user;
+    } catch (err) {
+      console.log(err);
     }
-    request.user = user;
 
     next();
   });

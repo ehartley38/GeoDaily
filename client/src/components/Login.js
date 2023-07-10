@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "../services/axios";
 import useAuth from "../hooks/useAuth";
 
@@ -8,11 +8,9 @@ export const Login = () => {
   const [password, setPassword] = useState("");
   const { setAuth, persist, setPersist } = useAuth();
 
-  let navigate = useNavigate();
-
-  const handlePersist = () => {
-    setPersist((prev) => !prev);
-  };
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
 
   useEffect(() => {
     localStorage.setItem("persist", persist);
@@ -36,7 +34,7 @@ export const Login = () => {
 
       setAuth({ email, password, role, accessToken });
 
-      navigate("/");
+      navigate(from, { replace: true });
     } catch (err) {
       console.log(err);
     }
@@ -90,13 +88,9 @@ export const Login = () => {
         </div>
 
         <div className="text-grey-dark mt-6">
-          <a
-            className="no-underline border-b border-blue text-blue"
-            href="../login/"
-          >
-            Create an account
-          </a>
-          .
+          <p className="no-underline border-b border-blue text-blue">
+            <Link to="/register">Create an account</Link>
+          </p>
         </div>
       </div>
     </div>
