@@ -14,7 +14,7 @@ export const Register = () => {
     e.preventDefault();
     try {
       const res = await axios.post(
-        "/users/register",
+        "/register",
         { email, username, password, confirmPassword },
         {
           headers: { "Content-Type": "application/json" },

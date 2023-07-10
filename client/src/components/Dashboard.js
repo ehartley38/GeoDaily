@@ -1,3 +1,28 @@
+import { useEffect, useState } from "react";
+import useAuth from "../hooks/useAuth";
+import axios from "../services/axios";
+
 export const Dashboard = () => {
-  return <h1>Dashboard</h1>;
+  const { auth } = useAuth();
+  const [userData, setUserData] = useState();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await axios.get("/users/data", {
+        headers: { "Content-Type": "application/json" },
+        withCredentials: true,
+      });
+
+      setUserData(data);
+    };
+
+    // fetchData();
+  }, []);
+
+  return (
+    <>
+      <h1>Dashboard</h1>
+      {/* {userData} */}
+    </>
+  );
 };

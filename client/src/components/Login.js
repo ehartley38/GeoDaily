@@ -1,26 +1,41 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "../services/axios";
+import useAuth from "../hooks/useAuth";
 
 export const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { setAuth, persist, setPersist } = useAuth();
 
   let navigate = useNavigate();
+
+  const handlePersist = () => {
+    setPersist(!persist);
+  };
+
+  // useEffect(() => {
+  //   localStorage.setItem("persist", persist);
+  // }, [persist]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
       const res = await axios.post(
-        "/users/login",
+        "/login",
         { email, password },
         {
           headers: { "Content-Type": "application/json" },
           withCredentials: true,
         }
       );
-      console.log("login response:", res);
+
+      const accessToken = res?.data?.accessToken;
+      const role = res?.data?.role;
+
+      setAuth({ email, password, role, accessToken });
+      localStorage.setItem("persist", true);
 
       navigate("/dashboard");
     } catch (err) {
@@ -48,6 +63,22 @@ export const Login = () => {
             placeholder="Password"
             onChange={({ target }) => setPassword(target.value)}
           />
+
+          {/* <div class="flex items-center mb-4">
+            <input
+              id="default-checkbox"
+              type="checkbox"
+              value=""
+              class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+              onClick={handlePersist}
+            />
+            <label
+              for="default-checkbox"
+              class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+            >
+              Stay logged in?
+            </label>
+          </div> */}
 
           <button
             type="submit"
