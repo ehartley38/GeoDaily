@@ -33,8 +33,6 @@ logoutRouter.get("/", async (request, response) => {
       },
     });
 
-    console.log("Updated user is ", updateUser);
-
     response.clearCookie("jwt", {
       httpOnly: true,
       sameSite: "None",

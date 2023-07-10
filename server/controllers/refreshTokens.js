@@ -12,7 +12,7 @@ refreshTokensRouter.get("/", async (request, response) => {
   const refreshToken = cookies.jwt;
 
   try {
-    const user = await prisma.user.findUnique({
+    const user = await prisma.user.findFirst({
       where: {
         refreshToken: refreshToken,
       },

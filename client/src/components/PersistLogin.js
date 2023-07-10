@@ -10,9 +10,6 @@ export const PersistLogin = () => {
 
   useEffect(() => {
     const verifyRefreshToken = async () => {
-      console.log("Verifying refresh token");
-      console.log("Persist", persist);
-      console.log("Auth access token:", auth);
       try {
         await refresh();
       } catch (err) {

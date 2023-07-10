@@ -11,12 +11,12 @@ export const Login = () => {
   let navigate = useNavigate();
 
   const handlePersist = () => {
-    setPersist(!persist);
+    setPersist((prev) => !prev);
   };
 
-  // useEffect(() => {
-  //   localStorage.setItem("persist", persist);
-  // }, [persist]);
+  useEffect(() => {
+    localStorage.setItem("persist", persist);
+  }, [persist]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -35,9 +35,9 @@ export const Login = () => {
       const role = res?.data?.role;
 
       setAuth({ email, password, role, accessToken });
-      localStorage.setItem("persist", true);
+      console.log("Persist is", persist);
 
-      navigate("/dashboard");
+      navigate("/");
     } catch (err) {
       console.log(err);
     }
@@ -64,21 +64,33 @@ export const Login = () => {
             onChange={({ target }) => setPassword(target.value)}
           />
 
-          {/* <div class="flex items-center mb-4">
-            <input
-              id="default-checkbox"
-              type="checkbox"
-              value=""
-              class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-              onClick={handlePersist}
-            />
+          <div className="flex items-center mb-4">
+            {persist ? (
+              <input
+                id="default-checkbox"
+                type="checkbox"
+                value=""
+                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                onChange={handlePersist}
+                checked
+              />
+            ) : (
+              <input
+                id="default-checkbox"
+                type="checkbox"
+                value=""
+                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                onChange={handlePersist}
+              />
+            )}
+
             <label
-              for="default-checkbox"
-              class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+              htmlFor="default-checkbox"
+              className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
             >
               Stay logged in?
             </label>
-          </div> */}
+          </div>
 
           <button
             type="submit"

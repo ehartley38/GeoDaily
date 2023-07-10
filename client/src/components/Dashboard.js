@@ -15,7 +15,7 @@ export const Dashboard = () => {
 
       setUserData(data);
     };
-
+    console.log("Dashboard auth is", auth);
     // fetchData();
   }, []);
 
