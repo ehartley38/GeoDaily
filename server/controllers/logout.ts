@@ -1,10 +1,11 @@
+import { Request, Response } from "express";
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
 const logoutRouter = require("express").Router();
 
-logoutRouter.get("/", async (request, response) => {
-  const cookies = request.cookies;
+logoutRouter.get("/", async (req: Request, res: Response) => {
+  const cookies = req.cookies;
   if (!cookies?.jwt) return res.sendStatus(204);
   const refreshToken = cookies.jwt;
 
@@ -16,12 +17,12 @@ logoutRouter.get("/", async (request, response) => {
     });
     if (!user) {
       console.log("No user to clearing cookies");
-      response.clearCookie("jwt", {
+      res.clearCookie("jwt", {
         httpOnly: true,
-        sameSite: "None",
+        sameSite: "none",
         secure: true,
       });
-      return response.sendStatus(204).end();
+      return res.sendStatus(204).end();
     }
 
     const updateUser = await prisma.user.update({
@@ -33,12 +34,12 @@ logoutRouter.get("/", async (request, response) => {
       },
     });
 
-    response.clearCookie("jwt", {
+    res.clearCookie("jwt", {
       httpOnly: true,
-      sameSite: "None",
+      sameSite: "none",
       secure: true,
     });
-    response.sendStatus(204);
+    res.sendStatus(204);
   } catch (err) {
     console.log(err);
   }

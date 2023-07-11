@@ -1,7 +1,9 @@
+import { CorsOptions } from "cors";
+
 const config = require("./config");
 
 const corsOptions = {
-  origin: (origin, callback) => {
+  origin: (origin: string | undefined, callback: any) => {
     if (config.allowedOrigins.indexOf(origin) !== -1 || !origin) {
       callback(null, true);
     } else {

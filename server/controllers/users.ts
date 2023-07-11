@@ -1,12 +1,13 @@
 const { PrismaClient } = require("@prisma/client");
-// import { Request, Response } from "express";
+import { Response } from "express";
+import { customRequest } from "../customTypings/customRequest";
 
 const prisma = new PrismaClient();
 const usersRouter = require("express").Router();
 const jwt = require("jsonwebtoken");
 const config = require("../utils/config");
 
-usersRouter.get("/", async (req, res) => {
+usersRouter.get("/", async (req: customRequest, res: Response) => {
   try {
     const users = await prisma.user.findMany();
     res.status(200).json(users).end();
@@ -15,7 +16,7 @@ usersRouter.get("/", async (req, res) => {
   }
 });
 
-usersRouter.get("/data", async (req, res) => {
+usersRouter.get("/data", async (req: customRequest, res: Response) => {
   const user = req.user;
   const id = user.id;
 
