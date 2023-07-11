@@ -2,16 +2,18 @@ import { useEffect } from "react";
 import useAuth from "./useAuth";
 import { useRefreshToken } from "./useRefreshToken";
 import { axiosPrivate } from "../services/axios";
+import { AuthType } from "../customTypings/auth";
 
 const useAxiosPrivate = () => {
   const refresh = useRefreshToken();
   const { auth } = useAuth();
+  const authType = auth as AuthType;
 
   useEffect(() => {
     const requestIntercept = axiosPrivate.interceptors.request.use(
       (config) => {
         if (!config.headers["Authorization"] && auth !== undefined) {
-          config.headers["Authorization"] = `Bearer ${auth?.accessToken}`;
+          config.headers["Authorization"] = `Bearer ${authType?.accessToken}`;
         }
         return config;
       },

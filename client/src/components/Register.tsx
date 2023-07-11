@@ -10,7 +10,7 @@ export const Register = () => {
 
   let navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLInputElement>) => {
     e.preventDefault();
     try {
       const res = await axios.post(
@@ -67,7 +67,7 @@ export const Register = () => {
           <button
             type="submit"
             className="w-full text-center py-3 rounded bg-green-500 text-white hover:bg-green-dark focus:outline-none my-1"
-            onClick={handleSubmit}
+            onClick={() => handleSubmit}
           >
             Create Account
           </button>

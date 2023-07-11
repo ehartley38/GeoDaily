@@ -29,8 +29,5 @@ app.use("/api/logout", logoutRouter);
 /* Protected routes */
 app.use(middleware.verifyJWT);
 app.use("/api/users", usersRouter);
-// Route here
-// And here
-// etc
 
 module.exports = app;

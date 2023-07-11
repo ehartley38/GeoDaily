@@ -9,13 +9,15 @@ import { Layout } from "./components/Layout";
 import { PersistLogin } from "./components/PersistLogin";
 import { Unauthorized } from "./components/Unauthorized";
 import { Missing } from "./components/Missing";
+import { AuthType } from "./customTypings/auth";
 
 const App = () => {
   const { auth } = useAuth();
+  const authType = auth as AuthType;
 
   return (
     <>
-      {auth.accessToken ? <SignOut /> : <></>}
+      {authType.accessToken ? <SignOut /> : <></>}
       <Routes>
         <Route path="/" element={<Layout />}>
           {/* Public routes */}

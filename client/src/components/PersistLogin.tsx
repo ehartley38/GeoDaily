@@ -2,11 +2,14 @@ import { useEffect, useState } from "react";
 import { useRefreshToken } from "../hooks/useRefreshToken";
 import useAuth from "../hooks/useAuth";
 import { Outlet } from "react-router-dom";
+import { AuthType } from "../customTypings/auth";
 
 export const PersistLogin = () => {
   const [isLoading, setIsLoading] = useState(true);
   const refresh = useRefreshToken();
   const { auth, persist } = useAuth();
+
+  const authType = auth as AuthType;
 
   useEffect(() => {
     const verifyRefreshToken = async () => {
@@ -20,7 +23,9 @@ export const PersistLogin = () => {
     };
 
     // If we do not have an access token, then attempt to generate new one
-    !auth?.accessToken && persist ? verifyRefreshToken() : setIsLoading(false);
+    !authType?.accessToken && persist
+      ? verifyRefreshToken()
+      : setIsLoading(false);
   }, []);
 
   return (

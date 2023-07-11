@@ -2,21 +2,24 @@ import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "../services/axios";
 import useAuth from "../hooks/useAuth";
+import { PersistType } from "../customTypings/auth";
 
 export const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { setAuth, persist, setPersist } = useAuth();
 
+  const persistType = persist as PersistType;
+
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
 
   useEffect(() => {
-    localStorage.setItem("persist", persist);
+    localStorage.setItem("persist", persistType.toString());
   }, [persist]);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
 
     try {
