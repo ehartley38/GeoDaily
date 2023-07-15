@@ -7,9 +7,16 @@ import { AuthType } from "../customTypings/auth";
 export const PersistLogin = () => {
   const [isLoading, setIsLoading] = useState(true);
   const refresh = useRefreshToken();
-  const { auth, persist } = useAuth();
+  const { auth } = useAuth();
 
   const authType = auth as AuthType;
+
+  let persist: boolean | string | null = localStorage.getItem("persist");
+  if (persist === null) {
+    persist = false;
+  } else {
+    persist = JSON.parse(persist);
+  }
 
   useEffect(() => {
     const verifyRefreshToken = async () => {
