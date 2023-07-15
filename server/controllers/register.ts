@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 
 const bcrypt = require("bcrypt");
 const registerRouter = require("express").Router();
-const prisma = new PrismaClient();
+const prisma = new PrismaClient({});
 const jwt = require("jsonwebtoken");
 const config = require("../utils/config");
 
@@ -21,11 +21,12 @@ registerRouter.post("/", async (req: Request, res: Response) => {
   const passwordHash = await bcrypt.hash(password, saltRounds);
 
   try {
-    const user = await prisma.user.create({
+    const user = await prisma.userAccount.create({
       data: {
         email: email,
         username: username,
         passwordHash: passwordHash,
+        roleList: ["BASIC"],
       },
     });
 
@@ -39,6 +40,7 @@ registerRouter.post("/", async (req: Request, res: Response) => {
       }
       return res.status(500).json({ message: "User registration failed" });
     }
+    console.log(err);
   }
 });
 

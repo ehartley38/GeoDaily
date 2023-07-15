@@ -11,7 +11,8 @@ export const RequireAuth = ({ allowedRoles }: RequireAuthProps) => {
   const authType = auth as AuthType;
 
   const location = useLocation();
-  return allowedRoles?.includes(authType?.role) ? (
+
+  return authType?.roleList?.find((role) => allowedRoles?.includes(role)) ? (
     <Outlet />
   ) : authType?.accessToken ? (
     <Navigate to="/unauthorized" state={{ from: location }} replace />

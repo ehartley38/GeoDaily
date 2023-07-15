@@ -14,7 +14,7 @@ loginRouter.post("/", async (req: Request, res: Response) => {
     return res.status(401).json({ message: "invalid username or password" });
 
   try {
-    const user = await prisma.user.findUnique({
+    const user = await prisma.userAccount.findUnique({
       where: {
         email: email,
       },
@@ -28,7 +28,7 @@ loginRouter.post("/", async (req: Request, res: Response) => {
       });
     }
 
-    const role = user.roles;
+    const roleList = user.roleList;
 
     const userForToken = {
       email: user.email,
@@ -45,7 +45,7 @@ loginRouter.post("/", async (req: Request, res: Response) => {
       { expiresIn: "7d" }
     );
 
-    const updateUser = await prisma.user.update({
+    const updateUser = await prisma.userAccount.update({
       where: {
         email: email,
       },
@@ -61,8 +61,10 @@ loginRouter.post("/", async (req: Request, res: Response) => {
       maxAge: 24 * 60 * 60 * 1000,
     });
 
-    res.status(200).send({ role, accessToken });
-  } catch (err) {}
+    res.status(200).send({ roleList, accessToken });
+  } catch (err) {
+    console.log(err);
+  }
 });
 
 module.exports = loginRouter;

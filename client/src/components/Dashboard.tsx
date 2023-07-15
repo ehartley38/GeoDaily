@@ -15,7 +15,7 @@ export const Dashboard = () => {
           withCredentials: true,
         });
         setUserData(userData.data);
-        console.log(userData.data);
+        // console.log(userData.data);
       } catch (err) {
         console.log(err);
       }

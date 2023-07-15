@@ -14,7 +14,7 @@ refreshTokensRouter.get("/", async (req: Request, res: Response) => {
   const refreshToken = cookies.jwt;
 
   try {
-    const user = await prisma.user.findFirst({
+    const user = await prisma.userAccount.findFirst({
       where: {
         refreshToken: refreshToken,
       },
@@ -26,7 +26,7 @@ refreshTokensRouter.get("/", async (req: Request, res: Response) => {
       config.REFRESH_TOKEN_SECRET,
       (err: any, decoded: decodedResult) => {
         if (err || user.email !== decoded.email) return res.sendStatus(404);
-        const role = user.roles;
+        const roleList = user.roleList;
         const userForToken = {
           email: decoded.email,
           id: user.id,
@@ -34,10 +34,12 @@ refreshTokensRouter.get("/", async (req: Request, res: Response) => {
         const accessToken = jwt.sign(userForToken, config.ACCESS_TOKEN_SECRET, {
           expiresIn: "1d",
         });
-        res.status(200).json({ role, accessToken });
+        res.status(200).json({ roleList, accessToken });
       }
     );
-  } catch (err) {}
+  } catch (err) {
+    console.log(err);
+  }
 });
 
 module.exports = refreshTokensRouter;

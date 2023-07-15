@@ -33,9 +33,9 @@ export const Login = () => {
       );
 
       const accessToken = res?.data?.accessToken;
-      const role = res?.data?.role;
+      const roleList = res?.data?.roleList;
 
-      setAuth({ email, password, role, accessToken });
+      setAuth({ email, password, roleList, accessToken });
 
       navigate(from, { replace: true });
     } catch (err) {

@@ -1,7 +1,7 @@
 export type AuthType = {
   email: string;
   password: string;
-  role: string;
+  roleList: string[];
   accessToken: string;
 };
 

@@ -10,7 +10,7 @@ export const useRefreshToken = () => {
     });
     setAuth({
       ...auth,
-      role: response.data.role,
+      roleList: response.data.roleList,
       accessToken: response.data.accessToken,
     });
     return response.data.accessToken;

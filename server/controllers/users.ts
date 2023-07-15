@@ -9,7 +9,7 @@ const config = require("../utils/config");
 
 usersRouter.get("/", async (req: customRequest, res: Response) => {
   try {
-    const users = await prisma.user.findMany();
+    const users = await prisma.userAccount.findMany();
     res.status(200).json(users).end();
   } catch (err) {
     console.log(err);
@@ -21,7 +21,7 @@ usersRouter.get("/data", async (req: customRequest, res: Response) => {
   const id = user.id;
 
   try {
-    const userData = await prisma.user.findUnique({
+    const userData = await prisma.userAccount.findUnique({
       where: {
         id: id,
       },

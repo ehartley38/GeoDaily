@@ -7,6 +7,6 @@ export interface customRequest extends Request {
     username: string;
     passwordHash: string;
     refreshToken: string;
-    roles: string;
+    roleList: string;
   };
 }

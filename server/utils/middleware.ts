@@ -41,7 +41,7 @@ const verifyJWT = (req: customRequest, res: Response, next: NextFunction) => {
       if (err) return res.sendStatus(403).json({ error: "Invalid token" }); //invalid token
 
       try {
-        const user = await prisma.user.findUnique({
+        const user = await prisma.userAccount.findUnique({
           where: {
             id: decoded.id,
           },

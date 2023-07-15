@@ -10,7 +10,7 @@ logoutRouter.get("/", async (req: Request, res: Response) => {
   const refreshToken = cookies.jwt;
 
   try {
-    const user = await prisma.user.findFirst({
+    const user = await prisma.userAccount.findFirst({
       where: {
         refreshToken: refreshToken,
       },
@@ -25,7 +25,7 @@ logoutRouter.get("/", async (req: Request, res: Response) => {
       return res.sendStatus(204).end();
     }
 
-    const updateUser = await prisma.user.update({
+    const updateUser = await prisma.userAccount.update({
       where: {
         id: user.id,
       },
