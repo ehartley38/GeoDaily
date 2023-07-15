@@ -40,21 +40,8 @@ const verifyJWT = (req: customRequest, res: Response, next: NextFunction) => {
     async (err: any, decoded: decodedResult) => {
       if (err) return res.sendStatus(403).json({ error: "Invalid token" }); //invalid token
 
-      try {
-        const user = await prisma.userAccount.findUnique({
-          where: {
-            email: decoded.email,
-          },
-        });
-
-        if (!user) {
-          return res.status(403).json({ error: "user invalid" });
-        }
-        req.user = user;
-        req.roleList = decoded.roleList;
-      } catch (err) {
-        console.log(err);
-      }
+      req.email = decoded.email;
+      req.roleList = decoded.roleList;
 
       next();
     }

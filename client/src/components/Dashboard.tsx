@@ -12,7 +12,6 @@ type UserDataType = {
 };
 
 export const Dashboard = () => {
-  const { auth } = useAuth();
   const [userData, setUserData] = useState<UserDataType>();
   const axiosPrivate = useAxiosPrivate();
 
@@ -24,7 +23,6 @@ export const Dashboard = () => {
           withCredentials: true,
         });
         setUserData(userData.data);
-        console.log(userData.data);
       } catch (err) {
         console.log(err);
       }

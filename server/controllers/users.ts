@@ -20,13 +20,10 @@ usersRouter.get(
   "/data",
   middleware.verifyRoles(["BASIC"]),
   async (req: customRequest, res: Response) => {
-    const user = req.user;
-    const id = user.id;
-
     try {
       const userData = await prisma.userAccount.findUnique({
         where: {
-          id: id,
+          email: req.email,
         },
       });
       res.status(200).json(userData).end();
