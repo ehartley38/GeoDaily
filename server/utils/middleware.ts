@@ -43,7 +43,7 @@ const verifyJWT = (req: customRequest, res: Response, next: NextFunction) => {
       try {
         const user = await prisma.userAccount.findUnique({
           where: {
-            id: decoded.id,
+            email: decoded.email,
           },
         });
 
@@ -51,6 +51,7 @@ const verifyJWT = (req: customRequest, res: Response, next: NextFunction) => {
           return res.status(403).json({ error: "user invalid" });
         }
         req.user = user;
+        req.roleList = decoded.roleList;
       } catch (err) {
         console.log(err);
       }
@@ -60,4 +61,22 @@ const verifyJWT = (req: customRequest, res: Response, next: NextFunction) => {
   );
 };
 
-module.exports = { requestLogger, credentials, verifyJWT };
+const verifyRoles = (allowedRoles: string[]) => {
+  return (req: customRequest, res: Response, next: NextFunction) => {
+    if (!req?.roleList) return res.sendStatus(401);
+    const rolesArray = [...allowedRoles];
+
+    let result = false;
+    rolesArray.some((role) => {
+      if (req.roleList.includes(role)) {
+        result = true;
+      }
+    });
+
+    if (!result) return res.sendStatus(401);
+
+    next();
+  };
+};
+
+module.exports = { requestLogger, credentials, verifyJWT, verifyRoles };

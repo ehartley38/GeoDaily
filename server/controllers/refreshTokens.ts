@@ -29,7 +29,7 @@ refreshTokensRouter.get("/", async (req: Request, res: Response) => {
         const roleList = user.roleList;
         const userForToken = {
           email: decoded.email,
-          id: user.id,
+          roleList: roleList,
         };
         const accessToken = jwt.sign(userForToken, config.ACCESS_TOKEN_SECRET, {
           expiresIn: "1d",

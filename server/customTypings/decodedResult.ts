@@ -1,6 +1,6 @@
 export type decodedResult = {
   email: string;
-  id: string;
+  roleList: string[];
   iat: number;
   exp: number;
 };

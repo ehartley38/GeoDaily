@@ -2,9 +2,18 @@ import { useEffect, useState } from "react";
 import useAuth from "../hooks/useAuth";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 
+type UserDataType = {
+  id: string;
+  email: string;
+  username: string;
+  passwordHash: string;
+  refreshToken: string;
+  roleList: string[];
+};
+
 export const Dashboard = () => {
   const { auth } = useAuth();
-  const [userData, setUserData] = useState();
+  const [userData, setUserData] = useState<UserDataType>();
   const axiosPrivate = useAxiosPrivate();
 
   useEffect(() => {
@@ -15,7 +24,7 @@ export const Dashboard = () => {
           withCredentials: true,
         });
         setUserData(userData.data);
-        // console.log(userData.data);
+        console.log(userData.data);
       } catch (err) {
         console.log(err);
       }
@@ -26,6 +35,7 @@ export const Dashboard = () => {
   return (
     <>
       <h1>Dashboard</h1>
+      {userData?.id}
     </>
   );
 };
