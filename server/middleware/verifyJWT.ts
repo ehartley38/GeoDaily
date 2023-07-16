@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from "express";
+import { Response, NextFunction } from "express";
 import { customRequest } from "../customTypings/customRequest";
 import { decodedResult } from "../customTypings/decodedResult";
 const jwt = require("jsonwebtoken");

@@ -1,5 +1,3 @@
-import { CorsOptions } from "cors";
-
 const config = require("./config");
 
 const corsOptions = {

@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import useAuth from "../hooks/useAuth";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 
 type UserDataType = {

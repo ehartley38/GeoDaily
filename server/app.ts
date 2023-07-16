@@ -1,11 +1,12 @@
 import express, { Express } from "express";
-import { requestLogger } from "./middleware/requestLogger";
-import { credentials } from "./middleware/credentials";
-const verifyJWT = require("./middleware/verifyJWT");
 const cors = require("cors");
 const corsOptions = require("./utils/corsOptions");
 const cookieParser = require("cookie-parser");
 const app: Express = express();
+
+import { requestLogger } from "./middleware/requestLogger";
+import { credentials } from "./middleware/credentials";
+const verifyJWT = require("./middleware/verifyJWT");
 
 /* Routers */
 const usersRouter = require("./controllers/users");
