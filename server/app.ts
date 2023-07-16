@@ -14,6 +14,8 @@ const loginRouter = require("./controllers/login");
 const registerRouter = require("./controllers/register");
 const refreshTokensRouter = require("./controllers/refreshTokens");
 const logoutRouter = require("./controllers/logout");
+const challengesRouter = require("./controllers/challenges");
+const questionsRouter = require("./controllers/questions");
 
 app.use(credentials);
 app.use(cors(corsOptions));
@@ -30,5 +32,7 @@ app.use("/api/logout", logoutRouter);
 /* Protected routes */
 app.use(verifyJWT.verifyJWT);
 app.use("/api/users", usersRouter);
+app.use("/api/challenges", challengesRouter);
+app.use("/api/questions", questionsRouter);
 
 module.exports = app;

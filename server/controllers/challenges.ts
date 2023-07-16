@@ -1,0 +1,46 @@
+import { Request, Response } from "express";
+import { customRequest } from "../customTypings/customRequest";
+
+import { PrismaClient } from "@prisma/client";
+
+const prisma = new PrismaClient({});
+const challengesRouter = require("express").Router();
+
+// Get a challenge by id
+challengesRouter.get("/", async (req: customRequest, res: Response) => {
+  try {
+    const challenge = await prisma.challenge.findUnique({
+      where: {
+        id: "e86566c6-a510-48ae-bf62-84bafe5d839c",
+      },
+      include: {
+        questions: true,
+      },
+    });
+
+    res.status(200).json(challenge);
+  } catch (err) {}
+});
+
+// Create a new challenge
+challengesRouter.post("/", async (req: customRequest, res: Response) => {
+  const body = req.body;
+
+  const challengeData = {
+    startDate: new Date(),
+    endDate: new Date(new Date().setFullYear(new Date().getFullYear() + 1)),
+  };
+
+  try {
+    const challenge = await prisma.challenge.create({
+      data: challengeData,
+    });
+
+    res.status(201).json(challenge);
+  } catch (err) {
+    console.log(err);
+    res.status(400).json(err);
+  }
+});
+
+module.exports = challengesRouter;

@@ -11,12 +11,51 @@ datasource db {
 }
 
 model UserAccount {
-  id           String   @id @default(uuid())
-  email        String   @unique
-  username     String   @unique
-  passwordHash String
-  refreshToken String   @default("")
-  roleList     String[]
-  // challengeSubmissions ChallengeSubmission[]
-  // questionSubmissions QuestionSubmission[]
+  id                   String                @id @default(uuid())
+  email                String                @unique
+  username             String                @unique
+  passwordHash         String
+  refreshToken         String                @default("")
+  roleList             String[]
+  challengeSubmissions ChallengeSubmission[]
+  questionSubmissions  QuestionSubmission[]
+}
+
+model Challenge {
+  id                   String                @id @default(uuid())
+  startDate            DateTime
+  endDate              DateTime
+  questions            Question[]
+  challengeSubmissions ChallengeSubmission[]
+}
+
+model ChallengeSubmission {
+  id                String               @id @default(uuid())
+  player            UserAccount          @relation(fields: [playerId], references: [id])
+  playerId          String
+  isComplete        Boolean
+  questionsAnswered QuestionSubmission[]
+  score             Int
+  parentChallenge   Challenge            @relation(fields: [parentChallengeId], references: [id])
+  parentChallengeId String
+}
+
+model Question {
+  id                String               @id @default(uuid())
+  parentChallenge   Challenge            @relation(fields: [parentChallengeId], references: [id])
+  parentChallengeId String
+  correctPos        Json
+  submissions       QuestionSubmission[]
+}
+
+model QuestionSubmission {
+  id                          String              @id @default(uuid())
+  player                      UserAccount         @relation(fields: [playerId], references: [id])
+  playerId                    String
+  parentChallengeSubmission   ChallengeSubmission @relation(fields: [parentChallengeSubmissionId], references: [id])
+  parentChallengeSubmissionId String
+  parentQuestion              Question            @relation(fields: [parentQuestionId], references: [id])
+  parentQuestionId            String
+  attemptPos                  Json
+  score                       Int
 }
