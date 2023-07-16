@@ -1,9 +1,9 @@
 import express, { Express } from "express";
-const config = require("./utils/config");
+import { requestLogger } from "./middleware/requestLogger";
+import { credentials } from "./middleware/credentials";
+const verifyJWT = require("./middleware/verifyJWT");
 const cors = require("cors");
 const corsOptions = require("./utils/corsOptions");
-const logger = require("./utils/logger");
-const middleware = require("./utils/middleware");
 const cookieParser = require("cookie-parser");
 const app: Express = express();
 
@@ -14,10 +14,10 @@ const registerRouter = require("./controllers/register");
 const refreshTokensRouter = require("./controllers/refreshTokens");
 const logoutRouter = require("./controllers/logout");
 
-app.use(middleware.credentials);
+app.use(credentials);
 app.use(cors(corsOptions));
 app.use(express.json());
-app.use(middleware.requestLogger);
+app.use(requestLogger);
 app.use(cookieParser());
 
 /* Un-protected routes */
@@ -27,7 +27,7 @@ app.use("/api/refreshTokens", refreshTokensRouter);
 app.use("/api/logout", logoutRouter);
 
 /* Protected routes */
-app.use(middleware.verifyJWT);
+app.use(verifyJWT.verifyJWT);
 app.use("/api/users", usersRouter);
 
 module.exports = app;

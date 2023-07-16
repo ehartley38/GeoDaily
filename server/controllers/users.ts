@@ -1,11 +1,9 @@
 const { PrismaClient } = require("@prisma/client");
 import { Response } from "express";
 import { customRequest } from "../customTypings/customRequest";
-const middleware = require("../utils/middleware");
 const prisma = new PrismaClient();
 const usersRouter = require("express").Router();
-const jwt = require("jsonwebtoken");
-const config = require("../utils/config");
+const verifyRoles = require("../middleware/verifyRoles");
 
 usersRouter.get("/", async (req: customRequest, res: Response) => {
   try {
@@ -18,7 +16,7 @@ usersRouter.get("/", async (req: customRequest, res: Response) => {
 
 usersRouter.get(
   "/data",
-  middleware.verifyRoles(["BASIC"]),
+  verifyRoles.verifyRoles(["BASIC"]),
   async (req: customRequest, res: Response) => {
     try {
       const userData = await prisma.userAccount.findUnique({
