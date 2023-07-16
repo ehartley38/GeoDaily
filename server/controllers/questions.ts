@@ -31,7 +31,6 @@ questionsRouter.post("/", async (req: customRequest, res: Response) => {
     res.status(201).json(question);
   } catch (err) {
     console.log(err);
-    console.log("ERROR");
   }
 });
 
