@@ -6,7 +6,7 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient({});
 const challengesRouter = require("express").Router();
 
-// Get a challenge by id
+// Get a challenge (Hard-code id for now)
 challengesRouter.get("/", async (req: customRequest, res: Response) => {
   try {
     const challenge = await prisma.challenge.findUnique({

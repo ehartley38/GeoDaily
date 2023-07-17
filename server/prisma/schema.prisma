@@ -33,9 +33,9 @@ model ChallengeSubmission {
   id                String               @id @default(uuid())
   player            UserAccount          @relation(fields: [playerId], references: [id])
   playerId          String
-  isComplete        Boolean
+  isComplete        Boolean              @default(false)
   questionsAnswered QuestionSubmission[]
-  score             Int
+  score             Int                  @default(0)
   parentChallenge   Challenge            @relation(fields: [parentChallengeId], references: [id])
   parentChallengeId String
 }

@@ -16,6 +16,7 @@ const refreshTokensRouter = require("./controllers/refreshTokens");
 const logoutRouter = require("./controllers/logout");
 const challengesRouter = require("./controllers/challenges");
 const questionsRouter = require("./controllers/questions");
+const playRouter = require("./controllers/play");
 
 app.use(credentials);
 app.use(cors(corsOptions));
@@ -34,5 +35,6 @@ app.use(verifyJWT.verifyJWT);
 app.use("/api/users", usersRouter);
 app.use("/api/challenges", challengesRouter);
 app.use("/api/questions", questionsRouter);
+app.use("/api/play", playRouter);
 
 module.exports = app;
