@@ -10,9 +10,12 @@ playRouter.get("/", async (req: customRequest, res: Response) => {
   try {
     // Get the current challenge
     // TODO
-    const currentChallenge = await prisma.challenge.findFirst({
+    const currentChallenge = await prisma.challenge.findUnique({
       where: {
         id: "e86566c6-a510-48ae-bf62-84bafe5d839c",
+      },
+      include: {
+        questions: true,
       },
     });
 
@@ -22,6 +25,9 @@ playRouter.get("/", async (req: customRequest, res: Response) => {
       where: {
         parentChallengeId: "e86566c6-a510-48ae-bf62-84bafe5d839c",
         playerId: req.user.id,
+      },
+      include: {
+        questionsAnswered: true,
       },
     });
 

@@ -50,9 +50,6 @@ export const Dashboard = () => {
       );
       const { currentChallenge, challengeSubmission } = response.data;
 
-      console.log(currentChallenge);
-      console.log(challengeSubmission);
-
       // Navigate to play-daily/:challengeId
       navigate(`play-daily/${currentChallenge.id}`, {
         state: {
