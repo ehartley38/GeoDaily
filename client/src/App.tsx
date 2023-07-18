@@ -10,6 +10,7 @@ import { PersistLogin } from "./components/PersistLogin";
 import { Unauthorized } from "./components/Unauthorized";
 import { Missing } from "./components/Missing";
 import { AuthType } from "./customTypings/auth";
+import { PlayDaily } from "./components/PlayDaily";
 
 const App = () => {
   const { auth } = useAuth();
@@ -30,6 +31,7 @@ const App = () => {
             <Route element={<RequireAuth allowedRoles={["BASIC"]} />}>
               <Route path="/">
                 <Route index element={<Dashboard />} />
+                <Route path="play-daily/:challengeId" element={<PlayDaily />} />
               </Route>
             </Route>
           </Route>
