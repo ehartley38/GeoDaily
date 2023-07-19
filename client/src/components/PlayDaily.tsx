@@ -77,7 +77,7 @@ export const PlayDaily = () => {
         style={{ height: "80vh", width: "100%" }}
       >
         <div
-          className="absolute bottom-0 right-0 z-10 h-1/3 w-1/5 m-5"
+          className="transition-all absolute bottom-0 right-0 z-10 h-1/3 w-1/5 m-5 hover:h-2/3 hover:w-2/5"
           // className="absolute bottom-0 right-0 z-10 h-full w-full m-5"
           ref={mapDivRef}
         ></div>
