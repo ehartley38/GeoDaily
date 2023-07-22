@@ -35,13 +35,14 @@ export const PlayDaily = () => {
 
     const mapOptions = {
       center: { lat: 0, lng: 0 },
-      zoom: 0,
+      zoom: 1,
       clickableIcons: false,
       disableDefaultIO: true,
       fullscreenControl: false,
       streetViewControl: false,
       mapTypeControl: false,
-      minZoom: 0,
+      minZoom: 1,
+      draggableCursor: "crosshair",
     };
 
     const loader = new Loader({
@@ -61,6 +62,26 @@ export const PlayDaily = () => {
           mapDivRef.current!,
           mapOptions
         );
+
+        let marker: null | google.maps.Marker = null;
+
+        mapInstance.addListener("click", (e: any) => {
+          placeMarker(e.latLng, mapInstance);
+        });
+
+        const placeMarker = (
+          position: google.maps.LatLng,
+          map: google.maps.Map
+        ) => {
+          if (marker === null) {
+            marker = new loadedGoogle.maps.Marker({
+              position: position,
+              map: map,
+            });
+          } else {
+            marker.setPosition(position);
+          }
+        };
       })
       .catch((err) => {
         console.log(err);
