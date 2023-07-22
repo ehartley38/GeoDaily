@@ -1,9 +1,11 @@
 import { Loader } from "@googlemaps/js-api-loader";
 import { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
 
 export const PlayDaily = () => {
   const { state } = useLocation();
+  const axiosPrivate = useAxiosPrivate();
   const streetviewDivRef = useRef<HTMLDivElement | null>(null);
   const mapDivRef = useRef<HTMLDivElement | null>(null);
   const { currentChallenge, challengeSubmission } = state;
@@ -12,6 +14,8 @@ export const PlayDaily = () => {
       challengeSubmission.questionsAnswered.length
     )
   );
+  const [markerPlaced, setMarkerPlaced] = useState<boolean>(false);
+  const [marker, setMarker] = useState<google.maps.Marker | null>(null);
 
   useEffect(() => {
     // console.log("Challenge data:", currentChallenge);
@@ -63,8 +67,6 @@ export const PlayDaily = () => {
           mapOptions
         );
 
-        let marker: null | google.maps.Marker = null;
-
         mapInstance.addListener("click", (e: any) => {
           placeMarker(e.latLng, mapInstance);
         });
@@ -74,12 +76,14 @@ export const PlayDaily = () => {
           map: google.maps.Map
         ) => {
           if (marker === null) {
-            marker = new loadedGoogle.maps.Marker({
+            const newMarker = new loadedGoogle.maps.Marker({
               position: position,
               map: map,
             });
+            setMarker(newMarker);
+            setMarkerPlaced(true);
           } else {
-            marker.setPosition(position);
+            marker!.setPosition(position);
           }
         };
       })
@@ -87,6 +91,20 @@ export const PlayDaily = () => {
         console.log(err);
       });
   }, []);
+
+  // Handle the submit of a question
+  const handleSubmit = async (e: any) => {
+    const markerPosition = marker!.getPosition();
+
+    const submitResponse = await axiosPrivate.post(
+      "/play/submitQuestion",
+      { markerPosition },
+      {
+        headers: { "Content-Type": "application/json" },
+        withCredentials: true,
+      }
+    );
+  };
 
   return (
     <>
@@ -99,9 +117,23 @@ export const PlayDaily = () => {
       >
         <div
           className="transition-all absolute bottom-0 right-0 z-10 h-1/3 w-1/5 m-5 hover:h-2/3 hover:w-2/5"
-          // className="absolute bottom-0 right-0 z-10 h-full w-full m-5"
           ref={mapDivRef}
         ></div>
+      </div>
+
+      <div className="absolute bottom-0 right-0 m-2">
+        {markerPlaced ? (
+          <button
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            onClick={handleSubmit}
+          >
+            Submit
+          </button>
+        ) : (
+          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded opacity-50 cursor-not-allowed">
+            Submit
+          </button>
+        )}
       </div>
     </>
   );

@@ -46,4 +46,13 @@ playRouter.get("/", async (req: customRequest, res: Response) => {
   }
 });
 
+playRouter.post(
+  "/submitQuestion",
+  async (req: customRequest, res: Response) => {
+    const body = req.body;
+
+    console.log(body.markerPosition);
+  }
+);
+
 module.exports = playRouter;
