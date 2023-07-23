@@ -15,7 +15,9 @@ export const PlayDaily = () => {
     )
   );
   const [markerPlaced, setMarkerPlaced] = useState<boolean>(false);
-  const [marker, setMarker] = useState<google.maps.Marker | null>(null);
+  // const [marker, setMarker] = useState<google.maps.Marker | null>(null);
+  const [markerPosition, setMarkerPosition] =
+    useState<null | google.maps.LatLng>(null);
 
   useEffect(() => {
     // console.log("Challenge data:", currentChallenge);
@@ -57,6 +59,8 @@ export const PlayDaily = () => {
     loader
       .load()
       .then(async (loadedGoogle) => {
+        let marker: null | google.maps.Marker = null;
+
         const streetViewInstance = new loadedGoogle.maps.StreetViewPanorama(
           streetviewDivRef.current!,
           streetViewOptions
@@ -76,15 +80,16 @@ export const PlayDaily = () => {
           map: google.maps.Map
         ) => {
           if (marker === null) {
-            const newMarker = new loadedGoogle.maps.Marker({
+            marker = new loadedGoogle.maps.Marker({
               position: position,
               map: map,
             });
-            setMarker(newMarker);
+            // setMarker(newMarker);
             setMarkerPlaced(true);
           } else {
-            marker!.setPosition(position);
+            marker.setPosition(position);
           }
+          setMarkerPosition(position);
         };
       })
       .catch((err) => {
@@ -93,9 +98,8 @@ export const PlayDaily = () => {
   }, []);
 
   // Handle the submit of a question
+  // TODO: consistent submit of coords
   const handleSubmit = async (e: any) => {
-    const markerPosition = marker!.getPosition();
-
     const submitResponse = await axiosPrivate.post(
       "/play/submitQuestion",
       { markerPosition },
