@@ -2,6 +2,11 @@ import { Loader } from "@googlemaps/js-api-loader";
 import { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
+import { ResultsSummary } from "./ResultsSummary";
+
+type submitResponseType = {
+  distance: number;
+} | null;
 
 export const PlayDaily = () => {
   const { state } = useLocation();
@@ -15,9 +20,12 @@ export const PlayDaily = () => {
     )
   );
   const [markerPlaced, setMarkerPlaced] = useState<boolean>(false);
-  // const [marker, setMarker] = useState<google.maps.Marker | null>(null);
   const [markerPosition, setMarkerPosition] =
     useState<null | google.maps.LatLng>(null);
+  const [submitResponseData, setSubmitResponseData] =
+    useState<submitResponseType>(null);
+
+  const [showResultModal, setShowResultModal] = useState<boolean>(true);
 
   useEffect(() => {
     // console.log("Challenge data:", currentChallenge);
@@ -84,7 +92,6 @@ export const PlayDaily = () => {
               position: position,
               map: map,
             });
-            // setMarker(newMarker);
             setMarkerPlaced(true);
           } else {
             marker.setPosition(position);
@@ -98,16 +105,21 @@ export const PlayDaily = () => {
   }, []);
 
   // Handle the submit of a question
-  // TODO: consistent submit of coords
   const handleSubmit = async (e: any) => {
+    const correctPos = questions[0].correctPos[0];
+
     const submitResponse = await axiosPrivate.post(
       "/play/submitQuestion",
-      { markerPosition },
+      { correctPos, markerPosition },
       {
         headers: { "Content-Type": "application/json" },
         withCredentials: true,
       }
     );
+
+    setSubmitResponseData(submitResponse.data);
+
+    console.log(submitResponse.data.distance);
   };
 
   return (
@@ -115,7 +127,7 @@ export const PlayDaily = () => {
       <h1>Play Daily</h1>
 
       <div
-        className="relative"
+        // className="relative"
         ref={streetviewDivRef}
         style={{ height: "80vh", width: "100%" }}
       >
@@ -126,6 +138,9 @@ export const PlayDaily = () => {
       </div>
 
       <div className="absolute bottom-0 right-0 m-2">
+        {submitResponseData && (
+          <ResultsSummary distance={submitResponseData!.distance} />
+        )}
         {markerPlaced ? (
           <button
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"

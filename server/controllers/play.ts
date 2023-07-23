@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { customRequest } from "../customTypings/customRequest";
 
 import { PrismaClient } from "@prisma/client";
+import { haversine_distance } from "../utils/haversineDistance";
 
 const prisma = new PrismaClient({});
 const playRouter = require("express").Router();
@@ -51,7 +52,11 @@ playRouter.post(
   async (req: customRequest, res: Response) => {
     const body = req.body;
 
-    console.log(body.markerPosition);
+    const distance = Math.round(
+      haversine_distance(body.correctPos, body.markerPosition)
+    ); // Distance in meters
+
+    res.status(200).json({ distance });
   }
 );
 // https://cloud.google.com/blog/products/maps-platform/how-calculate-distances-map-maps-javascript-api
