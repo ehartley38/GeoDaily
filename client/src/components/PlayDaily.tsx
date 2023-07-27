@@ -116,8 +116,11 @@ export const PlayDaily = () => {
     );
 
     setSubmitResponseData(submitResponse.data);
+  };
 
-    console.log(submitResponse.data.distance);
+  // Handle the transition to the next question in the challenge
+  const handleNext = () => {
+    console.log("Test");
   };
 
   return (
@@ -141,6 +144,7 @@ export const PlayDaily = () => {
             distance={submitResponseData!.distance}
             correctPos={questions[0].correctPos[0]}
             markerPos={markerPosition!}
+            handleNext={handleNext}
           />
         )}
         <div className="row-start-6 z-10 m-5">
