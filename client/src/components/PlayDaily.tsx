@@ -25,8 +25,6 @@ export const PlayDaily = () => {
   const [submitResponseData, setSubmitResponseData] =
     useState<submitResponseType>(null);
 
-  const [showResultModal, setShowResultModal] = useState<boolean>(true);
-
   useEffect(() => {
     // console.log("Challenge data:", currentChallenge);
     // console.log("Submission data:", challengeSubmission);
@@ -127,10 +125,10 @@ export const PlayDaily = () => {
       {/* <h1>Play Daily</h1> */}
 
       <div
-        className="grid grid-cols-10 grid-rows-8 h-screen"
+        className="grid grid-cols-10 grid-rows-6 h-screen"
         ref={streetviewDivRef}
       >
-        <div className="col-span-6 row-span-6 col-start-5 row-start-4 z-10 m-5">
+        <div className="col-start-5 row-start-3 col-span-6 row-span-4 z-10 m-5">
           <div className="relative h-full">
             <div
               className="transition-all absolute bottom-0 right-0 h-1/2 w-1/2 hover:h-full hover:w-full"
@@ -138,24 +136,27 @@ export const PlayDaily = () => {
             ></div>
           </div>
         </div>
-
-        {/* <div className="absolute bottom-0 right-0 m-2 z-10">
-            {submitResponseData && (
-              <ResultsSummary distance={submitResponseData!.distance} />
-            )}
-            {markerPlaced ? (
-              <button
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                onClick={handleSubmit}
-              >
-                Submit
-              </button>
-            ) : (
-              <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded opacity-50 cursor-not-allowed">
-                Submit
-              </button>
-            )}
-          </div> */}
+        {submitResponseData && (
+          <ResultsSummary
+            distance={submitResponseData!.distance}
+            correctPos={questions[0].correctPos[0]}
+            markerPos={markerPosition!}
+          />
+        )}
+        <div className="row-start-6 z-10 m-5">
+          {markerPlaced ? (
+            <button
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              onClick={handleSubmit}
+            >
+              Submit
+            </button>
+          ) : (
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded opacity-50 cursor-not-allowed">
+              Submit
+            </button>
+          )}
+        </div>
       </div>
     </>
   );
