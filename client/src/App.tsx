@@ -18,7 +18,7 @@ const App = () => {
 
   return (
     <>
-      {authType.accessToken ? <SignOut /> : <></>}
+      {/* {authType.accessToken ? <SignOut /> : <></>} */}
       <Routes>
         <Route path="/" element={<Layout />}>
           {/* Public routes */}

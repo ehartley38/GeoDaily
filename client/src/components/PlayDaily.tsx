@@ -124,35 +124,38 @@ export const PlayDaily = () => {
 
   return (
     <>
-      <h1>Play Daily</h1>
+      {/* <h1>Play Daily</h1> */}
 
       <div
-        // className="relative"
+        className="grid grid-cols-10 grid-rows-8 h-screen"
         ref={streetviewDivRef}
-        style={{ height: "80vh", width: "100%" }}
       >
-        <div
-          className="transition-all absolute bottom-0 right-0 z-10 h-1/3 w-1/5 m-5 hover:h-2/3 hover:w-2/5"
-          ref={mapDivRef}
-        ></div>
-      </div>
+        <div className="col-span-6 row-span-6 col-start-5 row-start-4 z-10 m-5">
+          <div className="relative h-full">
+            <div
+              className="transition-all absolute bottom-0 right-0 h-1/2 w-1/2 hover:h-full hover:w-full"
+              ref={mapDivRef}
+            ></div>
+          </div>
+        </div>
 
-      <div className="absolute bottom-0 right-0 m-2">
-        {submitResponseData && (
-          <ResultsSummary distance={submitResponseData!.distance} />
-        )}
-        {markerPlaced ? (
-          <button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-            onClick={handleSubmit}
-          >
-            Submit
-          </button>
-        ) : (
-          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded opacity-50 cursor-not-allowed">
-            Submit
-          </button>
-        )}
+        {/* <div className="absolute bottom-0 right-0 m-2 z-10">
+            {submitResponseData && (
+              <ResultsSummary distance={submitResponseData!.distance} />
+            )}
+            {markerPlaced ? (
+              <button
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                onClick={handleSubmit}
+              >
+                Submit
+              </button>
+            ) : (
+              <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded opacity-50 cursor-not-allowed">
+                Submit
+              </button>
+            )}
+          </div> */}
       </div>
     </>
   );
