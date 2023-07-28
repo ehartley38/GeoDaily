@@ -1,6 +1,6 @@
 import { Loader } from "@googlemaps/js-api-loader";
 import { useEffect, useRef, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import { ResultsSummary } from "./ResultsSummary";
 
@@ -11,6 +11,7 @@ type submitResponseType = {
 
 export const PlayDaily = () => {
   const { state } = useLocation();
+  const navigate = useNavigate();
   const axiosPrivate = useAxiosPrivate();
   const streetviewDivRef = useRef<HTMLDivElement | null>(null);
   const mapDivRef = useRef<HTMLDivElement | null>(null);
@@ -155,7 +156,7 @@ export const PlayDaily = () => {
   };
 
   const handleSeeSummary = () => {
-    console.log("Summary");
+    navigate("summary");
   };
 
   return (

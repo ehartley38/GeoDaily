@@ -11,6 +11,7 @@ import { Unauthorized } from "./components/Unauthorized";
 import { Missing } from "./components/Missing";
 import { AuthType } from "./customTypings/auth";
 import { PlayDaily } from "./components/PlayDaily";
+import { SpecificChallengeSummary } from "./components/SpecificChallengeSummary";
 
 const App = () => {
   const { auth } = useAuth();
@@ -31,7 +32,13 @@ const App = () => {
             <Route element={<RequireAuth allowedRoles={["BASIC"]} />}>
               <Route path="/">
                 <Route index element={<Dashboard />} />
-                <Route path="play-daily/:challengeId" element={<PlayDaily />} />
+                <Route path="play-daily/:challengeId">
+                  <Route index element={<PlayDaily />} />
+                  <Route
+                    path="summary"
+                    element={<SpecificChallengeSummary />}
+                  />
+                </Route>
               </Route>
             </Route>
           </Route>

@@ -50,13 +50,17 @@ export const Dashboard = () => {
       );
       const { currentChallenge, challengeSubmission } = response.data;
 
-      // Navigate to play-daily/:challengeId
-      navigate(`play-daily/${currentChallenge.id}`, {
-        state: {
-          currentChallenge: currentChallenge,
-          challengeSubmission: challengeSubmission,
-        },
-      });
+      if (challengeSubmission.isComplete) {
+        navigate(`play-daily/${currentChallenge.id}/summary`);
+      } else {
+        // Navigate to play-daily/:challengeId
+        navigate(`play-daily/${currentChallenge.id}`, {
+          state: {
+            currentChallenge: currentChallenge,
+            challengeSubmission: challengeSubmission,
+          },
+        });
+      }
     } catch (err) {
       console.log(err);
     }
