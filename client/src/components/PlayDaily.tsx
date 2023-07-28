@@ -6,6 +6,7 @@ import { ResultsSummary } from "./ResultsSummary";
 
 type submitResponseType = {
   distance: number;
+  isComplete: boolean;
 } | null;
 
 export const PlayDaily = () => {
@@ -15,16 +16,13 @@ export const PlayDaily = () => {
   const mapDivRef = useRef<HTMLDivElement | null>(null);
   const { currentChallenge } = state;
   const [challengeSubmission, setChallengeSubmission] = useState(null);
-  const [questions, setQuestions] = useState<any>(); //Tidy up type
+  const [questions, setQuestions] = useState<any>(null); //Tidy up type
   const [markerPlaced, setMarkerPlaced] = useState<boolean>(false);
   const [markerPosition, setMarkerPosition] =
     useState<null | google.maps.LatLng>(null);
   const [submitResponseData, setSubmitResponseData] =
     useState<submitResponseType>(null);
-
-  // On intitial load, get challenge submission data and set the questions state according to it
-  // When a user submits a question, update the question state.
-  // Add questions state to the use effect
+  // const [isComplete, setIsComplete] = useState<boolean>(false);
 
   useEffect(() => {
     const getSubmissionData = async () => {
@@ -52,7 +50,7 @@ export const PlayDaily = () => {
     // console.log("Submission data:", challengeSubmission);
     // console.log("Questions:", questions);
 
-    if (questions) {
+    if (questions && questions.length > 0) {
       const coords = {
         lat: questions[0].correctPos[0].lat,
         lng: questions[0].correctPos[0].lng,
@@ -123,6 +121,8 @@ export const PlayDaily = () => {
         .catch((err) => {
           console.log(err);
         });
+    } else if (questions && questions.length === 0) {
+      console.log("Finished");
     }
   }, [questions]);
 
@@ -154,6 +154,10 @@ export const PlayDaily = () => {
     setSubmitResponseData(null);
   };
 
+  const handleSeeSummary = () => {
+    console.log("Summary");
+  };
+
   return (
     <>
       {/* <h1>Play Daily</h1> */}
@@ -176,6 +180,8 @@ export const PlayDaily = () => {
             correctPos={questions![0].correctPos[0]}
             markerPos={markerPosition!}
             handleNext={handleNext}
+            isComplete={submitResponseData.isComplete}
+            handleSeeSummary={handleSeeSummary}
           />
         )}
         <div className="row-start-6 z-10 m-5">

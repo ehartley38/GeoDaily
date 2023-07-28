@@ -6,6 +6,8 @@ type ResultsSummaryProps = {
   correctPos: google.maps.LatLng;
   markerPos: google.maps.LatLng;
   handleNext: any;
+  handleSeeSummary: any;
+  isComplete: boolean;
 };
 
 export const ResultsSummary = ({
@@ -13,6 +15,8 @@ export const ResultsSummary = ({
   correctPos,
   markerPos,
   handleNext,
+  handleSeeSummary,
+  isComplete,
 }: ResultsSummaryProps) => {
   const resultMapDivRef = useRef<HTMLDivElement | null>(null);
 
@@ -93,13 +97,23 @@ export const ResultsSummary = ({
           <h1>Distance: {distance} meters</h1>
 
           <div className="absolute bottom-0 right-0 m-2">
-            <button
-              className="relative rounded px-5 py-2.5 overflow-hidden group bg-green-500 hover:bg-gradient-to-r hover:from-green-500 hover:to-green-400 text-white hover:ring-2 hover:ring-offset-2 hover:ring-green-400 transition-all ease-out duration-300"
-              onClick={handleNext}
-            >
-              <span className="absolute right-0 w-8 h-32 -mt-12 transition-all duration-1000 transform translate-x-12 bg-white opacity-10 rotate-12 group-hover:-translate-x-40 ease"></span>
-              <span className="relative">Next</span>
-            </button>
+            {isComplete ? (
+              <button
+                className="relative rounded px-5 py-2.5 overflow-hidden group bg-green-500 hover:bg-gradient-to-r hover:from-green-500 hover:to-green-400 text-white hover:ring-2 hover:ring-offset-2 hover:ring-green-400 transition-all ease-out duration-300"
+                onClick={handleSeeSummary}
+              >
+                <span className="absolute right-0 w-8 h-32 -mt-12 transition-all duration-1000 transform translate-x-12 bg-white opacity-10 rotate-12 group-hover:-translate-x-40 ease"></span>
+                <span className="relative">See summary</span>
+              </button>
+            ) : (
+              <button
+                className="relative rounded px-5 py-2.5 overflow-hidden group bg-green-500 hover:bg-gradient-to-r hover:from-green-500 hover:to-green-400 text-white hover:ring-2 hover:ring-offset-2 hover:ring-green-400 transition-all ease-out duration-300"
+                onClick={handleNext}
+              >
+                <span className="absolute right-0 w-8 h-32 -mt-12 transition-all duration-1000 transform translate-x-12 bg-white opacity-10 rotate-12 group-hover:-translate-x-40 ease"></span>
+                <span className="relative">Next</span>
+              </button>
+            )}
           </div>
         </div>
       </div>

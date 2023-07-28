@@ -52,6 +52,7 @@ playRouter.post(
   async (req: customRequest, res: Response) => {
     const body = req.body;
     let distance;
+    let isComplete = false;
 
     try {
       distance = Math.round(
@@ -68,11 +69,43 @@ playRouter.post(
           score: distance,
         },
       });
+
+      // Check if this is the final question and update challenge submission accordingly
+      // Get the number of questions the user has submitted for this challenge
+      const userQuestionsCount = await prisma.questionSubmission.count({
+        where: {
+          playerId: req.user.id,
+          parentChallengeSubmissionId: body.challengeSubmission.id,
+        },
+      });
+
+      // Get the questions for this challenge
+      const challenge = await prisma.challenge.findUnique({
+        where: {
+          id: body.challengeSubmission.parentChallengeId,
+        },
+        include: { questions: true },
+      });
+
+      isComplete = userQuestionsCount === challenge?.questions.length;
+
+      if (isComplete) {
+        // Update challengeSubmission
+        const updatedChallengeSubmission =
+          await prisma.challengeSubmission.update({
+            where: {
+              id: body.challengeSubmission.id,
+            },
+            data: {
+              isComplete: isComplete,
+            },
+          });
+      }
     } catch (err) {
       console.log(err);
     }
 
-    res.status(200).json({ distance });
+    res.status(200).json({ distance, isComplete });
   }
 );
 
