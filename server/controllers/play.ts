@@ -51,14 +51,29 @@ playRouter.post(
   "/submitQuestion",
   async (req: customRequest, res: Response) => {
     const body = req.body;
+    let distance;
 
-    const distance = Math.round(
-      haversine_distance(body.correctPos, body.markerPosition)
-    ); // Distance in meters
+    try {
+      distance = Math.round(
+        haversine_distance(body.question.correctPos[0], body.markerPosition)
+      ); // Distance in meters
+
+      // Create a question submission
+      const questionSubmission = await prisma.questionSubmission.create({
+        data: {
+          playerId: req.user.id,
+          parentChallengeSubmissionId: body.challengeSubmission.id,
+          parentQuestionId: body.question.id,
+          attemptPos: body.markerPosition,
+          score: distance,
+        },
+      });
+    } catch (err) {
+      console.log(err);
+    }
 
     res.status(200).json({ distance });
   }
 );
-// https://cloud.google.com/blog/products/maps-platform/how-calculate-distances-map-maps-javascript-api
 
 module.exports = playRouter;

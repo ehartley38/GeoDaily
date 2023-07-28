@@ -14,6 +14,7 @@ export const PlayDaily = () => {
   const streetviewDivRef = useRef<HTMLDivElement | null>(null);
   const mapDivRef = useRef<HTMLDivElement | null>(null);
   const { currentChallenge, challengeSubmission } = state;
+  // const [challengeSubmission, setChallengeSubmission]= useState(null)
   const [questions, setQuestions] = useState(
     currentChallenge.questions.slice(
       challengeSubmission.questionsAnswered.length
@@ -105,10 +106,11 @@ export const PlayDaily = () => {
   // Handle the submit of a question
   const handleSubmit = async (e: any) => {
     const correctPos = questions[0].correctPos[0];
+    const question = questions[0];
 
     const submitResponse = await axiosPrivate.post(
       "/play/submitQuestion",
-      { correctPos, markerPosition },
+      { question, challengeSubmission, markerPosition },
       {
         headers: { "Content-Type": "application/json" },
         withCredentials: true,
@@ -120,7 +122,7 @@ export const PlayDaily = () => {
 
   // Handle the transition to the next question in the challenge
   const handleNext = () => {
-    console.log("Test");
+    setSubmitResponseData(null);
   };
 
   return (
