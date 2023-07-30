@@ -6,7 +6,7 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient({});
 const challengesRouter = require("express").Router();
 
-// Get a challenge (Hard-code id for now)
+// Get the challenge (Hard-code id for now)
 challengesRouter.get("/", async (req: customRequest, res: Response) => {
   try {
     const challenge = await prisma.challenge.findUnique({
@@ -22,7 +22,7 @@ challengesRouter.get("/", async (req: customRequest, res: Response) => {
   } catch (err) {}
 });
 
-// Get a users challenge submission for current challenge
+// Get a users challenge submission for current challenge (hard code ID for now)
 challengesRouter.get(
   "/current-submission",
   async (req: customRequest, res: Response) => {
@@ -38,6 +38,41 @@ challengesRouter.get(
       });
 
       res.status(200).json(challengeSubmission);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+);
+
+// Get a users submission summary data for all challenges
+challengesRouter.get("/summary");
+
+// Get a users submission summary data for a specific challenge
+challengesRouter.get(
+  "/summary/:challengeId",
+  async (req: customRequest, res: Response) => {
+    const challengeId = req.params.challengeId;
+    try {
+      const challengeSubmission = await prisma.challengeSubmission.findFirst({
+        where: {
+          parentChallengeId: challengeId,
+          playerId: req.user.id,
+        },
+        include: {
+          questionsAnswered: true,
+        },
+      });
+
+      const challenge = await prisma.challenge.findFirst({
+        where: {
+          id: challengeId,
+        },
+        include: {
+          questions: true,
+        },
+      });
+
+      res.status(200).json({ challengeSubmission, challenge });
     } catch (err) {
       console.log(err);
     }

@@ -87,10 +87,11 @@ playRouter.post(
         include: { questions: true },
       });
 
+      // Compare
       isComplete = userQuestionsCount === challenge?.questions.length;
 
       if (isComplete) {
-        // Update challengeSubmission
+        // Update challengeSubmission isComplete field
         const updatedChallengeSubmission =
           await prisma.challengeSubmission.update({
             where: {

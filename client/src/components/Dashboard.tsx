@@ -51,7 +51,7 @@ export const Dashboard = () => {
       const { currentChallenge, challengeSubmission } = response.data;
 
       if (challengeSubmission.isComplete) {
-        navigate(`play-daily/${currentChallenge.id}/summary`);
+        navigate(`/summary/${currentChallenge.id}`);
       } else {
         // Navigate to play-daily/:challengeId
         navigate(`play-daily/${currentChallenge.id}`, {

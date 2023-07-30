@@ -34,11 +34,11 @@ const App = () => {
                 <Route index element={<Dashboard />} />
                 <Route path="play-daily/:challengeId">
                   <Route index element={<PlayDaily />} />
-                  <Route
-                    path="summary"
-                    element={<SpecificChallengeSummary />}
-                  />
                 </Route>
+                <Route
+                  path="summary/:challengeId"
+                  element={<SpecificChallengeSummary />}
+                />
               </Route>
             </Route>
           </Route>

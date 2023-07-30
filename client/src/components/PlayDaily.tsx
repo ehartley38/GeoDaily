@@ -16,7 +16,7 @@ export const PlayDaily = () => {
   const streetviewDivRef = useRef<HTMLDivElement | null>(null);
   const mapDivRef = useRef<HTMLDivElement | null>(null);
   const { currentChallenge } = state;
-  const [challengeSubmission, setChallengeSubmission] = useState(null);
+  const [challengeSubmission, setChallengeSubmission] = useState<any>(null); //Tidy up type
   const [questions, setQuestions] = useState<any>(null); //Tidy up type
   const [markerPlaced, setMarkerPlaced] = useState<boolean>(false);
   const [markerPosition, setMarkerPosition] =
@@ -156,7 +156,7 @@ export const PlayDaily = () => {
   };
 
   const handleSeeSummary = () => {
-    navigate("summary");
+    navigate(`/summary/${challengeSubmission!.parentChallengeId}`);
   };
 
   return (
