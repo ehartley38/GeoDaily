@@ -35,7 +35,7 @@ model ChallengeSubmission {
   playerId          String
   isComplete        Boolean              @default(false)
   questionsAnswered QuestionSubmission[]
-  score             Int                  @default(0)
+  totalScore        Int                  @default(0)
   parentChallenge   Challenge            @relation(fields: [parentChallengeId], references: [id])
   parentChallengeId String
 }
@@ -58,4 +58,5 @@ model QuestionSubmission {
   parentQuestionId            String
   attemptPos                  Json
   score                       Int
+  distance                    Int
 }

@@ -9,6 +9,7 @@ import { latLng } from "../customTypings/latLng";
 
 type submitResponseType = {
   distance: number;
+  score: number;
   isComplete: boolean;
 } | null;
 
@@ -179,6 +180,7 @@ export const PlayDaily = () => {
         {submitResponseData && (
           <ResultsSummary
             distance={submitResponseData!.distance}
+            score={submitResponseData!.score}
             correctPos={questions![0].correctPos[0]}
             markerPos={markerPosition!}
             handleNext={handleNext}

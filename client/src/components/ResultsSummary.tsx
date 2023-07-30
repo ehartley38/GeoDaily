@@ -1,16 +1,16 @@
 import { Loader } from "@googlemaps/js-api-loader";
 import { useEffect, useRef } from "react";
 
+type LatLngType = {
+  lat: number;
+  lng: number;
+};
+
 type ResultsSummaryProps = {
   distance: number;
-  correctPos: {
-    lat: number;
-    lng: number;
-  };
-  markerPos: {
-    lat: number;
-    lng: number;
-  };
+  score: number;
+  correctPos: LatLngType;
+  markerPos: LatLngType;
   handleNext: any;
   handleSeeSummary: any;
   isComplete: boolean;
@@ -18,6 +18,7 @@ type ResultsSummaryProps = {
 
 export const ResultsSummary = ({
   distance,
+  score,
   correctPos,
   markerPos,
   handleNext,
@@ -101,6 +102,7 @@ export const ResultsSummary = ({
         </div>
         <div className="bg-white relative">
           <h1>Distance: {distance} meters</h1>
+          <h1>Score: {score}</h1>
 
           <div className="absolute bottom-0 right-0 m-2">
             {isComplete ? (

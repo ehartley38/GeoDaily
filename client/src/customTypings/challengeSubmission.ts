@@ -3,7 +3,7 @@ export type challengeSubmission = {
   isComplete: boolean;
   parentChallengeId: string;
   playerId: string;
-  score: number;
+  totalScore: number;
   parentChallenge?: {
     id: string;
     endDate: string;

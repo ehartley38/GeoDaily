@@ -47,17 +47,33 @@ playRouter.get("/", async (req: customRequest, res: Response) => {
   }
 });
 
+// Submit a question in a challenge
 playRouter.post(
   "/submitQuestion",
   async (req: customRequest, res: Response) => {
     const body = req.body;
-    let distance;
+    let distance,
+      score = 0;
     let isComplete = false;
 
     try {
+      // Distance in meters
       distance = Math.round(
         haversine_distance(body.question.correctPos[0], body.markerPosition)
-      ); // Distance in meters
+      );
+
+      // Calculate the score for the question / 10,000 based on exponential decay
+      const maxDistance = 3000000;
+      if (distance <= maxDistance) {
+        // const decayFactor = -Math.log(1 / 10000) / 5000000;
+        // Calculate the decay factor using:
+        // points_at_d_max = max_points * e^(-decay_rate * d_max)
+        // And solve for decay_rate
+
+        const decayFactor = 0.00000184;
+
+        score = Math.round(10000 * Math.exp(-decayFactor * distance));
+      }
 
       // Create a question submission
       const questionSubmission = await prisma.questionSubmission.create({
@@ -66,7 +82,8 @@ playRouter.post(
           parentChallengeSubmissionId: body.challengeSubmission.id,
           parentQuestionId: body.question.id,
           attemptPos: body.markerPosition,
-          score: distance,
+          score: score,
+          distance: distance,
         },
       });
 
@@ -91,7 +108,23 @@ playRouter.post(
       isComplete = userQuestionsCount === challenge?.questions.length;
 
       if (isComplete) {
-        // Update challengeSubmission isComplete field
+        // Get the scores for all question submissions
+        const scores = await prisma.questionSubmission.findMany({
+          where: {
+            playerId: req.user.id,
+            parentChallengeSubmissionId: body.challengeSubmission.id,
+          },
+          select: {
+            score: true,
+          },
+        });
+
+        let totalScore = 0;
+        scores.map((submission) => {
+          totalScore += submission.score;
+        });
+
+        // Update challengeSubmission isComplete and totalScore fields
         const updatedChallengeSubmission =
           await prisma.challengeSubmission.update({
             where: {
@@ -99,6 +132,7 @@ playRouter.post(
             },
             data: {
               isComplete: isComplete,
+              totalScore: totalScore,
             },
           });
       }
@@ -106,7 +140,7 @@ playRouter.post(
       console.log(err);
     }
 
-    res.status(200).json({ distance, isComplete });
+    res.status(200).json({ distance, score, isComplete });
   }
 );
 

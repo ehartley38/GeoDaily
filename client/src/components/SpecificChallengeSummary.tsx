@@ -35,9 +35,10 @@ export const SpecificChallengeSummary = () => {
     challengeData &&
     submissionData && (
       <>
-        <h1>Challenge summary page W/B {challengeData.startDate}</h1>
+        <h1>Challenge summary W/B {challengeData.startDate}</h1>
         <h1>Challenge ID: {challengeData.id}</h1>
         <h1>Submission ID: {submissionData.id}</h1>
+        <h1>Score: {submissionData.totalScore}</h1>
       </>
     )
   );
