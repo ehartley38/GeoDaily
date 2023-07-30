@@ -130,6 +130,7 @@ export const PlayDaily = () => {
   // Handle the submit of a question
   const handleSubmit = async (e: any) => {
     const question = questions![0];
+    setMarkerPlaced(false);
 
     try {
       const submitResponse = await axiosPrivate.post(
