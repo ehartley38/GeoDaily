@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
+import { challengeSubmission } from "../customTypings/challengeSubmission";
+import { challenge } from "../customTypings/challenge";
 
 export const SpecificChallengeSummary = () => {
   let { challengeId } = useParams();
   const axiosPrivate = useAxiosPrivate();
-  const [challengeData, setChallengeData] = useState<any>(null); // Tidy up type
-  const [submissionData, setSubmissionData] = useState<any>(null); // Tidy up type
+  const [challengeData, setChallengeData] = useState<challenge>();
+  const [submissionData, setSubmissionData] = useState<challengeSubmission>();
 
   useEffect(() => {
     const fetchChallengeData = async () => {

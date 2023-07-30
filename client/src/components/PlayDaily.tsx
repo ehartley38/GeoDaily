@@ -3,6 +3,9 @@ import { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import { ResultsSummary } from "./ResultsSummary";
+import { challengeSubmission } from "../customTypings/challengeSubmission";
+import { question } from "../customTypings/question";
+import { latLng } from "../customTypings/latLng";
 
 type submitResponseType = {
   distance: number;
@@ -16,18 +19,18 @@ export const PlayDaily = () => {
   const streetviewDivRef = useRef<HTMLDivElement | null>(null);
   const mapDivRef = useRef<HTMLDivElement | null>(null);
   const { currentChallenge } = state;
-  const [challengeSubmission, setChallengeSubmission] = useState<any>(null); //Tidy up type
-  const [questions, setQuestions] = useState<any>(null); //Tidy up type
+  const [challengeSubmission, setChallengeSubmission] =
+    useState<challengeSubmission>();
+  const [questions, setQuestions] = useState<question[] | null>(null);
   const [markerPlaced, setMarkerPlaced] = useState<boolean>(false);
-  const [markerPosition, setMarkerPosition] =
-    useState<null | google.maps.LatLng>(null);
+  const [markerPosition, setMarkerPosition] = useState<latLng | null>(null);
   const [submitResponseData, setSubmitResponseData] =
     useState<submitResponseType>(null);
   // const [isComplete, setIsComplete] = useState<boolean>(false);
 
   useEffect(() => {
     const getSubmissionData = async () => {
-      const submission: any = await axiosPrivate.get(
+      const submission = await axiosPrivate.get(
         "/challenges/current-submission",
         {
           headers: { "Content-Type": "application/json" },
@@ -103,10 +106,7 @@ export const PlayDaily = () => {
             placeMarker(e.latLng, mapInstance);
           });
 
-          const placeMarker = (
-            position: google.maps.LatLng,
-            map: google.maps.Map
-          ) => {
+          const placeMarker = (position: latLng, map: google.maps.Map) => {
             if (marker === null) {
               marker = new loadedGoogle.maps.Marker({
                 position: position,
@@ -149,7 +149,7 @@ export const PlayDaily = () => {
 
   // Handle the transition to the next question in the challenge
   const handleNext = () => {
-    const updatedQuestions = [...questions];
+    const updatedQuestions = [...questions!];
     updatedQuestions.shift();
     setQuestions(updatedQuestions);
     setSubmitResponseData(null);
