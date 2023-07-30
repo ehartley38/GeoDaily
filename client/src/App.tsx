@@ -12,6 +12,7 @@ import { Missing } from "./components/Missing";
 import { AuthType } from "./customTypings/auth";
 import { PlayDaily } from "./components/PlayDaily";
 import { SpecificChallengeSummary } from "./components/SpecificChallengeSummary";
+import { History } from "./components/History";
 
 const App = () => {
   const { auth } = useAuth();
@@ -35,10 +36,13 @@ const App = () => {
                 <Route path="play-daily/:challengeId">
                   <Route index element={<PlayDaily />} />
                 </Route>
-                <Route
-                  path="summary/:challengeId"
-                  element={<SpecificChallengeSummary />}
-                />
+                <Route path="challenge-history">
+                  <Route index element={<History />} />
+                  <Route
+                    path=":challengeId"
+                    element={<SpecificChallengeSummary />}
+                  />
+                </Route>
               </Route>
             </Route>
           </Route>

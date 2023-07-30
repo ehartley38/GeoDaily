@@ -1,11 +1,6 @@
 import { Loader } from "@googlemaps/js-api-loader";
 import { useEffect, useRef } from "react";
 
-type LatLng = {
-  lat: number;
-  lng: number;
-};
-
 type ResultsSummaryProps = {
   distance: number;
   correctPos: {

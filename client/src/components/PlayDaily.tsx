@@ -156,7 +156,7 @@ export const PlayDaily = () => {
   };
 
   const handleSeeSummary = () => {
-    navigate(`/summary/${challengeSubmission!.parentChallengeId}`);
+    navigate(`/challenge-history/${challengeSubmission!.parentChallengeId}`);
   };
 
   return (

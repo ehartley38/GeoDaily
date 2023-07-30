@@ -6,7 +6,7 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient({});
 const challengesRouter = require("express").Router();
 
-// Get the challenge (Hard-code id for now)
+// Get the current challenge (Hard-code id for now)
 challengesRouter.get("/", async (req: customRequest, res: Response) => {
   try {
     const challenge = await prisma.challenge.findUnique({
@@ -44,10 +44,25 @@ challengesRouter.get(
   }
 );
 
-// Get a users submission summary data for all challenges
-challengesRouter.get("/summary");
+// Get a users submission history for all challenges
+challengesRouter.get("/history", async (req: customRequest, res: Response) => {
+  try {
+    const submissionHistory = await prisma.challengeSubmission.findMany({
+      where: {
+        playerId: req.user.id,
+      },
+      include: {
+        parentChallenge: true,
+      },
+    });
 
-// Get a users submission summary data for a specific challenge
+    res.status(200).json(submissionHistory);
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+// Get a users submission history for a specific challenge
 challengesRouter.get(
   "/summary/:challengeId",
   async (req: customRequest, res: Response) => {

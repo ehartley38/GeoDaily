@@ -4,4 +4,9 @@ export type challengeSubmission = {
   parentChallengeId: string;
   playerId: string;
   score: number;
+  parentChallenge?: {
+    id: string;
+    endDate: string;
+    startDate: string;
+  };
 };
