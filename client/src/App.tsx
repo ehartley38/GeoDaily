@@ -13,6 +13,7 @@ import { AuthType } from "./customTypings/auth";
 import { PlayDaily } from "./components/PlayDaily";
 import { SpecificChallengeSummary } from "./components/SpecificChallengeSummary";
 import { History } from "./components/History";
+import { Friends } from "./components/Friends";
 
 const App = () => {
   const { auth } = useAuth();
@@ -43,6 +44,7 @@ const App = () => {
                     element={<SpecificChallengeSummary />}
                   />
                 </Route>
+                <Route path="friends" element={<Friends />} />
               </Route>
             </Route>
           </Route>

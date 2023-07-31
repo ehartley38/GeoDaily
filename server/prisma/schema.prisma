@@ -10,15 +10,30 @@ datasource db {
   url      = "postgresql://postgres:Password1@localhost:5432/dailygeo?schema=public"
 }
 
+// https://stackoverflow.com/questions/65162657/one-to-many-self-relation-in-prisma-schema
+
 model UserAccount {
-  id                   String                @id @default(uuid())
-  email                String                @unique
-  username             String                @unique
-  passwordHash         String
-  refreshToken         String                @default("")
-  roleList             String[]
-  challengeSubmissions ChallengeSubmission[]
-  questionSubmissions  QuestionSubmission[]
+  id                     String                @id @default(uuid())
+  email                  String                @unique
+  username               String                @unique
+  passwordHash           String
+  refreshToken           String                @default("")
+  roleList               String[]
+  challengeSubmissions   ChallengeSubmission[]
+  questionSubmissions    QuestionSubmission[]
+  friends                UserAccount[]         @relation("friends")
+  friendsRelation        UserAccount[]         @relation("friends")
+  sentFriendRequests     FriendRequest[]       @relation("sender")
+  receivedFriendRequests FriendRequest[]       @relation("receiver")
+}
+
+model FriendRequest {
+  id         String      @id @default(uuid())
+  sender     UserAccount @relation("sender", fields: [senderId], references: [id])
+  receiver   UserAccount @relation("receiver", fields: [receiverId], references: [id])
+  senderId   String
+  receiverId String
+  dateSent   DateTime
 }
 
 model Challenge {
