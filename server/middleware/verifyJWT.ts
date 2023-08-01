@@ -23,6 +23,14 @@ const verifyJWT = (req: customRequest, res: Response, next: NextFunction) => {
           where: {
             email: decoded.email,
           },
+          include: {
+            friends: {
+              select: {
+                id: true,
+                username: true,
+              },
+            },
+          },
         });
 
         req.email = decoded.email;

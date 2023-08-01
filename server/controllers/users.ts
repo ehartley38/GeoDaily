@@ -67,6 +67,17 @@ usersRouter.post(
 
     try {
       // Check if friend is already added
+      const isAlreadyFriends = user.friends.find(
+        (user: any) => user.username === body.receiverUsername
+      );
+      if (isAlreadyFriends) {
+        return res
+          .status(400)
+          .json({
+            msg: `You are already friends with the user ${user.username}`,
+          })
+          .end();
+      }
 
       // Check if user is trying to add themselves
       if (user.username === body.receiverUsername) {
