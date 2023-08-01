@@ -181,7 +181,11 @@ usersRouter.post(
         },
       });
 
-      return res.status(200).json({ msg: "Friend request accepted" });
+      return res.status(200).json({
+        msg: "Friend request accepted",
+        senderId: sender.id,
+        senderUsername: sender.username,
+      });
     } catch (err) {
       console.log(err);
     }

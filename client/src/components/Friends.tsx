@@ -1,11 +1,24 @@
 import { useEffect, useState } from "react";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 
+type friendRequestType = {
+  id: string;
+  receiverUsername: string;
+  senderUsername: string;
+};
+
+type friendDataType = {
+  id: string;
+  username: string;
+};
+
 export const Friends = () => {
   const axiosPrivate = useAxiosPrivate();
   const [username, setUsername] = useState<string>();
-  const [friendRequests, setFriendRequests] = useState<any>(); //Tidy up type
-  const [friendData, setFriendData] = useState<any>(); // Tidy up type
+  const [friendRequests, setFriendRequests] = useState<
+    friendRequestType[] | null
+  >();
+  const [friendData, setFriendData] = useState<friendDataType[] | null>();
 
   useEffect(() => {
     const getFriendRequestData = async () => {
@@ -16,6 +29,7 @@ export const Friends = () => {
           withCredentials: true,
         }
       );
+
       setFriendRequests(friendRequests.data);
     };
 
@@ -24,6 +38,7 @@ export const Friends = () => {
         headers: { "Content-Type": "application/json" },
         withCredentials: true,
       });
+
       setFriendData(friendData.data.friends);
     };
 
@@ -42,7 +57,6 @@ export const Friends = () => {
         withCredentials: true,
       }
     );
-    console.log(friendRequestResponse);
   };
 
   const handleAccept = async (requestId: string, senderUsername: string) => {
@@ -55,12 +69,30 @@ export const Friends = () => {
           withCredentials: true,
         }
       );
+
+      // Update friend data state
+      const responseData = acceptFriendResponse.data;
+      let updatedFriendData = friendData?.map((user) => {
+        return user;
+      });
+      updatedFriendData?.push({
+        id: responseData.senderId,
+        username: senderUsername,
+      });
+
+      setFriendData(updatedFriendData);
+
+      // Update friend requests state
+      const updatedFriendRequests = friendRequests?.filter(
+        (request) => request.id !== requestId
+      );
+      setFriendRequests(updatedFriendRequests);
     } catch (err) {
       console.log(err);
     }
   };
 
-  const handleDelete = async (requestId: string) => {
+  const handleReject = async (requestId: string) => {
     try {
       const rejectRequest = await axiosPrivate.post(
         "/users/reject-friend-request",
@@ -70,6 +102,12 @@ export const Friends = () => {
           withCredentials: true,
         }
       );
+
+      // Update friend requests state
+      const updatedFriendRequests = friendRequests?.filter(
+        (request) => request.id !== requestId
+      );
+      setFriendRequests(updatedFriendRequests);
     } catch (err) {
       console.log(err);
     }
@@ -110,7 +148,7 @@ export const Friends = () => {
             >
               Accept
             </button>
-            <button onClick={() => handleDelete(request.id)}>Reject</button>
+            <button onClick={() => handleReject(request.id)}>Reject</button>
           </div>
         ))}
       <h2>Your friends</h2>
