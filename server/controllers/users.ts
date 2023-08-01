@@ -180,6 +180,28 @@ usersRouter.post(
           id: body.requestId,
         },
       });
+
+      return res.status(200).json({ msg: "Friend request accepted" });
+    } catch (err) {
+      console.log(err);
+    }
+  }
+);
+
+usersRouter.post(
+  "/reject-friend-request",
+  async (req: customRequest, res: Response) => {
+    const body = req.body;
+
+    try {
+      // Delete the friend request
+      const deleteRequest = await prisma.friendRequest.delete({
+        where: {
+          id: body.requestId,
+        },
+      });
+
+      return res.status(200).json({ msg: "Friend request rejected" });
     } catch (err) {
       console.log(err);
     }

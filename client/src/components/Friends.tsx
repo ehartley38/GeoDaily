@@ -60,6 +60,21 @@ export const Friends = () => {
     }
   };
 
+  const handleDelete = async (requestId: string) => {
+    try {
+      const rejectRequest = await axiosPrivate.post(
+        "/users/reject-friend-request",
+        { requestId: requestId },
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <>
       <h1>Friends</h1>
@@ -95,7 +110,7 @@ export const Friends = () => {
             >
               Accept
             </button>
-            <button>Reject</button>
+            <button onClick={() => handleDelete(request.id)}>Reject</button>
           </div>
         ))}
       <h2>Your friends</h2>
