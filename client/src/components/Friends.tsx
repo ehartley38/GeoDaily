@@ -25,7 +25,6 @@ export const Friends = () => {
         withCredentials: true,
       });
       setFriendData(friendData.data.friends);
-      console.log(friendData.data.friends);
     };
 
     getFriendRequestData();
@@ -100,6 +99,12 @@ export const Friends = () => {
           </div>
         ))}
       <h2>Your friends</h2>
+      {friendData &&
+        friendData.map((user: any) => (
+          <h3 key={user.id} className="font-bold">
+            {user.username}
+          </h3>
+        ))}
     </>
   );
 };

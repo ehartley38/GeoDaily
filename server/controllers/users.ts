@@ -24,11 +24,18 @@ usersRouter.get(
           email: req.email,
         },
         include: {
-          friends: true,
+          friends: {
+            select: {
+              id: true,
+              username: true,
+            },
+          },
         },
       });
       res.status(200).json(userData).end();
     } catch (err) {
+      console.log(err);
+
       res.status(400).end();
     }
   }
