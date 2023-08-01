@@ -41,6 +41,7 @@ model Challenge {
   endDate              DateTime
   questions            Question[]
   challengeSubmissions ChallengeSubmission[]
+  isActive             Boolean               @default(false)
 }
 
 model ChallengeSubmission {

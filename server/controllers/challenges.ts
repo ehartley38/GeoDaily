@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { customRequest } from "../customTypings/customRequest";
 
 import { PrismaClient } from "@prisma/client";
+import { genLatLngCoords } from "../utils/generateCoords";
 
 const prisma = new PrismaClient({});
 const challengesRouter = require("express").Router();
@@ -114,5 +115,46 @@ challengesRouter.post("/", async (req: customRequest, res: Response) => {
     res.status(400).json(err);
   }
 });
+
+// Create a new daily challenge
+challengesRouter.post(
+  "/create-daily",
+  async (req: customRequest, res: Response) => {
+    const challengeData = {
+      startDate: new Date(),
+      endDate: new Date(Date.now() + 3600 * 1000 * 24),
+      isActive: true,
+      questions: {
+        create: [
+          { correctPos: genLatLngCoords() },
+          { correctPos: genLatLngCoords() },
+          { correctPos: genLatLngCoords() },
+        ],
+      },
+    };
+
+    try {
+      // Set curret challenge isActive to false
+      const updateCurrentChallenge = await prisma.challenge.updateMany({
+        where: {
+          isActive: true,
+        },
+        data: {
+          isActive: false,
+        },
+      });
+
+      // Create new challenge
+      const challenge = await prisma.challenge.create({
+        data: challengeData,
+      });
+
+      res.status(201).json(challenge);
+    } catch (err) {
+      console.log(err);
+      res.status(400).json(err);
+    }
+  }
+);
 
 module.exports = challengesRouter;
