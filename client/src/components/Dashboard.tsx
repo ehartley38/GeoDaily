@@ -4,6 +4,7 @@ import { currentChallenge } from "../customTypings/currentChallenge";
 import { challengeSubmission } from "../customTypings/challengeSubmission";
 import { AxiosResponse } from "axios";
 import { useNavigate } from "react-router-dom";
+import { SignOut } from "./SignOut";
 
 type UserDataType = {
   id: string;
@@ -69,7 +70,8 @@ export const Dashboard = () => {
   return (
     <>
       <h1>Dashboard</h1>
-      {userData?.username}
+      <SignOut />
+      <h2>{userData?.username}</h2>
       <div className="p-2">
         <button
           className="relative rounded px-5 py-2.5 overflow-hidden group bg-green-500 hover:bg-gradient-to-r hover:from-green-500 hover:to-green-400 text-white hover:ring-2 hover:ring-offset-2 hover:ring-green-400 transition-all ease-out duration-300"
