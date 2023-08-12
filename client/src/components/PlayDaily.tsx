@@ -69,6 +69,7 @@ export const PlayDaily = () => {
         fullscreenControl: false,
         showRoadLabels: false,
         zoomControl: false,
+        zoom: 100,
       };
 
       const mapOptions = {
@@ -81,7 +82,6 @@ export const PlayDaily = () => {
         mapTypeControl: false,
         minZoom: 1,
         draggableCursor: "crosshair",
-        radius: 50000,
       };
 
       const loader = new Loader({

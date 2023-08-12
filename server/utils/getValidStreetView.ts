@@ -31,16 +31,20 @@ export const getValidStreetView = async (): Promise<CoordinatesType[]> => {
   try {
     while (true) {
       const coords = await getRandomPoint();
-      const streetViewData = await axios.get(
+      const response = await axios.get(
         `https://maps.googleapis.com/maps/api/streetview/metadata?location=${
           coords!.lat
         },${coords!.lng}&radius=50000&source=outdoor&key=${config.MAPS_API_KEY}`
       );
 
-      if (streetViewData.data.status === "OK") {
-        console.log(streetViewData.data);
+      const streetViewData = response.data;
 
-        return streetViewData.data.location;
+      if (streetViewData.status === "OK") {
+        const year = parseInt(streetViewData.date.substring(0, 4));
+        if (year > 2015) {
+          console.log(streetViewData);
+          return streetViewData.location;
+        }
       }
     }
   } catch (err) {
