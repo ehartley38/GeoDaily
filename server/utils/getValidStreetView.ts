@@ -34,10 +34,12 @@ export const getValidStreetView = async (): Promise<CoordinatesType[]> => {
       const streetViewData = await axios.get(
         `https://maps.googleapis.com/maps/api/streetview/metadata?location=${
           coords!.lat
-        },${coords!.lng}&radius=50000&key=${config.MAPS_API_KEY}`
+        },${coords!.lng}&radius=50000&source=outdoor&key=${config.MAPS_API_KEY}`
       );
 
       if (streetViewData.data.status === "OK") {
+        console.log(streetViewData.data);
+
         return [streetViewData.data.location];
       }
     }
