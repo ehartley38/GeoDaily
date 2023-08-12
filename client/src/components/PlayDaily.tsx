@@ -57,8 +57,8 @@ export const PlayDaily = () => {
 
     if (questions && questions.length > 0) {
       const coords = {
-        lat: questions[0].correctPos[0].lat,
-        lng: questions[0].correctPos[0].lng,
+        lat: questions[0].correctPos.lat,
+        lng: questions[0].correctPos.lng,
       };
 
       const streetViewOptions = {
@@ -182,7 +182,7 @@ export const PlayDaily = () => {
           <ResultsSummary
             distance={submitResponseData!.distance}
             score={submitResponseData!.score}
-            correctPos={questions![0].correctPos[0]}
+            correctPos={questions![0].correctPos}
             markerPos={markerPosition!}
             handleNext={handleNext}
             isComplete={submitResponseData.isComplete}

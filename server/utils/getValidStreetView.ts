@@ -18,8 +18,8 @@ const getRandomPoint = async () => {
       spaces: 4,
     });
 
-    const lat = location.geodata.nearest.latt._text;
-    const lng = location.geodata.nearest.longt._text;
+    const lat = location.geodata.major.latt._text;
+    const lng = location.geodata.major.longt._text;
 
     return { lat: lat, lng: lng };
   } catch (err) {
@@ -40,7 +40,7 @@ export const getValidStreetView = async (): Promise<CoordinatesType[]> => {
       if (streetViewData.data.status === "OK") {
         console.log(streetViewData.data);
 
-        return [streetViewData.data.location];
+        return streetViewData.data.location;
       }
     }
   } catch (err) {

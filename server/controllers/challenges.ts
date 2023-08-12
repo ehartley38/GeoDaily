@@ -23,7 +23,7 @@ challengesRouter.get("/", async (req: customRequest, res: Response) => {
   } catch (err) {}
 });
 
-// Get a users challenge submission for current challenge (hard code ID for now)
+// Get a users challenge submission for current challenge
 challengesRouter.get(
   "/current-submission",
   async (req: customRequest, res: Response) => {
@@ -142,19 +142,6 @@ challengesRouter.post(
         ],
       },
     };
-
-    // const challengeData = {
-    //   startDate: new Date(),
-    //   endDate: new Date(Date.now() + 3600 * 1000 * 24),
-    //   isActive: true,
-    //   questions: {
-    //     create: [
-    //       { correctPos: [ { lat: 33.451281, lng: 49.4602429 } ] },
-    //       { correctPos: [ { lat: 33.451281, lng: 49.4602429 } ] },
-    //       { correctPos: [ { lat: 33.451281, lng: 49.4602429 } ] },
-    //     ],
-    //   },
-    // };
 
     try {
       // Set curret challenge isActive to false

@@ -24,7 +24,7 @@ playRouter.get("/", async (req: customRequest, res: Response) => {
       return res.status(400).json({ msg: "No current challenge found" });
     }
 
-    // Create a challenge submission
+    // Fetch or Create a challenge submission
     let challengeSubmission = null;
     challengeSubmission = await prisma.challengeSubmission.findFirst({
       where: {
@@ -63,7 +63,7 @@ playRouter.post(
     try {
       // Distance in meters
       distance = Math.round(
-        haversine_distance(body.question.correctPos[0], body.markerPosition)
+        haversine_distance(body.question.correctPos, body.markerPosition)
       );
 
       // Calculate the score for the question / 10,000 based on exponential decay
