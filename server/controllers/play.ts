@@ -11,20 +11,24 @@ playRouter.get("/", async (req: customRequest, res: Response) => {
   try {
     // Get the current challenge
     // TODO
-    const currentChallenge = await prisma.challenge.findUnique({
+    const currentChallenge = await prisma.challenge.findFirst({
       where: {
-        id: "e86566c6-a510-48ae-bf62-84bafe5d839c",
+        isActive: true,
       },
       include: {
         questions: true,
       },
     });
 
+    if (!currentChallenge) {
+      return res.status(400).json({ msg: "No current challenge found" });
+    }
+
     // Create a challenge submission
     let challengeSubmission = null;
     challengeSubmission = await prisma.challengeSubmission.findFirst({
       where: {
-        parentChallengeId: "e86566c6-a510-48ae-bf62-84bafe5d839c",
+        parentChallengeId: currentChallenge!.id,
         playerId: req.user.id,
       },
       include: {
@@ -36,7 +40,7 @@ playRouter.get("/", async (req: customRequest, res: Response) => {
       challengeSubmission = await prisma.challengeSubmission.create({
         data: {
           playerId: req.user.id,
-          parentChallengeId: "e86566c6-a510-48ae-bf62-84bafe5d839c",
+          parentChallengeId: currentChallenge!.id,
         },
       });
     }

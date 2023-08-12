@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { customRequest } from "../customTypings/customRequest";
 
 import { PrismaClient } from "@prisma/client";
-import { genLatLngCoords } from "../utils/generateCoords";
+import { getValidStreetView } from "../utils/getValidStreetView";
 
 const prisma = new PrismaClient({});
 const challengesRouter = require("express").Router();
@@ -28,9 +28,19 @@ challengesRouter.get(
   "/current-submission",
   async (req: customRequest, res: Response) => {
     try {
+      const currentChallenge = await prisma.challenge.findFirst({
+        where: {
+          isActive: true,
+        },
+      });
+
+      if (!currentChallenge) {
+        return res.status(400).json({ msg: "No current challenge found" });
+      }
+
       const challengeSubmission = await prisma.challengeSubmission.findFirst({
         where: {
-          parentChallengeId: "e86566c6-a510-48ae-bf62-84bafe5d839c",
+          parentChallengeId: currentChallenge.id,
           playerId: req.user.id,
         },
         include: {
@@ -126,12 +136,25 @@ challengesRouter.post(
       isActive: true,
       questions: {
         create: [
-          { correctPos: genLatLngCoords() },
-          { correctPos: genLatLngCoords() },
-          { correctPos: genLatLngCoords() },
+          { correctPos: await getValidStreetView() },
+          { correctPos: await getValidStreetView() },
+          { correctPos: await getValidStreetView() },
         ],
       },
     };
+
+    // const challengeData = {
+    //   startDate: new Date(),
+    //   endDate: new Date(Date.now() + 3600 * 1000 * 24),
+    //   isActive: true,
+    //   questions: {
+    //     create: [
+    //       { correctPos: [ { lat: 33.451281, lng: 49.4602429 } ] },
+    //       { correctPos: [ { lat: 33.451281, lng: 49.4602429 } ] },
+    //       { correctPos: [ { lat: 33.451281, lng: 49.4602429 } ] },
+    //     ],
+    //   },
+    // };
 
     try {
       // Set curret challenge isActive to false

@@ -81,6 +81,7 @@ export const PlayDaily = () => {
         mapTypeControl: false,
         minZoom: 1,
         draggableCursor: "crosshair",
+        radius: 50000,
       };
 
       const loader = new Loader({
