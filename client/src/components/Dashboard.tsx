@@ -4,7 +4,7 @@ import { currentChallenge } from "../customTypings/currentChallenge";
 import { challengeSubmission } from "../customTypings/challengeSubmission";
 import { AxiosResponse } from "axios";
 import { useNavigate } from "react-router-dom";
-import { SignOut } from "./SignOut";
+import { SignOut } from "./auth/SignOut";
 
 type UserDataType = {
   id: string;

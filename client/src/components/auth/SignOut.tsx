@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import useLogout from "../hooks/useLogout";
+import useLogout from "../../hooks/useLogout";
 
 export const SignOut = () => {
   const navigate = useNavigate();

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import axios from "../services/axios";
+import axios from "../../services/axios";
 import { Link, useNavigate } from "react-router-dom";
 
 export const Register = () => {
@@ -23,7 +23,7 @@ export const Register = () => {
       );
 
       navigate("/");
-    } catch (err) {
+    } catch (err: any) {
       console.log(err.response.data);
     }
   };

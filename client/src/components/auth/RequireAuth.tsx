@@ -1,6 +1,6 @@
 import { Navigate, Outlet, useLocation } from "react-router-dom";
-import useAuth from "../hooks/useAuth";
-import { AuthType } from "../customTypings/auth";
+import useAuth from "../../hooks/useAuth";
+import { AuthType } from "../../customTypings/auth";
 
 type RequireAuthProps = {
   allowedRoles: string[];
