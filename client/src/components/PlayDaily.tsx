@@ -69,7 +69,6 @@ export const PlayDaily = () => {
         fullscreenControl: false,
         showRoadLabels: false,
         zoomControl: false,
-        zoom: 100,
       };
 
       const mapOptions = {

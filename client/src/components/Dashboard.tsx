@@ -5,6 +5,7 @@ import { challengeSubmission } from "../customTypings/challengeSubmission";
 import { AxiosResponse } from "axios";
 import { useNavigate } from "react-router-dom";
 import { SignOut } from "./auth/SignOut";
+import { NavBar } from "./NavBar";
 
 type UserDataType = {
   id: string;
@@ -69,7 +70,8 @@ export const Dashboard = () => {
 
   return (
     <>
-      <h1>Dashboard</h1>
+      <NavBar />
+      {/* <h1>Dashboard</h1>
       <SignOut />
       <h2>{userData?.username}</h2>
       <div className="p-2">
@@ -96,7 +98,7 @@ export const Dashboard = () => {
           <span className="absolute right-0 w-8 h-32 -mt-12 transition-all duration-1000 transform translate-x-12 bg-white opacity-10 rotate-12 group-hover:-translate-x-40 ease"></span>
           <span className="relative">History</span>
         </button>
-      </div>
+      </div> */}
     </>
   );
 };
