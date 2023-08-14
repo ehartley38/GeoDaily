@@ -3,78 +3,6 @@ body {
   padding: 0;
 }
 
-/* .website-title {
-  font-size: 1.5rem;
-  margin: 0.5rem;
-}
-
-.website-title a {
-  text-decoration: none;
-  color: black;
-  display: block;
-}
-
-.navbar ul {
-  margin: 0;
-  padding: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: white;
-}
-
-.navbar li {
-  list-style: none;
-}
-
-.navbar li a {
-  text-decoration: none;
-  color: black;
-  padding: 0.5rem;
-  display: block;
-}
-
-.last-item {
-  margin-left: auto;
-}
-
-.toggle-button {
-  position: absolute;
-  top: 0.75rem;
-  right: 1rem;
-  display: none;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 30px;
-  height: 21px;
-}
-
-.toggle-button .bar {
-  height: 3px;
-  width: 100%;
-  background-color: blue;
-  border-radius: 10px;
-}
-
-@media (max-width: 500px) {
-  .navbar li {
-    width: 100%;
-    text-align: center;
-  }
-  .navbar ul {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .navbar li a {
-    padding: 0.2rem;
-  }
-
-  .last-item {
-    margin: 0;
-  }
-} */
-
 :root {
   --button-border-color: rgba(68, 68, 68, 1);
   --text-border: -1px -1px 0 black, -1px 0px 0 black, -1px 1px 0 black,
@@ -86,7 +14,6 @@ body {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  margin: 1rem;
 }
 
 .user-info {
@@ -107,9 +34,7 @@ body {
   cursor: pointer;
   color: white;
   text-shadow: var(--text-border);
-  padding-inline-start: 0.2rem;
-  padding-inline-end: 0.75rem;
-  padding: 0.1rem 0.1rem;
+  padding: 0.3rem 0.2rem;
   transition: transform 0.3s ease-out;
   border-radius: 3px;
 }

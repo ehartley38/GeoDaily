@@ -76,7 +76,12 @@ export const Dashboard = () => {
 
         <div className="center-content">
           <div className="website-name">DailyGeo</div>
-          <div className="play">Play</div>
+          <div className="play" onClick={handlePlay}>
+            <div className="play-intro">Daily Challenge AVAILABLE</div>
+            <div className="play-challenge-button">Play</div>
+            <div>New challenge generated in:</div>
+            <div>TIME HERE</div>
+          </div>
         </div>
 
         {/* <h1>Dashboard</h1>

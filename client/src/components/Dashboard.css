@@ -13,3 +13,31 @@
   font-size: 3rem;
   margin: 0.5rem;
 }
+
+.play {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.play-challenge-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid black;
+  border-radius: 20px;
+  margin: 0.5rem;
+  width: 100%;
+  height: 3rem;
+  text-align: center;
+  transition: transform 0.2s ease-in-out;
+  cursor: pointer;
+  background-color: rgb(93, 190, 163);
+  color: white;
+  text-shadow: var(--text-border);
+}
+
+.play-challenge-button:hover {
+  transform: scale(1.1);
+}
