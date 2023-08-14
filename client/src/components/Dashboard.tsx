@@ -6,6 +6,7 @@ import { AxiosResponse } from "axios";
 import { useNavigate } from "react-router-dom";
 import { SignOut } from "./auth/SignOut";
 import { NavBar } from "./NavBar";
+import "./Dashboard.css";
 
 type UserDataType = {
   id: string;
@@ -69,9 +70,16 @@ export const Dashboard = () => {
   };
 
   return (
-    <>
-      <NavBar />
-      {/* <h1>Dashboard</h1>
+    userData && (
+      <>
+        <NavBar username={userData.username} />
+
+        <div className="center-content">
+          <div className="website-name">DailyGeo</div>
+          <div className="play">Play</div>
+        </div>
+
+        {/* <h1>Dashboard</h1>
       <SignOut />
       <h2>{userData?.username}</h2>
       <div className="p-2">
@@ -99,6 +107,7 @@ export const Dashboard = () => {
           <span className="relative">History</span>
         </button>
       </div> */}
-    </>
+      </>
+    )
   );
 };
