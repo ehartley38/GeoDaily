@@ -51,7 +51,7 @@ playRouter.get("/", async (req: customRequest, res: Response) => {
   }
 });
 
-// Get time until next challenge available
+// Get time until the next challenge is available
 playRouter.get("/time-remaining", (req: Request, res: Response) => {
   const currentDate = new Date();
 

@@ -26,6 +26,7 @@ type ResponseDataType = {
 export const Dashboard = () => {
   const [userData, setUserData] = useState<UserDataType>();
   const [timeRemaining, setTimeRemaining] = useState<number>();
+  const [isLoading, setIsLoading] = useState(true);
   const axiosPrivate = useAxiosPrivate();
   const navigate = useNavigate();
 
@@ -44,6 +45,7 @@ export const Dashboard = () => {
 
         setUserData(userData.data);
         setTimeRemaining(timeRemaining.data.timeRemaining);
+        setIsLoading(false);
       } catch (err) {
         console.log(err);
       }
@@ -78,30 +80,33 @@ export const Dashboard = () => {
     }
   };
 
+  if (isLoading) {
+    return <div>Loading!</div>;
+  }
+
   return (
-    userData && (
-      <>
-        <NavBar username={userData.username} />
+    <>
+      <NavBar username={userData!.username} />
 
-        <div className="center-content">
-          <div className="website-name">DailyGeo</div>
-          <div className="play">
-            <div className="play-intro">Daily Challenge AVAILABLE</div>
-            <div className="play-challenge-button" onClick={handlePlay}>
-              Play
-            </div>
-            <div>New challenge generated in:</div>
-            {timeRemaining && (
-              <Timer
-                timeRemaining={timeRemaining}
-                setTimeRemaining={setTimeRemaining}
-              />
-            )}
+      <div className="center-content">
+        <div className="website-name">DailyGeo</div>
+        <div className="play">
+          <div className="play-intro">Daily Challenge AVAILABLE</div>
+          <div className="play-challenge-button" onClick={handlePlay}>
+            Play
           </div>
-          <div>CALENDER HERE</div>
+          <div>New challenge generated in:</div>
+          {timeRemaining && (
+            <Timer
+              timeRemaining={timeRemaining}
+              setTimeRemaining={setTimeRemaining}
+            />
+          )}
         </div>
+        <div>CALENDER HERE</div>
+      </div>
 
-        {/* <h1>Dashboard</h1>
+      {/* <h1>Dashboard</h1>
       <SignOut />
       <h2>{userData?.username}</h2>
       <div className="p-2">
@@ -129,7 +134,6 @@ export const Dashboard = () => {
           <span className="relative">History</span>
         </button>
       </div> */}
-      </>
-    )
+    </>
   );
 };

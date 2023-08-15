@@ -6,11 +6,16 @@ type TimerProps = {
 };
 
 export const Timer = ({ timeRemaining, setTimeRemaining }: TimerProps) => {
-  const [hours, sethours] = useState<number>();
-  const [mins, setmins] = useState<number>();
-  const [secs, setsecs] = useState<number>();
+  const [hours, sethours] = useState<number>(
+    Math.floor(timeRemaining / 1000 / 60 / 60)
+  );
+  const [mins, setmins] = useState<number>(
+    Math.floor((timeRemaining / 1000 / 60) % 60)
+  );
+  const [secs, setsecs] = useState<number>(
+    Math.floor((timeRemaining / 1000) % 60)
+  );
 
-  // countdown timer
   useEffect(() => {
     if (timeRemaining < 0) return;
     const intervalId = setInterval(() => {
@@ -24,13 +29,8 @@ export const Timer = ({ timeRemaining, setTimeRemaining }: TimerProps) => {
   }, [timeRemaining]);
 
   return (
-    timeRemaining &&
-    hours &&
-    mins &&
-    secs && (
-      <div>
-        {hours}h {mins}m {secs}s
-      </div>
-    )
+    <div>
+      {hours}h {mins}m {secs}s
+    </div>
   );
 };
