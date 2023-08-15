@@ -55,6 +55,39 @@ challengesRouter.get(
   }
 );
 
+// Check if a user has completed the current challenge (return isComplete)
+challengesRouter.get(
+  "/current-submission/isComplete",
+  async (req: customRequest, res: Response) => {
+    try {
+      const currentChallenge = await prisma.challenge.findFirst({
+        where: {
+          isActive: true,
+        },
+      });
+
+      if (!currentChallenge) {
+        return res.status(400).json({ msg: "No current challenge found" });
+      }
+
+      const challengeSubmission = await prisma.challengeSubmission.findFirst({
+        where: {
+          parentChallengeId: currentChallenge.id,
+          playerId: req.user.id,
+        },
+      });
+
+      if (!challengeSubmission) {
+        return res.status(200).json(false);
+      }
+
+      return res.status(200).json(challengeSubmission?.isComplete);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+);
+
 // Get a users submission history for all challenges
 challengesRouter.get("/history", async (req: customRequest, res: Response) => {
   try {

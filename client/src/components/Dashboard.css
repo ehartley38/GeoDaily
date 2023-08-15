@@ -21,6 +21,7 @@
   align-items: center;
 }
 
+.play-complete-button,
 .play-challenge-button {
   display: flex;
   align-items: center;
@@ -33,13 +34,27 @@
   text-align: center;
   transition: transform 0.2s ease-in-out;
   cursor: pointer;
-  background-color: rgb(93, 190, 163);
   color: white;
   text-shadow: var(--text-border);
 }
 
+.play-complete-button {
+  background-color: orange;
+}
+
+.play-complete-button:hover {
+  transform: scale(1.1);
+}
+
+.play-challenge-button {
+  background-color: rgb(93, 190, 163);
+}
+
 .play-challenge-button:hover {
   transform: scale(1.1);
+}
+
+.play-complete-button {
 }
 
 .streak span {

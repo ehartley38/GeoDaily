@@ -17,8 +17,8 @@ type ResponseDataType = {
 };
 
 export const Dashboard = () => {
-  // const [userData, setUserData] = useState<UserDataType>();
   const [timeRemaining, setTimeRemaining] = useState<number>();
+  const [isComplete, setIsComplete] = useState<boolean>();
   const [isLoading, setIsLoading] = useState(true);
   const axiosPrivate = useAxiosPrivate();
   const navigate = useNavigate();
@@ -27,18 +27,21 @@ export const Dashboard = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // const userData = await axiosPrivate.get("/users/data", {
-        //   headers: { "Content-Type": "application/json" },
-        //   withCredentials: true,
-        // });
-
         const timeRemaining = await axiosPrivate.get("/play/time-remaining", {
           headers: { "Content-Type": "application/json" },
           withCredentials: true,
         });
 
-        // setUserData(userData.data);
+        const isComplete = await axiosPrivate.get(
+          "/challenges/current-submission/isComplete",
+          {
+            headers: { "Content-Type": "application/json" },
+            withCredentials: true,
+          }
+        );
+
         setTimeRemaining(timeRemaining.data.timeRemaining);
+        setIsComplete(isComplete.data);
         setIsLoading(false);
       } catch (err) {
         console.log(err);
@@ -87,11 +90,19 @@ export const Dashboard = () => {
           <div className="website-name">DailyGeo</div>
           <div className="play">
             <div className="play-intro">
-              Daily Challenge <span>AVAILABLE</span>
+              Daily Challenge{" "}
+              {isComplete ? <span>COMPLETE</span> : <span>AVAILABLE</span>}
             </div>
-            <div className="play-challenge-button" onClick={handlePlay}>
-              Play
-            </div>
+            {isComplete ? (
+              <div className="play-complete-button" onClick={handlePlay}>
+                Summary
+              </div>
+            ) : (
+              <div className="play-challenge-button" onClick={handlePlay}>
+                Play
+              </div>
+            )}
+
             <div>New challenge generated in:</div>
             <Timer
               timeRemaining={timeRemaining!}
