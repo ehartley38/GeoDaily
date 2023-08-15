@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import "./navbar.css";
 
 type NavBarProps = {
@@ -5,20 +6,27 @@ type NavBarProps = {
 };
 
 export const NavBar = ({ username }: NavBarProps) => {
+  const navigate = useNavigate();
   return (
     <header className="primary-header">
-      <div className="user-info">Welcome {username}</div>
+      <div className="user-info">
+        <div className="avatar">Avatar</div>
+        <div className="username"> {username}</div>
+      </div>
       <nav className="primary-navigation">
-        <div className="play-button">
+        <div className="play-button" onClick={() => navigate("/")}>
           <a>Play</a>
         </div>
-        <div className="friends-button">
+        <div className="friends-button" onClick={() => navigate("friends")}>
           <a>Friends</a>
         </div>
-        <div className="leaderboards-button">
+        <div className="leaderboards-button" onClick={() => navigate("/")}>
           <a>Leaderboards</a>
         </div>
-        <div className="history-button">
+        <div
+          className="history-button"
+          onClick={() => navigate("challenge-history")}
+        >
           <a>History</a>
         </div>
         <div className="about-button">

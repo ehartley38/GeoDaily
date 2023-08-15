@@ -51,6 +51,20 @@ playRouter.get("/", async (req: customRequest, res: Response) => {
   }
 });
 
+// Get time until next challenge available
+playRouter.get("/time-remaining", (req: Request, res: Response) => {
+  const currentDate = new Date();
+
+  // Set the time to midnight tonight
+  const midnightTonight = new Date();
+  midnightTonight.setHours(24, 0, 0, 0); // Set hours, minutes, seconds, and milliseconds to 0 for midnight
+
+  // Calculate the time remaining in milliseconds
+  const timeRemaining = midnightTonight.getTime() - currentDate.getTime();
+
+  res.status(200).json({ timeRemaining });
+});
+
 // Submit a question in a challenge
 playRouter.post(
   "/submitQuestion",

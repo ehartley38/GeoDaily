@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { SignOut } from "./auth/SignOut";
 import { NavBar } from "./NavBar";
 import "./Dashboard.css";
+import { Timer } from "./Timer";
 
 type UserDataType = {
   id: string;
@@ -24,6 +25,7 @@ type ResponseDataType = {
 
 export const Dashboard = () => {
   const [userData, setUserData] = useState<UserDataType>();
+  const [timeRemaining, setTimeRemaining] = useState<number>();
   const axiosPrivate = useAxiosPrivate();
   const navigate = useNavigate();
 
@@ -34,7 +36,14 @@ export const Dashboard = () => {
           headers: { "Content-Type": "application/json" },
           withCredentials: true,
         });
+
+        const timeRemaining = await axiosPrivate.get("/play/time-remaining", {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        });
+
         setUserData(userData.data);
+        setTimeRemaining(timeRemaining.data.timeRemaining);
       } catch (err) {
         console.log(err);
       }
@@ -76,12 +85,20 @@ export const Dashboard = () => {
 
         <div className="center-content">
           <div className="website-name">DailyGeo</div>
-          <div className="play" onClick={handlePlay}>
+          <div className="play">
             <div className="play-intro">Daily Challenge AVAILABLE</div>
-            <div className="play-challenge-button">Play</div>
+            <div className="play-challenge-button" onClick={handlePlay}>
+              Play
+            </div>
             <div>New challenge generated in:</div>
-            <div>TIME HERE</div>
+            {timeRemaining && (
+              <Timer
+                timeRemaining={timeRemaining}
+                setTimeRemaining={setTimeRemaining}
+              />
+            )}
           </div>
+          <div>CALENDER HERE</div>
         </div>
 
         {/* <h1>Dashboard</h1>

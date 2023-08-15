@@ -18,6 +18,17 @@ body {
 
 .user-info {
   margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+}
+
+.avatar {
+  margin: 0.3rem;
+}
+
+.username {
+  font-weight: 600;
+  font-size: 2rem;
 }
 
 .primary-navigation {
@@ -36,7 +47,8 @@ body {
   text-shadow: var(--text-border);
   padding: 0.3rem 0.2rem;
   transition: transform 0.3s ease-out;
-  border-radius: 3px;
+  border-radius: 4px;
+  font-size: 1.5rem;
 }
 
 .primary-navigation div:hover {
