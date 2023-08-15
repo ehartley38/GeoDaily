@@ -44,7 +44,7 @@ const App = () => {
 
   return (
     <>
-      {authType.accessToken ? <SignOut /> : <></>}
+      {/* {authType.accessToken ? <SignOut /> : <></>} */}
       {/* Navbar */}
       {userData && isNotPlayDailyRoute && (
         <NavBar username={userData?.username} />

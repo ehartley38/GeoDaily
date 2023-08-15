@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import "./navbar.css";
 import IMAGES from "../images/images";
+import useLogout from "../hooks/useLogout";
 
 type NavBarProps = {
   username: string;
@@ -8,6 +9,13 @@ type NavBarProps = {
 
 export const NavBar = ({ username }: NavBarProps) => {
   const navigate = useNavigate();
+  const logout = useLogout();
+
+  const logoutUser = async () => {
+    await logout();
+    navigate("/login");
+  };
+
   return (
     <header className="primary-header">
       <div className="user-info">
@@ -32,8 +40,8 @@ export const NavBar = ({ username }: NavBarProps) => {
         >
           <a>History</a>
         </div>
-        <div className="about-button">
-          <a>About</a>
+        <div className="logout-button" onClick={logoutUser}>
+          <a>Logout</a>
         </div>
       </nav>
     </header>

@@ -100,3 +100,11 @@ body {
 .about-button:hover {
   background-color: rgb(73, 149, 255);
 }
+
+.logout-button {
+  background-color: rgb(252, 10, 10);
+}
+
+.logout-button:hover {
+  background-color: rgb(255, 30, 35);
+}
