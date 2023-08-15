@@ -14,6 +14,7 @@ import { PlayDaily } from "./components/PlayDaily";
 import { SpecificChallengeSummary } from "./components/SpecificChallengeSummary";
 import { History } from "./components/History";
 import { Friends } from "./components/Friends";
+import { NavBar } from "./components/NavBar";
 
 const App = () => {
   const { auth } = useAuth();

@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import "./navbar.css";
+import IMAGES from "../images/images";
 
 type NavBarProps = {
   username: string;
@@ -10,7 +11,9 @@ export const NavBar = ({ username }: NavBarProps) => {
   return (
     <header className="primary-header">
       <div className="user-info">
-        <div className="avatar">Avatar</div>
+        <div className="avatar">
+          <img src={IMAGES.profilePicture} alt="avatar"></img>
+        </div>
         <div className="username"> {username}</div>
       </div>
       <nav className="primary-navigation">
