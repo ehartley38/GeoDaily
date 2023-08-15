@@ -144,6 +144,43 @@ challengesRouter.post(
     };
 
     try {
+      // First, handle any users challengeStreak reset
+      // Get current challenge
+      const currentChallenge = await prisma.challenge.findFirst({
+        where: {
+          isActive: true,
+        },
+      });
+
+      // Retrieve all users with no submissions for the current challenge
+      const usersWithoutSubmissions = await prisma.userAccount.findMany({
+        where: {
+          NOT: {
+            challengeSubmissions: {
+              some: {
+                parentChallengeId: currentChallenge?.id,
+                isComplete: true,
+              },
+            },
+          },
+        },
+      });
+
+      // Update the challengeStreak to 0 for each relevant user
+      const updatePromises = usersWithoutSubmissions.map((user) => {
+        return prisma.userAccount.update({
+          where: {
+            id: user.id,
+          },
+          data: {
+            challengeStreak: 0,
+          },
+        });
+      });
+
+      await Promise.all(updatePromises);
+
+      // Now, handle the creation of the challenge
       // Set curret challenge isActive to false
       const updateCurrentChallenge = await prisma.challenge.updateMany({
         where: {

@@ -29,7 +29,7 @@ export const Timer = ({ timeRemaining, setTimeRemaining }: TimerProps) => {
   }, [timeRemaining]);
 
   return (
-    <div>
+    <div className="timer">
       {hours}h {mins}m {secs}s
     </div>
   );

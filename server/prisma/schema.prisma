@@ -19,6 +19,7 @@ model UserAccount {
   passwordHash           String
   refreshToken           String                @default("")
   roleList               String[]
+  challengeStreak        Int                   @default(0)
   challengeSubmissions   ChallengeSubmission[]
   questionSubmissions    QuestionSubmission[]
   friends                UserAccount[]         @relation("friends")

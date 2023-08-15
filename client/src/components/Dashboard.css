@@ -41,3 +41,7 @@
 .play-challenge-button:hover {
   transform: scale(1.1);
 }
+
+.streak span {
+  font-weight: 600;
+}

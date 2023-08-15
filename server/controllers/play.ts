@@ -153,6 +153,18 @@ playRouter.post(
               totalScore: totalScore,
             },
           });
+
+        // Update the user challengeStreak
+        const updatedUser = await prisma.userAccount.update({
+          where: {
+            id: req.user.id,
+          },
+          data: {
+            challengeStreak: {
+              increment: 1,
+            },
+          },
+        });
       }
     } catch (err) {
       console.log(err);
