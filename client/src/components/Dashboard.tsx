@@ -8,16 +8,8 @@ import { SignOut } from "./auth/SignOut";
 import { NavBar } from "./NavBar";
 import "./Dashboard.css";
 import { Timer } from "./Timer";
-
-type UserDataType = {
-  id: string;
-  email: string;
-  username: string;
-  passwordHash: string;
-  refreshToken: string;
-  roleList: string[];
-  challengeStreak: number;
-};
+import { UserDataType } from "../customTypings/userData";
+import useUserData from "../hooks/useUserData";
 
 type ResponseDataType = {
   currentChallenge: currentChallenge;
@@ -25,26 +17,27 @@ type ResponseDataType = {
 };
 
 export const Dashboard = () => {
-  const [userData, setUserData] = useState<UserDataType>();
+  // const [userData, setUserData] = useState<UserDataType>();
   const [timeRemaining, setTimeRemaining] = useState<number>();
   const [isLoading, setIsLoading] = useState(true);
   const axiosPrivate = useAxiosPrivate();
   const navigate = useNavigate();
+  const { userData } = useUserData();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const userData = await axiosPrivate.get("/users/data", {
-          headers: { "Content-Type": "application/json" },
-          withCredentials: true,
-        });
+        // const userData = await axiosPrivate.get("/users/data", {
+        //   headers: { "Content-Type": "application/json" },
+        //   withCredentials: true,
+        // });
 
         const timeRemaining = await axiosPrivate.get("/play/time-remaining", {
           headers: { "Content-Type": "application/json" },
           withCredentials: true,
         });
 
-        setUserData(userData.data);
+        // setUserData(userData.data);
         setTimeRemaining(timeRemaining.data.timeRemaining);
         setIsLoading(false);
       } catch (err) {
@@ -86,30 +79,31 @@ export const Dashboard = () => {
   }
 
   return (
-    <>
-      <NavBar username={userData!.username} />
+    userData && (
+      <>
+        {/* <NavBar username={userData!.username} /> */}
 
-      <div className="center-content">
-        <div className="website-name">DailyGeo</div>
-        <div className="play">
-          <div className="play-intro">
-            Daily Challenge <span>AVAILABLE</span>
-          </div>
-          <div className="play-challenge-button" onClick={handlePlay}>
-            Play
-          </div>
-          <div>New challenge generated in:</div>
-          <Timer
-            timeRemaining={timeRemaining!}
-            setTimeRemaining={setTimeRemaining}
-          />
-          <div className="streak">
-            Current DailyGeo streak: <span>{userData?.challengeStreak}</span>
+        <div className="center-content">
+          <div className="website-name">DailyGeo</div>
+          <div className="play">
+            <div className="play-intro">
+              Daily Challenge <span>AVAILABLE</span>
+            </div>
+            <div className="play-challenge-button" onClick={handlePlay}>
+              Play
+            </div>
+            <div>New challenge generated in:</div>
+            <Timer
+              timeRemaining={timeRemaining!}
+              setTimeRemaining={setTimeRemaining}
+            />
+            <div className="streak">
+              Current DailyGeo streak: <span>{userData?.challengeStreak}</span>
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* <h1>Dashboard</h1>
+        {/* <h1>Dashboard</h1>
       <SignOut />
       <h2>{userData?.username}</h2>
       <div className="p-2">
@@ -137,6 +131,7 @@ export const Dashboard = () => {
           <span className="relative">History</span>
         </button>
       </div> */}
-    </>
+      </>
+    )
   );
 };
