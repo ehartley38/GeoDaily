@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import "./navbar.css";
 import IMAGES from "../images/images";
 import useLogout from "../hooks/useLogout";
@@ -9,6 +9,7 @@ type NavBarProps = {
 
 export const NavBar = ({ username }: NavBarProps) => {
   const navigate = useNavigate();
+  const location = useLocation();
   const logout = useLogout();
 
   const logoutUser = async () => {
@@ -28,14 +29,26 @@ export const NavBar = ({ username }: NavBarProps) => {
         <div className="play-button" onClick={() => navigate("/")}>
           <a>Play</a>
         </div>
-        <div className="friends-button" onClick={() => navigate("friends")}>
+        <div
+          className={`friends-button ${
+            location.pathname === "/friends" ? "active" : ""
+          }`}
+          onClick={() => navigate("friends")}
+        >
           <a>Friends</a>
         </div>
-        <div className="leaderboards-button" onClick={() => navigate("/")}>
+        <div
+          className={`leaderboards-button ${
+            location.pathname === "/leaderboards" ? "active" : ""
+          }`}
+          onClick={() => navigate("/")}
+        >
           <a>Leaderboards</a>
         </div>
         <div
-          className="history-button"
+          className={`history-button ${
+            location.pathname === "/challenge-history" ? "active" : ""
+          }`}
           onClick={() => navigate("challenge-history")}
         >
           <a>History</a>

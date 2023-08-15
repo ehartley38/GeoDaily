@@ -56,7 +56,11 @@ body {
 }
 
 .primary-navigation div:hover {
-  transform: translate(10px);
+  transform: translate(15px);
+}
+
+.primary-navigation .active {
+  transform: translate(15px);
 }
 
 /* Menu buttons */
