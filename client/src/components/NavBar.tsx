@@ -41,7 +41,7 @@ export const NavBar = ({ username }: NavBarProps) => {
           className={`leaderboards-button ${
             location.pathname === "/leaderboards" ? "active" : ""
           }`}
-          onClick={() => navigate("/")}
+          onClick={() => navigate("/leaderboards")}
         >
           <a>Leaderboards</a>
         </div>

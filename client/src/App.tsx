@@ -18,6 +18,7 @@ import { Friends } from "./components/Friends";
 import { NavBar } from "./components/NavBar";
 import useUserData from "./hooks/useUserData";
 import useAxiosPrivate from "./hooks/useAxiosPrivate";
+import { Leaderboards } from "./components/Leaderboards";
 
 const App = () => {
   const { auth } = useAuth();
@@ -74,6 +75,7 @@ const App = () => {
                   />
                 </Route>
                 <Route path="friends" element={<Friends />} />
+                <Route path="leaderboards" element={<Leaderboards />} />
               </Route>
             </Route>
           </Route>
