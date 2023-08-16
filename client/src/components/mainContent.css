@@ -1,0 +1,30 @@
+.main-container {
+  display: flex;
+  color: hsla(0, 0%, 30%);
+}
+
+.left-div {
+  flex: none;
+  width: auto;
+}
+
+.right-div {
+  flex: auto;
+}
+
+.page-header {
+  width: 100%;
+}
+
+.page-title {
+  font-size: 3rem;
+  font-weight: 600;
+}
+
+.title-bar {
+  background-color: rgb(255, 190, 11);
+  height: 1rem;
+  margin: 0 3rem 0 3rem;
+  border-radius: 0.25rem;
+  border: 2px solid var(--button-border-color);
+}

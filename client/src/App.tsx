@@ -19,10 +19,11 @@ import { NavBar } from "./components/NavBar";
 import useUserData from "./hooks/useUserData";
 import useAxiosPrivate from "./hooks/useAxiosPrivate";
 import { Leaderboards } from "./components/Leaderboards";
+import { MainContent } from "./components/MainContent";
 
 const App = () => {
   const { auth } = useAuth();
-  const { setUserData, userData } = useUserData();
+  const { setUserData } = useUserData();
   const authType = auth as AuthType;
   const axiosPrivate = useAxiosPrivate();
   const location = useLocation();
@@ -48,10 +49,7 @@ const App = () => {
   return (
     <>
       {/* {authType.accessToken ? <SignOut /> : <></>} */}
-      {/* Navbar */}
-      {userData && isNotPlayDailyRoute && (
-        <NavBar username={userData?.username} />
-      )}
+
       <Routes>
         <Route path="/" element={<Layout />}>
           {/* Public routes */}
@@ -61,21 +59,23 @@ const App = () => {
 
           {/* Private routes */}
           <Route element={<PersistLogin />}>
-            <Route element={<RequireAuth allowedRoles={["BASIC"]} />}>
-              <Route path="/">
-                <Route index element={<Dashboard />} />
-                <Route path="play-daily/:challengeId">
-                  <Route index element={<PlayDaily />} />
+            <Route element={<MainContent />}>
+              <Route element={<RequireAuth allowedRoles={["BASIC"]} />}>
+                <Route path="/">
+                  <Route index element={<Dashboard />} />
+                  <Route path="play-daily/:challengeId">
+                    <Route index element={<PlayDaily />} />
+                  </Route>
+                  <Route path="challenge-history">
+                    <Route index element={<History />} />
+                    <Route
+                      path=":challengeId"
+                      element={<SpecificChallengeSummary />}
+                    />
+                  </Route>
+                  <Route path="friends" element={<Friends />} />
+                  <Route path="leaderboards" element={<Leaderboards />} />
                 </Route>
-                <Route path="challenge-history">
-                  <Route index element={<History />} />
-                  <Route
-                    path=":challengeId"
-                    element={<SpecificChallengeSummary />}
-                  />
-                </Route>
-                <Route path="friends" element={<Friends />} />
-                <Route path="leaderboards" element={<Leaderboards />} />
               </Route>
             </Route>
           </Route>
