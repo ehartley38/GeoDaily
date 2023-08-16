@@ -6,6 +6,7 @@ import { ResultsSummary } from "./ResultsSummary";
 import { challengeSubmission } from "../customTypings/challengeSubmission";
 import { question } from "../customTypings/question";
 import { latLng } from "../customTypings/latLng";
+import useUserData from "../hooks/useUserData";
 
 type submitResponseType = {
   distance: number;
@@ -27,6 +28,7 @@ export const PlayDaily = () => {
   const [markerPosition, setMarkerPosition] = useState<latLng | null>(null);
   const [submitResponseData, setSubmitResponseData] =
     useState<submitResponseType>(null);
+  const { userData, setUserData } = useUserData();
   // const [isComplete, setIsComplete] = useState<boolean>(false);
 
   useEffect(() => {
@@ -142,6 +144,14 @@ export const PlayDaily = () => {
           withCredentials: true,
         }
       );
+
+      // If challenge is complete, update the userData challengeStreak state
+      if (submitResponse.data.isComplete) {
+        setUserData({
+          ...userData!,
+          challengeStreak: userData!.challengeStreak + 1,
+        });
+      }
 
       setSubmitResponseData(submitResponse.data);
     } catch (err) {

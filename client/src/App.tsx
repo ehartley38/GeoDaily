@@ -36,7 +36,9 @@ const App = () => {
           withCredentials: true,
         });
         setUserData(userData.data);
-      } catch (err) {}
+      } catch (err) {
+        console.log(err);
+      }
     };
 
     if (authType.accessToken) setUserDataContext();
