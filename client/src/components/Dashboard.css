@@ -1,17 +1,14 @@
-.center-content {
-  position: absolute;
+.dashboard-wrapper {
+  /* position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -70%);
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center; */
+  display: flex;
   align-items: center;
-}
-
-.website-name {
-  font-size: 5rem;
-  margin: 0.5rem;
 }
 
 .play {

@@ -84,10 +84,7 @@ export const Dashboard = () => {
   return (
     userData && (
       <>
-        {/* <NavBar username={userData!.username} /> */}
-
-        <div className="center-content">
-          <div className="website-name">DailyGeo</div>
+        <div className="dashboard-wrapper">
           <div className="play">
             <div className="play-intro">
               Daily Challenge{" "}

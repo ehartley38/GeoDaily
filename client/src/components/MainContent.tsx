@@ -8,13 +8,22 @@ export const MainContent = () => {
 
   return (
     <div className="main-container">
-      <div className="left-div">
-        {/* Navbar */}
-        {userData && <NavBar username={userData?.username} />}
+      <div className="left-content">
+        <div className="nav-bar-wrapper">
+          {/* Navbar */}
+          {userData && <NavBar username={userData?.username} />}
+        </div>
       </div>
-      <div className="right-div">
-        {/* Main page content */}
-        <Outlet />
+      <div className="right-content">
+        <header className="main-header">
+          <div className="website-name">DailyGeo</div>
+        </header>
+        <div className="right-lower-wrapper">
+          <div className="right-lower-content">
+            {/* Main page content */}
+            <Outlet />
+          </div>
+        </div>
       </div>
     </div>
   );
