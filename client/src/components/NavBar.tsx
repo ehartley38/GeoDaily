@@ -18,46 +18,43 @@ export const NavBar = ({ username }: NavBarProps) => {
   };
 
   return (
-    <header className="primary-header">
-      <div className="user-info">
-        <div className="avatar">
-          <img src={IMAGES.profilePicture} alt="avatar"></img>
-        </div>
-        <div className="username"> {username}</div>
+    // <header className="primary-header">
+    <nav className="primary-navigation">
+      <div
+        className={`play-button ${location.pathname === "/" ? "active" : ""}`}
+        onClick={() => navigate("/")}
+      >
+        <a>Play</a>
       </div>
-      <nav className="primary-navigation">
-        <div className="play-button" onClick={() => navigate("/")}>
-          <a>Play</a>
-        </div>
-        <div
-          className={`friends-button ${
-            location.pathname === "/friends" ? "active" : ""
-          }`}
-          onClick={() => navigate("friends")}
-        >
-          <a>Friends</a>
-        </div>
-        <div
-          className={`leaderboards-button ${
-            location.pathname === "/leaderboards" ? "active" : ""
-          }`}
-          onClick={() => navigate("/leaderboards")}
-        >
-          <a>Leaderboards</a>
-        </div>
-        <div
-          className={`history-button ${
-            location.pathname === "/challenge-history" ? "active" : ""
-          }`}
-          onClick={() => navigate("challenge-history")}
-        >
-          <a>History</a>
-        </div>
-        <div className="logout-button" onClick={logoutUser}>
-          <a>Logout</a>
-        </div>
-      </nav>
-    </header>
+      <div
+        className={`friends-button ${
+          location.pathname === "/friends" ? "active" : ""
+        }`}
+        onClick={() => navigate("friends")}
+      >
+        <a>Friends</a>
+      </div>
+      <div
+        className={`leaderboards-button ${
+          location.pathname === "/leaderboards" ? "active" : ""
+        }`}
+        onClick={() => navigate("/leaderboards")}
+      >
+        <a>Leaderboards</a>
+      </div>
+      <div
+        className={`history-button ${
+          location.pathname === "/challenge-history" ? "active" : ""
+        }`}
+        onClick={() => navigate("challenge-history")}
+      >
+        <a>History</a>
+      </div>
+      <div className="logout-button" onClick={logoutUser}>
+        <a>Logout</a>
+      </div>
+    </nav>
+    // </header>
   );
 };
 

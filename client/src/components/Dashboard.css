@@ -1,14 +1,14 @@
 .dashboard-wrapper {
-  /* position: absolute;
+  position: absolute;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -70%);
+  transform: translate(-50%, -50%);
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center; */
-  display: flex;
   align-items: center;
+  /* display: flex;
+  align-items: center; */
 }
 
 .play {
@@ -44,7 +44,7 @@
 }
 
 .play-challenge-button {
-  background-color: rgb(93, 190, 163);
+  background-color: #79c819;
 }
 
 .play-challenge-button:hover {
