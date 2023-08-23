@@ -1,6 +1,7 @@
 .main-container {
   min-height: 100vh;
   background-image: url("../images/cubes.png");
+  /* background-image: url("../images/inflicted.png"); */
 }
 
 .main-header {
@@ -11,9 +12,14 @@
   margin: 0 0.5rem 0.5rem 0.5rem;
 }
 
+.logo {
+  width: 10rem;
+}
+
 .website-name {
   font-size: 3rem;
   margin: 0.5rem;
+  font-weight: 800;
 }
 
 .user-info {
