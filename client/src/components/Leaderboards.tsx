@@ -6,8 +6,8 @@ export const Leaderboards = () => {
       <div className="leaderboard-card-wrapper">
         <div className="leaderboard-settings">
           <div className="timeframe-wrapper">
-            <div className="timeframe-upper"></div>
-            <div className="timeframe-lower"></div>
+            <div className="timeframe-upper">All Time</div>
+            <div className="timeframe-lower">Current Month</div>
           </div>
           <div className="leaderboard-type">
             <div>Top Daily</div>
