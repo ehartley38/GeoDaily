@@ -1,40 +1,72 @@
 .leaderboards-page {
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  text-align: center;
 }
 
-.leaderboard-cards {
+.leaderboard-card-wrapper {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  flex-direction: column;
+  height: 80%;
+  width: 80%;
+  gap: 0.4rem;
+}
+
+.leaderboard-settings {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.leaderboard-type {
+  display: flex;
+  gap: 0.7rem;
+  align-items: end;
+}
+
+.timeframe-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 20%;
+}
+
+.timeframe-upper {
+  border: 1px solid black;
+  height: 2rem;
+}
+
+.timeframe-lower {
+  border: 1px solid black;
+  height: 2rem;
+}
+
+.leaderboard-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .leaderboard-card-outer {
-  padding: 1rem;
-  margin: 3rem 1rem 1rem 0;
-  width: 290px;
-  height: 390px;
+  /* width: 70%; */
 }
 
 .leaderboard-card-inner-upper {
   display: flex;
-  background-color: aqua;
+  background-color: white;
   width: 100%;
   height: 4rem;
   border: 1px solid black;
-  border-top-left-radius: 1.5rem;
-  border-top-right-radius: 1.5rem;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
 }
 
 .leaderboard-card-inner-lower {
   background-color: white;
   width: 100%;
-  height: 18rem;
+  height: 100%;
   border: 1px solid black;
   border-top-width: 0;
-  border-bottom-left-radius: 1.5rem;
-  border-bottom-right-radius: 1.5rem;
+  border-bottom-left-radius: 1rem;
+  border-bottom-right-radius: 1rem;
 }

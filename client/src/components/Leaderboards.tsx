@@ -3,20 +3,20 @@ import "./leaderboards.css";
 export const Leaderboards = () => {
   return (
     <div className="leaderboards-page">
-      <div className="page-header">
-        <div className="page-title">Leaderboards</div>
-        <div className="title-bar"></div>
-      </div>
-      <div className="leaderboard-cards">
-        <div className="leaderboard-card-outer daily-score">
-          <div className="leaderboard-card-inner-upper"></div>
-          <div className="leaderboard-card-inner-lower"></div>
+      <div className="leaderboard-card-wrapper">
+        <div className="leaderboard-settings">
+          <div className="timeframe-wrapper">
+            <div className="timeframe-upper"></div>
+            <div className="timeframe-lower"></div>
+          </div>
+          <div className="leaderboard-type">
+            <div>Top Daily</div>
+            <div>Total Score</div>
+            <div>Highest Streak</div>
+          </div>
         </div>
-        <div className="leaderboard-card-outer daily-score">
-          <div className="leaderboard-card-inner-upper"></div>
-          <div className="leaderboard-card-inner-lower"></div>
-        </div>
-        <div className="leaderboard-card-outer daily-score">
+
+        <div className="leaderboard-card">
           <div className="leaderboard-card-inner-upper"></div>
           <div className="leaderboard-card-inner-lower"></div>
         </div>
