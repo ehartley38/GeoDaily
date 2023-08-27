@@ -22,7 +22,27 @@ export const Leaderboards = () => {
       withCredentials: true,
     });
     setLeaderboardData(res.data.testData);
-    setSelectedType("top-daily");
+    setSelectedType("topDaily");
+  };
+
+  const getTotalScoreAllTime = async () => {
+    const res = await axiosPrivate.get("/leaderboards/total-score/all-time", {
+      headers: { "Content-Type": "application/json" },
+      withCredentials: true,
+    });
+    setLeaderboardData(res.data.totalScoreAllTime);
+    setSelectedType("totalScore");
+    console.log(res.data.totalScoreAllTime);
+  };
+
+  const getHighestStreak = async () => {
+    const res = await axiosPrivate.get("/leaderboards/highest-streak", {
+      headers: { "Content-Type": "application/json" },
+      withCredentials: true,
+    });
+
+    setLeaderboardData(res.data.highestStreak);
+    setSelectedType("highestStreak");
   };
 
   return (
@@ -35,13 +55,25 @@ export const Leaderboards = () => {
           </div>
           <div className="leaderboard-type">
             <a
-              className={`${selectedType === "top-daily" ? "selected" : ""}`}
+              className={`${selectedType === "topDaily" ? "selected" : ""}`}
               onClick={getTopDaily}
             >
               Top Daily
             </a>
-            <a>Total Score</a>
-            <a>Highest Streak</a>
+            <a
+              className={`${selectedType === "totalScore" ? "selected" : ""}`}
+              onClick={getTotalScoreAllTime}
+            >
+              Total Score
+            </a>
+            <a
+              className={`${
+                selectedType === "highestStreak" ? "selected" : ""
+              }`}
+              onClick={getHighestStreak}
+            >
+              Highest Streak
+            </a>
           </div>
         </div>
 
@@ -49,13 +81,13 @@ export const Leaderboards = () => {
           <div className="leaderboard-card-inner-upper"></div>
           <div className="leaderboard-card-inner-lower">
             <div className="leaderboard-data">
-              {leaderboardData &&
+              {/* {leaderboardData &&
                 leaderboardData.map((submission, i) => (
                   <div className="submission" key={i}>
                     <div>{`${i + 1} ${submission.player.username}`}</div>
                     <div>{submission.totalScore}</div>
                   </div>
-                ))}
+                ))} */}
             </div>
           </div>
         </div>
