@@ -11,12 +11,13 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 60px;
+  height: 80px;
   margin: 0 0.5rem 0.5rem 0.5rem;
 }
 
 .logo {
   width: 10rem;
+  margin: 2.5rem 0 0 0;
 }
 
 .website-name {
