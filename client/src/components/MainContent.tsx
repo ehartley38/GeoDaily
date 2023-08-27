@@ -12,13 +12,11 @@ export const MainContent = () => {
       <header className="main-header">
         <img className="logo" src={IMAGES.logo}></img>
         {/* <div className="website-name">DailyGeo</div> */}
-        <div className="user-info-wrapper">
-          <div className="user-info">
-            <div className="avatar">
-              <img src={IMAGES.profilePicture} alt="avatar"></img>
-            </div>
-            <div className="username"> {userData?.username}</div>
+        <div className="user-info">
+          <div className="avatar">
+            <img src={IMAGES.profilePicture} alt="avatar"></img>
           </div>
+          <div className="username"> {userData?.username}</div>
         </div>
       </header>
       <div className="lower-content">

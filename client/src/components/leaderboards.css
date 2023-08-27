@@ -3,13 +3,13 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .leaderboard-card-wrapper {
   display: flex;
   flex-direction: column;
-  height: 80%;
+  height: 90%;
   width: 80%;
   gap: 0.4rem;
 }
@@ -22,7 +22,15 @@
 .leaderboard-type {
   display: flex;
   gap: 0.7rem;
-  align-items: end;
+  align-items: flex-end;
+}
+
+.leaderboard-type a {
+  cursor: pointer;
+}
+
+.selected {
+  font-weight: 600;
 }
 
 .timeframe-wrapper {
@@ -55,6 +63,7 @@
   display: flex;
   flex-direction: column;
   height: 100%;
+  overflow: hidden;
 }
 
 .leaderboard-card-outer {
@@ -74,9 +83,21 @@
 .leaderboard-card-inner-lower {
   background-color: white;
   width: 100%;
-  height: 100%;
+  height: 60vh;
   border: 1px solid black;
   border-top-width: 0;
   border-bottom-left-radius: 0.5rem;
   border-bottom-right-radius: 0.5rem;
+  padding: 1rem;
+  overflow: auto;
+}
+
+.leaderboard-data {
+  height: 100%;
+  /* overflow: auto; */
+}
+
+.submission {
+  display: flex;
+  justify-content: space-between;
 }
