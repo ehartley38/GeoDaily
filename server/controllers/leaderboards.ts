@@ -28,7 +28,9 @@ leaderboardsRouter.get(
         orderBy: {
           totalScore: "desc",
         },
-        include: {
+        select: {
+          playerId: true,
+          totalScore: true,
           player: {
             select: {
               username: true,
@@ -37,13 +39,13 @@ leaderboardsRouter.get(
         },
       });
 
-      const testData = [];
-      for (let i = 0; i < 50; i++) {
-        testData.push(...topDaily);
-      }
+      // const testData = [];
+      // for (let i = 0; i < 50; i++) {
+      //   testData.push(...topDaily);
+      // }
 
-      //   res.status(200).json({ topDaily });
-      res.status(200).json({ testData });
+      res.status(200).json({ topDaily });
+      // res.status(200).json({ testData });
     } catch (err) {
       console.log(err);
     }
@@ -56,6 +58,11 @@ leaderboardsRouter.get(
   async (req: Request, res: Response) => {
     try {
       const highestStreak = await prisma.userAccount.findMany({
+        select: {
+          id: true,
+          username: true,
+          challengeStreak: true,
+        },
         orderBy: {
           challengeStreak: "desc",
         },

@@ -2,7 +2,7 @@ import { useState } from "react";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import "./leaderboards.css";
 
-type LeaderboardDataType = {
+type TopDailyType = {
   playerId: string;
   player: {
     username: string;
@@ -10,13 +10,29 @@ type LeaderboardDataType = {
   totalScore: number;
 };
 
+type HighestStreakType = {
+  id: string;
+  username: string;
+  challengeStreak: number;
+};
+
+type TotalScoreType = {
+  id: string;
+  username: string;
+  totalScoreSum: number;
+};
+
 type LeaderboardType = "topDaily" | "totalScore" | "highestStreak";
 type TimeframeType = "monthly" | "allTime" | "";
 
 export const Leaderboards = () => {
   const axiosPrivate = useAxiosPrivate();
-  const [leaderboardData, setLeaderboardData] =
-    useState<LeaderboardDataType[]>();
+
+  const [topDailyData, setTopDailyData] = useState<TopDailyType[]>();
+  const [highestStreakData, setHighestStreakData] =
+    useState<HighestStreakType[]>();
+  const [totalScoreData, setTotalScoreData] = useState<TotalScoreType[]>();
+
   const [selectedType, setSelectedType] = useState<LeaderboardType>("topDaily");
   const [selectedTimeframe, setSelectedTimeframe] = useState<TimeframeType>("");
 
@@ -25,27 +41,8 @@ export const Leaderboards = () => {
       headers: { "Content-Type": "application/json" },
       withCredentials: true,
     });
-    console.log("Top daily");
-    setLeaderboardData(res.data.testData);
-  };
 
-  const getTotalScoreMonthly = async () => {
-    const res = await axiosPrivate.get("/leaderboards/total-score/monthly", {
-      headers: { "Content-Type": "application/json" },
-      withCredentials: true,
-    });
-    console.log("Total score monthly");
-    setLeaderboardData(res.data.totalScoreMonthly);
-  };
-
-  const getTotalScoreAllTime = async () => {
-    const res = await axiosPrivate.get("/leaderboards/total-score/all-time", {
-      headers: { "Content-Type": "application/json" },
-      withCredentials: true,
-    });
-    console.log("Total score all time");
-
-    setLeaderboardData(res.data.totalScoreAllTime);
+    setTopDailyData(res.data.topDaily);
   };
 
   const getHighestStreak = async () => {
@@ -54,10 +51,25 @@ export const Leaderboards = () => {
       withCredentials: true,
     });
 
-    console.log("Highest streak");
-    console.log(res.data.highestStreak);
+    setHighestStreakData(res.data.highestStreak);
+  };
 
-    setLeaderboardData(res.data.highestStreak);
+  const getTotalScoreMonthly = async () => {
+    const res = await axiosPrivate.get("/leaderboards/total-score/monthly", {
+      headers: { "Content-Type": "application/json" },
+      withCredentials: true,
+    });
+
+    setTotalScoreData(res.data.totalScoreMonthly);
+  };
+
+  const getTotalScoreAllTime = async () => {
+    const res = await axiosPrivate.get("/leaderboards/total-score/all-time", {
+      headers: { "Content-Type": "application/json" },
+      withCredentials: true,
+    });
+
+    setTotalScoreData(res.data.totalScoreAllTime);
   };
 
   // Check what leaderboard data to fetch
@@ -134,16 +146,80 @@ export const Leaderboards = () => {
         </div>
 
         <div className="leaderboard-card">
-          <div className="leaderboard-card-inner-upper"></div>
+          <div className="leaderboard-card-inner-upper">
+            {selectedType === "topDaily" ? (
+              <div>Today's Top Scores</div>
+            ) : (
+              <></>
+            )}
+            {selectedType === "highestStreak" ? (
+              <div>Highest GeoDaily Streak</div>
+            ) : (
+              <></>
+            )}
+
+            {selectedType === "totalScore" &&
+            selectedTimeframe === "monthly" ? (
+              <div>Largest Total Score - Monthly</div>
+            ) : (
+              <></>
+            )}
+            {selectedType === "totalScore" &&
+            selectedTimeframe === "allTime" ? (
+              <div>Largest Total Score - All Time</div>
+            ) : (
+              <></>
+            )}
+          </div>
           <div className="leaderboard-card-inner-lower">
             <div className="leaderboard-data">
-              {/* {leaderboardData &&
-                leaderboardData.map((submission, i) => (
+              {topDailyData && selectedType === "topDaily" ? (
+                topDailyData.map((submission, i) => (
                   <div className="submission" key={i}>
                     <div>{`${i + 1} ${submission.player.username}`}</div>
                     <div>{submission.totalScore}</div>
                   </div>
-                ))} */}
+                ))
+              ) : (
+                <></>
+              )}
+
+              {highestStreakData && selectedType === "highestStreak" ? (
+                highestStreakData.map((user, i) => (
+                  <div className="submission" key={i}>
+                    <div>{`${i + 1} ${user.username}`}</div>
+                    <div>{user.challengeStreak}</div>
+                  </div>
+                ))
+              ) : (
+                <></>
+              )}
+
+              {totalScoreData &&
+              selectedType === "totalScore" &&
+              selectedTimeframe === "allTime" ? (
+                totalScoreData.map((user, i) => (
+                  <div className="submission" key={i}>
+                    <div>{`${i + 1} ${user.username}`}</div>
+                    <div>{user.totalScoreSum}</div>
+                  </div>
+                ))
+              ) : (
+                <></>
+              )}
+
+              {totalScoreData &&
+              selectedType === "totalScore" &&
+              selectedTimeframe === "monthly" ? (
+                totalScoreData.map((user, i) => (
+                  <div className="submission" key={i}>
+                    <div>{`${i + 1} ${user.username}`}</div>
+                    <div>{user.totalScoreSum}</div>
+                  </div>
+                ))
+              ) : (
+                <></>
+              )}
             </div>
           </div>
         </div>
