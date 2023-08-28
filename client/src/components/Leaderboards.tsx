@@ -83,24 +83,32 @@ export const Leaderboards = () => {
     <div className="leaderboards-page">
       <div className="leaderboard-card-wrapper">
         <div className="leaderboard-settings">
-          <div className="timeframe-wrapper">
-            <div
-              className={`timeframe-upper ${
-                selectedTimeframe === "allTime" ? "selected" : ""
-              }`}
-              onClick={() => leaderboardRouter(selectedType, "allTime")}
-            >
-              All Time
+          {selectedType === "topDaily" || selectedType === "highestStreak" ? (
+            <div className="timeframe-not-allowed-wrapper">
+              <div className="timeframe-upper">All Time</div>
+              <div className="timeframe-lower">Current Month</div>
             </div>
-            <div
-              className={`timeframe-lower ${
-                selectedTimeframe === "monthly" ? "selected" : ""
-              }`}
-              onClick={() => leaderboardRouter(selectedType, "monthly")}
-            >
-              Current Month
+          ) : (
+            <div className="timeframe-wrapper">
+              <div
+                className={`timeframe-upper ${
+                  selectedTimeframe === "allTime" ? "selected" : ""
+                }`}
+                onClick={() => leaderboardRouter(selectedType, "allTime")}
+              >
+                All Time
+              </div>
+              <div
+                className={`timeframe-lower ${
+                  selectedTimeframe === "monthly" ? "selected" : ""
+                }`}
+                onClick={() => leaderboardRouter(selectedType, "monthly")}
+              >
+                Current Month
+              </div>
             </div>
-          </div>
+          )}
+
           <div className="leaderboard-type">
             <a
               className={`${selectedType === "topDaily" ? "selected" : ""}`}

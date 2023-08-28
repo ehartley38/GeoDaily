@@ -33,10 +33,18 @@
   font-weight: 600;
 }
 
+.timeframe-not-allowed-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 20%;
+  cursor: not-allowed;
+}
+
 .timeframe-wrapper {
   display: flex;
   flex-direction: column;
   width: 20%;
+  cursor: pointer;
 }
 
 .timeframe-upper {
@@ -47,7 +55,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
 }
 
 .timeframe-lower {
@@ -58,7 +65,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
 }
 
 .leaderboard-card {
