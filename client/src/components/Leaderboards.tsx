@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import "./leaderboards.css";
 
@@ -27,14 +27,16 @@ type TimeframeType = "monthly" | "allTime" | "";
 
 export const Leaderboards = () => {
   const axiosPrivate = useAxiosPrivate();
-
   const [topDailyData, setTopDailyData] = useState<TopDailyType[]>();
   const [highestStreakData, setHighestStreakData] =
     useState<HighestStreakType[]>();
   const [totalScoreData, setTotalScoreData] = useState<TotalScoreType[]>();
-
   const [selectedType, setSelectedType] = useState<LeaderboardType>("topDaily");
   const [selectedTimeframe, setSelectedTimeframe] = useState<TimeframeType>("");
+
+  useEffect(() => {
+    getTopDaily();
+  }, []);
 
   const getTopDaily = async () => {
     const res = await axiosPrivate.get("/leaderboards/top-daily", {
@@ -97,27 +99,27 @@ export const Leaderboards = () => {
         <div className="leaderboard-settings">
           {selectedType === "topDaily" || selectedType === "highestStreak" ? (
             <div className="timeframe-not-allowed-wrapper">
-              <div className="timeframe-upper">All Time</div>
-              <div className="timeframe-lower">Current Month</div>
+              <a className="timeframe-upper">All Time</a>
+              <a className="timeframe-lower">Current Month</a>
             </div>
           ) : (
             <div className="timeframe-wrapper">
-              <div
+              <a
                 className={`timeframe-upper ${
-                  selectedTimeframe === "allTime" ? "selected" : ""
+                  selectedTimeframe === "allTime" ? "selected-timeframe" : ""
                 }`}
                 onClick={() => leaderboardRouter(selectedType, "allTime")}
               >
                 All Time
-              </div>
-              <div
+              </a>
+              <a
                 className={`timeframe-lower ${
-                  selectedTimeframe === "monthly" ? "selected" : ""
+                  selectedTimeframe === "monthly" ? "selected-timeframe" : ""
                 }`}
                 onClick={() => leaderboardRouter(selectedType, "monthly")}
               >
                 Current Month
-              </div>
+              </a>
             </div>
           )}
 
