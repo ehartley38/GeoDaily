@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
+import "./friends.css";
+import IMAGES from "../images/images";
 
 type friendRequestType = {
   id: string;
@@ -44,6 +46,7 @@ export const Friends = () => {
 
     getFriendRequestData();
     getFriendData();
+    console.log(friendRequests);
   }, []);
 
   const handleSubmit = async (e: any) => {
@@ -114,50 +117,78 @@ export const Friends = () => {
   };
 
   return (
-    <>
-      <h1>Friends</h1>
-      <h2>Add new friend</h2>
-      <form onSubmit={handleSubmit}>
-        <label
-          className="block text-gray-700 text-sm font-bold mb-2"
-          htmlFor="username"
-        >
-          Username
-        </label>
-        <input
-          className="shadow appearance-none border rounded py-2 px-3 text-gray-700"
-          id="username"
-          type="text"
-          placeholder="Username"
-          onChange={({ target }) => setUsername(target.value)}
-        />
-        <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-          type="submit"
-        >
-          Send invite
-        </button>
-      </form>
-      <h2>Your invitations</h2>
-      {friendRequests &&
-        friendRequests.map((request: any) => (
-          <div key={request.id} className="bg-slate-400 my-2">
-            <h2>From: {request.senderUsername}</h2>
-            <button
-              onClick={() => handleAccept(request.id, request.senderUsername)}
-            >
-              Accept
-            </button>
-            <button onClick={() => handleReject(request.id)}>Reject</button>
+    <div className="friends-page">
+      <div className="friends-card-wrapper">
+        <div className="friends-card">
+          <div className="friends-card-inner-upper">
+            <div>Your Friends</div>
+            <div>Add a friend</div>
           </div>
-        ))}
-      <h2>Your friends</h2>
-      {friendData &&
-        friendData.map((user: any) => (
-          <h3 key={user.id} className="font-bold">
-            {user.username}
-          </h3>
-        ))}
-    </>
+          <div className="friends-card-inner-lower">
+            <div className="friends-card-data">
+              {friendData &&
+                friendData.map((user: any) => (
+                  <div key={user.id} className="friend">
+                    <img src={IMAGES.profilePicture} alt="avatar"></img>
+                    <div>{user.username}</div>
+                  </div>
+                ))}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="recommended-friends-card-wrapper">
+        <div className="friends-card">
+          <div className="friends-card-inner-upper">Friend Requests</div>
+          <div className="friends-card-inner-lower">
+            <div className="friends-card-data">
+              {friendRequests &&
+                friendRequests.map((request: any) => (
+                  <div key={request.id} className="bg-slate-400 ">
+                    <h2>From: {request.senderUsername}</h2>
+                    <button
+                      onClick={() =>
+                        handleAccept(request.id, request.senderUsername)
+                      }
+                    >
+                      Accept
+                    </button>
+                    <button onClick={() => handleReject(request.id)}>
+                      Reject
+                    </button>
+                  </div>
+                ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    // <>
+    //   <h1>Friends</h1>
+    //   <h2>Add new friend</h2>
+    //   <form onSubmit={handleSubmit}>
+    //     <label
+    //       className="block text-gray-700 text-sm font-bold mb-2"
+    //       htmlFor="username"
+    //     >
+    //       Username
+    //     </label>
+    //     <input
+    //       className="shadow appearance-none border rounded py-2 px-3 text-gray-700"
+    //       id="username"
+    //       type="text"
+    //       placeholder="Username"
+    //       onChange={({ target }) => setUsername(target.value)}
+    //     />
+    //     <button
+    //       className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+    //       type="submit"
+    //     >
+    //       Send invite
+    //     </button>
+    //   </form>
+    //   <h2>Your invitations</h2>
+
+    // </>
   );
 };
