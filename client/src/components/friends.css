@@ -34,6 +34,28 @@
   padding: 0 1rem 0 1rem;
 }
 
+.add-friend-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: #79c819;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.add-friend-button:hover {
+  background-color: rgb(140, 219, 44);
+}
+
+.add-friend-icon {
+  background-image: url("../images/add_friends_icon.png");
+  height: 1.5rem;
+  filter: invert(100%);
+}
+
 .friends-card-inner-lower {
   background-color: white;
   width: 100%;

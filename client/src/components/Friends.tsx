@@ -122,7 +122,13 @@ export const Friends = () => {
         <div className="friends-card">
           <div className="friends-card-inner-upper">
             <div>Your Friends</div>
-            <div>Add a friend</div>
+            <div className="add-friend-button">
+              <img
+                src={IMAGES.addFriendsIcon}
+                className="add-friend-icon"
+              ></img>
+              <span>Add a friend</span>
+            </div>
           </div>
           <div className="friends-card-inner-lower">
             <div className="friends-card-data">
