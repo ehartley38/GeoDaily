@@ -114,6 +114,19 @@ usersRouter.post(
         });
       }
 
+      // Check if recepient has already sent a friend request
+      const checkAlreadySent = await prisma.friendRequest.findFirst({
+        where: {
+          senderUsername: body.receiverUsername,
+          receiverUsername: user.username,
+        },
+      });
+      if (checkAlreadySent) {
+        return res.status(400).json({
+          msg: `User: ${body.receiverUsername} has already sent you a request! Check your friend requests.`,
+        });
+      }
+
       // Send friend request
       const friendRequest = await prisma.friendRequest.create({
         data: {
