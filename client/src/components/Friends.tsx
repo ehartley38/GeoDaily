@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import "./friends.css";
 import IMAGES from "../images/images";
+import axios, { AxiosError } from "axios";
 
 type friendRequestType = {
   id: string;
@@ -16,11 +17,15 @@ type friendDataType = {
 
 export const Friends = () => {
   const axiosPrivate = useAxiosPrivate();
-  const [username, setUsername] = useState<string>();
+  const [username, setUsername] = useState<string>("");
   const [friendRequests, setFriendRequests] = useState<
     friendRequestType[] | null
   >();
   const [friendData, setFriendData] = useState<friendDataType[] | null>();
+  const [showPopup, setShowPopup] = useState<boolean>(false);
+  const [friendRequestResMsg, setFriendRequestResMsg] = useState<string>("");
+  const [friendRequestResMsgErr, setFriendRequestResMsgErr] =
+    useState<string>("");
 
   useEffect(() => {
     const getFriendRequestData = async () => {
@@ -46,20 +51,29 @@ export const Friends = () => {
 
     getFriendRequestData();
     getFriendData();
-    console.log(friendRequests);
   }, []);
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
+    setFriendRequestResMsg("");
+    try {
+      const friendRequestResponse = await axiosPrivate.post(
+        "/users/send-friend-request",
+        { receiverUsername: username },
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      );
 
-    const friendRequestResponse = await axiosPrivate.post(
-      "/users/send-friend-request",
-      { receiverUsername: username },
-      {
-        headers: { "Content-Type": "application/json" },
-        withCredentials: true,
+      setFriendRequestResMsg(friendRequestResponse.data.msg);
+    } catch (err: unknown) {
+      if (err instanceof AxiosError) {
+        setFriendRequestResMsgErr(err.response!.data.msg);
+      } else {
+        setFriendRequestResMsgErr("Error");
       }
-    );
+    }
   };
 
   const handleAccept = async (requestId: string, senderUsername: string) => {
@@ -116,59 +130,104 @@ export const Friends = () => {
     }
   };
 
+  const handleClosePopup = () => {
+    setShowPopup(false);
+    setUsername("");
+    setFriendRequestResMsg("");
+    setFriendRequestResMsgErr("");
+  };
+
+  const handleUsernameChange = (target: EventTarget & HTMLInputElement) => {
+    setUsername(target.value);
+    setFriendRequestResMsgErr("");
+    setFriendRequestResMsg("");
+  };
+
   return (
-    <div className="friends-page">
-      <div className="friends-card-wrapper">
-        <div className="friends-card">
-          <div className="friends-card-inner-upper">
-            <div>Your Friends</div>
-            <div className="add-friend-button">
-              <img
-                src={IMAGES.addFriendsIcon}
-                className="add-friend-icon"
-              ></img>
-              <span>Add a friend</span>
+    <>
+      <div className={showPopup ? "add-friend-popup" : "add-friend-popup-hide"}>
+        <img src={IMAGES.closeWindow} onClick={handleClosePopup}></img>
+        <div className="popup-content">
+          <h1>Add Friend</h1>
+          <form className="search-username" onSubmit={handleSubmit}>
+            {/* <label htmlFor="search">Search friends by username</label> */}
+            <input
+              type="text"
+              placeholder="Search friends by username"
+              name="search"
+              value={username}
+              onChange={({ target }) => handleUsernameChange(target)}
+            ></input>
+            <button type="submit">Go</button>
+          </form>
+          {friendRequestResMsgErr ? (
+            <div className="error-msg">{friendRequestResMsgErr}</div>
+          ) : (
+            <></>
+          )}
+          {friendRequestResMsg ? (
+            <div className="success-msg">{friendRequestResMsg}</div>
+          ) : (
+            <></>
+          )}
+        </div>
+      </div>
+      <div className="friends-page">
+        <div className="friends-card-wrapper">
+          <div className="friends-card">
+            <div className="friends-card-inner-upper">
+              <div>Your Friends</div>
+              <div
+                className="add-friend-button"
+                onClick={() => setShowPopup(true)}
+              >
+                <img
+                  src={IMAGES.addFriendsIcon}
+                  className="add-friend-icon"
+                ></img>
+                <span>Add a friend</span>
+              </div>
+            </div>
+            <div className="friends-card-inner-lower">
+              <div className="friends-card-data">
+                {friendData &&
+                  friendData.map((user: any) => (
+                    <div key={user.id} className="friend">
+                      <img src={IMAGES.profilePicture} alt="avatar"></img>
+                      <div>{user.username}</div>
+                    </div>
+                  ))}
+              </div>
             </div>
           </div>
-          <div className="friends-card-inner-lower">
-            <div className="friends-card-data">
-              {friendData &&
-                friendData.map((user: any) => (
-                  <div key={user.id} className="friend">
-                    <img src={IMAGES.profilePicture} alt="avatar"></img>
-                    <div>{user.username}</div>
-                  </div>
-                ))}
+        </div>
+        <div className="recommended-friends-card-wrapper">
+          <div className="friends-card">
+            <div className="friends-card-inner-upper">Friend Requests</div>
+            <div className="friends-card-inner-lower">
+              <div className="friends-card-data">
+                {friendRequests &&
+                  friendRequests.map((request: any) => (
+                    <div key={request.id} className="bg-slate-400 ">
+                      <h2>From: {request.senderUsername}</h2>
+                      <button
+                        onClick={() =>
+                          handleAccept(request.id, request.senderUsername)
+                        }
+                      >
+                        Accept
+                      </button>
+                      <button onClick={() => handleReject(request.id)}>
+                        Reject
+                      </button>
+                    </div>
+                  ))}
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <div className="recommended-friends-card-wrapper">
-        <div className="friends-card">
-          <div className="friends-card-inner-upper">Friend Requests</div>
-          <div className="friends-card-inner-lower">
-            <div className="friends-card-data">
-              {friendRequests &&
-                friendRequests.map((request: any) => (
-                  <div key={request.id} className="bg-slate-400 ">
-                    <h2>From: {request.senderUsername}</h2>
-                    <button
-                      onClick={() =>
-                        handleAccept(request.id, request.senderUsername)
-                      }
-                    >
-                      Accept
-                    </button>
-                    <button onClick={() => handleReject(request.id)}>
-                      Reject
-                    </button>
-                  </div>
-                ))}
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    </>
     // <>
     //   <h1>Friends</h1>
     //   <h2>Add new friend</h2>

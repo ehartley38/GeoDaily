@@ -1,3 +1,75 @@
+.add-friend-popup {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -70%);
+  width: 50%;
+  height: 40%;
+  border: 1px solid black;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  z-index: 1;
+}
+
+.add-friend-popup-hide {
+  display: none;
+}
+
+.add-friend-popup img {
+  position: absolute;
+  left: 0;
+  width: 5%;
+  margin: 0.2rem;
+  cursor: pointer;
+}
+
+.popup-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  padding: 0.5rem;
+}
+
+.popup-content h1 {
+  font-size: 2rem;
+}
+
+.popup-content form {
+  position: relative;
+  width: 80%;
+}
+
+.popup-content input {
+  padding: 10px;
+  font-size: 17px;
+  border: 1px solid grey;
+  float: left;
+  width: 80%;
+  background: #f1f1f1;
+}
+
+.popup-content button {
+  float: left;
+  width: 20%;
+  padding: 10px;
+  background: #2196f3;
+  color: white;
+  font-size: 17px;
+  border: 1px solid grey;
+  border-left: none;
+  cursor: pointer;
+}
+
+.error-msg {
+  color: red;
+}
+
+.success-msg {
+  color: #79c819;
+}
+
 .friends-page {
   height: 100%;
   padding: 2rem;

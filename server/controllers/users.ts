@@ -66,25 +66,26 @@ usersRouter.post(
     const user = req.user;
 
     try {
+      // Check for blank username
+      if (!body.receiverUsername || body.receiverUsername.trim() === "") {
+        return res.status(400).json({ msg: "Please enter a valid username" });
+      }
+
       // Check if friend is already added
       const isAlreadyFriends = user.friends.find(
         (user: any) => user.username === body.receiverUsername
       );
       if (isAlreadyFriends) {
-        return res
-          .status(400)
-          .json({
-            msg: `You are already friends with the user ${user.username}`,
-          })
-          .end();
+        return res.status(400).json({
+          msg: `You are already friends with the user: ${user.username}`,
+        });
       }
 
       // Check if user is trying to add themselves
       if (user.username === body.receiverUsername) {
         return res
           .status(400)
-          .json({ msg: "You cannot add yourself as a friend!" })
-          .end();
+          .json({ msg: "You cannot add yourself as a friend!" });
       }
       // Check if username exists in DB
       const recipient = await prisma.userAccount.findUnique({
@@ -94,12 +95,9 @@ usersRouter.post(
       });
 
       if (!recipient) {
-        return res
-          .status(404)
-          .json({
-            msg: `No user exists with username: ${body.receiverUsername}`,
-          })
-          .end();
+        return res.status(404).json({
+          msg: `No user exists with username: ${body.receiverUsername}`,
+        });
       }
 
       // Check if friend request is already sent
@@ -111,12 +109,9 @@ usersRouter.post(
       });
 
       if (requestCount >= 1) {
-        return res
-          .status(400)
-          .json({
-            msg: `Friend request to user ${body.receiverUsername} already sent`,
-          })
-          .end();
+        return res.status(400).json({
+          msg: `Friend request to user ${body.receiverUsername} already sent`,
+        });
       }
 
       // Send friend request
@@ -126,7 +121,7 @@ usersRouter.post(
           receiverUsername: body.receiverUsername,
         },
       });
-      return res.status(201).json({ msg: "Friend request sent" }).end();
+      return res.status(201).json({ msg: "Friend request sent" });
     } catch (err) {
       console.log(err);
     }
