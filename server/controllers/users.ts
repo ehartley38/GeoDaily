@@ -51,8 +51,13 @@ usersRouter.get(
           receiverUsername: req.user.username,
         },
       });
+      let testData = [];
+      for (let i = 0; i < 10; i++) {
+        testData.push(friendRequests[0]);
+      }
 
       res.status(200).json(friendRequests);
+      // res.status(200).json(testData);
     } catch (err) {
       console.log(err);
     }
