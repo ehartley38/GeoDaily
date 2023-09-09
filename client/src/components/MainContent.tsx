@@ -12,9 +12,9 @@ export const MainContent = () => {
   const isNotPlayDailyRoute = !location.pathname.startsWith("/play-daily");
 
   return (
-    <div className="main-container">
+    <>
       {isNotPlayDailyRoute ? (
-        <>
+        <div className="main-container">
           <header className="main-header">
             <img className="logo" src={IMAGES.logo}></img>
             {/* <div className="website-name">DailyGeo</div> */}
@@ -37,10 +37,10 @@ export const MainContent = () => {
               <Outlet />
             </div>
           </div>
-        </>
+        </div>
       ) : (
         <PlayDaily />
       )}
-    </div>
+    </>
   );
 };

@@ -7,6 +7,7 @@ import { challengeSubmission } from "../customTypings/challengeSubmission";
 import { question } from "../customTypings/question";
 import { latLng } from "../customTypings/latLng";
 import useUserData from "../hooks/useUserData";
+import "./playDaily.css";
 
 type submitResponseType = {
   distance: number;
@@ -173,21 +174,21 @@ export const PlayDaily = () => {
 
   return (
     <>
-      {/* <h1>Play Daily</h1> */}
-
       <div
-        className="grid grid-cols-10 grid-rows-6 h-screen"
+        // className="grid grid-cols-10 grid-rows-6 h-screen"
+        className="street-view-container"
         ref={streetviewDivRef}
       >
-        <div className="col-start-5 row-start-3 col-span-6 row-span-4 z-10 m-5">
+        asdddddddddddddddddddd asd asd
+        {/* <div className="col-start-5 row-start-3 col-span-6 row-span-4 z-10 m-5">
           <div className="relative h-full">
             <div
               className="transition-all absolute bottom-0 right-0 h-1/2 w-1/2 hover:h-full hover:w-full"
               ref={mapDivRef}
             ></div>
           </div>
-        </div>
-        {submitResponseData && (
+        </div> */}
+        {/* {submitResponseData && (
           <ResultsSummary
             distance={submitResponseData!.distance}
             score={submitResponseData!.score}
@@ -197,8 +198,8 @@ export const PlayDaily = () => {
             isComplete={submitResponseData.isComplete}
             handleSeeSummary={handleSeeSummary}
           />
-        )}
-        <div className="row-start-6 z-10 m-5">
+        )} */}
+        {/* <div className="row-start-6 z-10 m-5">
           {markerPlaced ? (
             <button
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
@@ -211,7 +212,7 @@ export const PlayDaily = () => {
               Submit
             </button>
           )}
-        </div>
+        </div> */}
       </div>
     </>
   );
