@@ -95,13 +95,13 @@ challengesRouter.get("/history", async (req: customRequest, res: Response) => {
     const submissionHistory = await prisma.challengeSubmission.findMany({
       where: {
         playerId: req.user.id,
+        isComplete: true,
       },
       include: {
         parentChallenge: true,
       },
     });
-
-    res.status(200).json(submissionHistory.reverse());
+    return res.status(200).json(submissionHistory.reverse());
   } catch (err) {
     console.log(err);
   }

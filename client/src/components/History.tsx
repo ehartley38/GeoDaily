@@ -22,8 +22,9 @@ const Submissions = ({ currentItems }: SubmissionsProps) => {
 
 export const History = () => {
   const axiosPrivate = useAxiosPrivate();
-  const [submissionHistory, setSubmissionHistory] =
-    useState<challengeSubmission[]>();
+  const [submissionHistory, setSubmissionHistory] = useState<
+    challengeSubmission[] | null
+  >(null);
   const [currentItems, setCurrentItems] = useState<
     challengeSubmission[] | null
   >(null);
@@ -41,9 +42,11 @@ export const History = () => {
             withCredentials: true,
           }
         );
-        console.log(submissionHistory.data);
-
-        setSubmissionHistory(submissionHistory.data);
+        if (submissionHistory.data.length > 0) {
+          setSubmissionHistory(submissionHistory.data);
+        } else {
+          setSubmissionHistory(null);
+        }
       } catch (err) {
         console.log(err);
       }
