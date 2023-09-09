@@ -26,9 +26,6 @@ const App = () => {
   const { setUserData } = useUserData();
   const authType = auth as AuthType;
   const axiosPrivate = useAxiosPrivate();
-  const location = useLocation();
-
-  const isNotPlayDailyRoute = !location.pathname.startsWith("/play-daily");
 
   useEffect(() => {
     const setUserDataContext = async () => {
