@@ -163,7 +163,41 @@
   width: 3rem;
 }
 
-.recommended-friends-card-wrapper {
+.friend-request-card-wrapper {
   height: 100%;
   width: 30%;
+}
+
+.friend-request-card-data {
+  display: flex;
+  flex-direction: column;
+}
+
+.friend-request-card-data h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.friend-request-buttons {
+  display: flex;
+  gap: 1rem;
+}
+
+.friend-request-buttons button {
+  padding: 0 0.2rem 0 0.2rem;
+  border-radius: 0.3rem;
+}
+
+.accept {
+  background-color: #79c819;
+}
+
+.reject {
+  background-color: red;
+}
+
+.request-divider {
+  width: 100%;
+  border: 1px solid black;
+  margin-top: 0.5rem;
 }

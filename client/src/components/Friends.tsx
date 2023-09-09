@@ -201,28 +201,33 @@ export const Friends = () => {
             </div>
           </div>
         </div>
-        <div className="recommended-friends-card-wrapper">
-          <div className="friends-card">
-            <div className="friends-card-inner-upper">Friend Requests</div>
-            <div className="friends-card-inner-lower">
-              <div className="friends-card-data">
-                {friendRequests &&
-                  friendRequests.map((request: any) => (
-                    <div key={request.id} className="bg-slate-400 ">
-                      <h2>From: {request.senderUsername}</h2>
+        <div className="friend-request-card-wrapper">
+          <div className="friends-card-inner-upper">Friend Requests</div>
+          <div className="friends-card-inner-lower">
+            <div className="friend-request-card-data">
+              {friendRequests &&
+                friendRequests.map((request: any) => (
+                  <div key={request.id}>
+                    <h2>{request.senderUsername}</h2>
+                    <div className="friend-request-buttons">
                       <button
+                        className="accept"
                         onClick={() =>
                           handleAccept(request.id, request.senderUsername)
                         }
                       >
                         Accept
                       </button>
-                      <button onClick={() => handleReject(request.id)}>
+                      <button
+                        className="reject"
+                        onClick={() => handleReject(request.id)}
+                      >
                         Reject
                       </button>
                     </div>
-                  ))}
-              </div>
+                    <div className="request-divider"></div>
+                  </div>
+                ))}
             </div>
           </div>
         </div>

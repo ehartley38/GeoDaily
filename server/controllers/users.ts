@@ -51,6 +51,7 @@ usersRouter.get(
           receiverUsername: req.user.username,
         },
       });
+
       res.status(200).json(friendRequests);
     } catch (err) {
       console.log(err);
