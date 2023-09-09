@@ -68,31 +68,39 @@ export const History = () => {
   };
 
   return (
-    submissionHistory && (
-      <div className="history-page">
-        <h1>History</h1>
-        <div className="history-page-content">
-          <Submissions currentItems={currentItems} />
-        </div>
-        <div>
-          <ReactPaginate
-            nextLabel="next >"
-            onPageChange={handlePageClick}
-            pageRangeDisplayed={3}
-            marginPagesDisplayed={2}
-            pageCount={pageCount}
-            previousLabel="< previous"
-            breakLabel="..."
-            containerClassName="pagination"
-            activeClassName="active"
-            pageClassName="page"
-            previousClassName="previous"
-            nextClassName="next"
-            breakClassName="break"
-            renderOnZeroPageCount={null}
-          />
-        </div>
-      </div>
-    )
+    <div className="history-page">
+      <h1>History</h1>
+      {!submissionHistory && (
+        <>
+          <p>Nothing here :(</p>
+          <p>Why not try the daily challenge?</p>
+        </>
+      )}
+      {submissionHistory && (
+        <>
+          <div className="history-page-content">
+            <Submissions currentItems={currentItems} />
+          </div>
+          <div>
+            <ReactPaginate
+              nextLabel="next >"
+              onPageChange={handlePageClick}
+              pageRangeDisplayed={3}
+              marginPagesDisplayed={2}
+              pageCount={pageCount}
+              previousLabel="< previous"
+              breakLabel="..."
+              containerClassName="pagination"
+              activeClassName="active"
+              pageClassName="page"
+              previousClassName="previous"
+              nextClassName="next"
+              breakClassName="break"
+              renderOnZeroPageCount={null}
+            />
+          </div>
+        </>
+      )}
+    </div>
   );
 };

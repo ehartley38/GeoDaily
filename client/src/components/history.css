@@ -7,6 +7,10 @@
   /* background-color: blueviolet; */
 }
 
+.history-page p {
+  color: rgb(100, 100, 100);
+}
+
 .history-page h1 {
   font-size: 3rem;
 }
