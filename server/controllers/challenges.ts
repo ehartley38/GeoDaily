@@ -91,6 +91,7 @@ challengesRouter.get(
 // Get a users submission history for all challenges
 challengesRouter.get("/history", async (req: customRequest, res: Response) => {
   try {
+    // I cant seem to work out how to order by a nested property...
     const submissionHistory = await prisma.challengeSubmission.findMany({
       where: {
         playerId: req.user.id,
@@ -100,7 +101,7 @@ challengesRouter.get("/history", async (req: customRequest, res: Response) => {
       },
     });
 
-    res.status(200).json(submissionHistory);
+    res.status(200).json(submissionHistory.reverse());
   } catch (err) {
     console.log(err);
   }

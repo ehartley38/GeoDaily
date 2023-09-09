@@ -1,0 +1,65 @@
+.history-page {
+  height: 100%;
+  padding: 0rem 10rem 0 10rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* background-color: blueviolet; */
+}
+
+.history-page h1 {
+  font-size: 3rem;
+}
+
+.history-page-content {
+  flex: 1;
+  width: 100%;
+  /* background-color: blue; */
+}
+
+.history-submission {
+  display: flex;
+  flex-direction: column;
+}
+
+.history-submission h2 {
+  font-size: 1.5rem;
+  font-style: italic;
+}
+
+.history-submission-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 1;
+}
+
+.history-submission-bar {
+  height: 0.1rem;
+  flex: 1 1;
+  background-color: black;
+}
+
+.history-submission-content {
+  margin: 0 2rem 1rem 3rem;
+}
+
+.pagination {
+  display: flex;
+  list-style: none;
+  gap: 1rem;
+  margin: 0.5rem;
+}
+
+.page.active {
+  font-weight: bold; /* Make the active page number bold */
+}
+
+.previous,
+.next {
+  margin: 0 1rem;
+}
+
+.break {
+  margin: 0 0.5rem;
+}
