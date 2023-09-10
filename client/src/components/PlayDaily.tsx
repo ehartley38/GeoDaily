@@ -178,7 +178,11 @@ export const PlayDaily = () => {
         <div className="street-view-container" ref={streetviewDivRef}></div>
         <div className="map-picker-container">
           <div className="map-picker" ref={mapDivRef}></div>
-          <div className="submit-answer">Submit</div>
+          {markerPlaced ? (
+            <div className="submit-answer marker-placed">Submit</div>
+          ) : (
+            <div className="submit-answer">Submit</div>
+          )}
         </div>
 
         {/* {submitResponseData && (
@@ -192,20 +196,6 @@ export const PlayDaily = () => {
             handleSeeSummary={handleSeeSummary}
           />
         )} */}
-        {/* <div className="row-start-6 z-10 m-5">
-          {markerPlaced ? (
-            <button
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-              onClick={handleSubmit}
-            >
-              Submit
-            </button>
-          ) : (
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded opacity-50 cursor-not-allowed">
-              Submit
-            </button>
-          )}
-        </div> */}
       </div>
     </>
   );
