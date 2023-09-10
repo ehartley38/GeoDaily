@@ -174,20 +174,13 @@ export const PlayDaily = () => {
 
   return (
     <>
-      <div
-        // className="grid grid-cols-10 grid-rows-6 h-screen"
-        className="street-view-container"
-        ref={streetviewDivRef}
-      >
-        asdddddddddddddddddddd asd asd
-        {/* <div className="col-start-5 row-start-3 col-span-6 row-span-4 z-10 m-5">
-          <div className="relative h-full">
-            <div
-              className="transition-all absolute bottom-0 right-0 h-1/2 w-1/2 hover:h-full hover:w-full"
-              ref={mapDivRef}
-            ></div>
-          </div>
-        </div> */}
+      <div className="play-daily-container">
+        <div className="street-view-container" ref={streetviewDivRef}></div>
+        <div className="map-picker-container">
+          <div className="map-picker" ref={mapDivRef}></div>
+          <div className="submit-answer">Submit</div>
+        </div>
+
         {/* {submitResponseData && (
           <ResultsSummary
             distance={submitResponseData!.distance}

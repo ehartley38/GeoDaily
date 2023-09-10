@@ -1,7 +1,48 @@
+.play-daily-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
 .street-view-container {
   height: 100%;
   width: 100%;
   position: fixed !important;
   top: 0 !important;
   left: 0 !important;
+}
+
+.map-picker-container {
+  height: 25%;
+  width: 30%;
+  bottom: 8%;
+  right: 3%;
+  position: fixed !important;
+  transition: all 0.2s ease-in-out;
+}
+
+.map-picker {
+  height: 95%;
+  width: 100%;
+  z-index: 10;
+}
+
+.map-picker-container:hover {
+  height: 50%;
+  width: 60%;
+}
+
+.submit-answer {
+  display: flex;
+  justify-content: center;
+  background-color: #79c819;
+  color: white;
+  margin-top: 0.3rem;
+  border-radius: 1rem;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: 0 0.275rem 1.125rem rgba(0, 0, 0, 0.25),
+    inset 0 0.0625rem 0 hsla(0, 0%, 100%, 0.2),
+    inset 0 -0.125rem 0 rgba(0, 0, 0, 0.3);
+  height: 30px;
 }
