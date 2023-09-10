@@ -179,13 +179,15 @@ export const PlayDaily = () => {
         <div className="map-picker-container">
           <div className="map-picker" ref={mapDivRef}></div>
           {markerPlaced ? (
-            <div className="submit-answer marker-placed">Submit</div>
+            <div className="submit-answer marker-placed" onClick={handleSubmit}>
+              Submit
+            </div>
           ) : (
             <div className="submit-answer">Submit</div>
           )}
         </div>
 
-        {/* {submitResponseData && (
+        {submitResponseData && (
           <ResultsSummary
             distance={submitResponseData!.distance}
             score={submitResponseData!.score}
@@ -195,7 +197,7 @@ export const PlayDaily = () => {
             isComplete={submitResponseData.isComplete}
             handleSeeSummary={handleSeeSummary}
           />
-        )} */}
+        )}
       </div>
     </>
   );
