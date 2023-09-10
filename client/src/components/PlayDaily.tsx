@@ -31,8 +31,11 @@ export const PlayDaily = () => {
   const [submitResponseData, setSubmitResponseData] =
     useState<submitResponseType>(null);
   const { userData, setUserData } = useUserData();
-
   const [questionNo, setQuestionNo] = useState<number>();
+  const [initialQuestionCoords, setInitialQuestionCoords] =
+    useState<latLng | null>(null);
+  const [streetViewInstance, setStreetViewInstance] =
+    useState<google.maps.StreetViewPanorama | null>(null);
 
   useEffect(() => {
     const getSubmissionData = async () => {
@@ -67,6 +70,8 @@ export const PlayDaily = () => {
         lng: questions[0].correctPos.lng,
       };
 
+      setInitialQuestionCoords(coords);
+
       const streetViewOptions = {
         position: coords,
         addressControl: false,
@@ -99,10 +104,11 @@ export const PlayDaily = () => {
         .then(async (loadedGoogle) => {
           let marker: null | google.maps.Marker = null;
 
-          const streetViewInstance = new loadedGoogle.maps.StreetViewPanorama(
+          const streetView = new loadedGoogle.maps.StreetViewPanorama(
             streetviewDivRef.current!,
             streetViewOptions
           );
+          setStreetViewInstance(streetView);
 
           const mapInstance = new loadedGoogle.maps.Map(
             mapDivRef.current!,
@@ -181,17 +187,29 @@ export const PlayDaily = () => {
     navigate("/");
   };
 
+  const handlePositionReset = () => {
+    if (streetViewInstance && initialQuestionCoords) {
+      streetViewInstance.setPosition(initialQuestionCoords);
+    }
+  };
+
   return (
     <>
       <div className="play-daily-container">
         <div className="street-view-container" ref={streetviewDivRef}></div>
+        <div className="top-ui-wrapper">
+          <div className="go-back" onClick={handleGoBack}>
+            <img src={IMAGES.backArrow}></img>
+          </div>
+          <div className="top-ui-right">
+            <div className="question-counter">
+              {`${questionNo} / ${currentChallenge.questions.length}`}
+            </div>
 
-        <div className="go-back" onClick={handleGoBack}>
-          <img src={IMAGES.backArrow}></img>
-        </div>
-
-        <div className="question-counter">
-          {`${questionNo} / ${currentChallenge.questions.length}`}
+            <div className="location-reset" onClick={handlePositionReset}>
+              <img src={IMAGES.undo}></img>
+            </div>
+          </div>
         </div>
 
         <div className="map-picker-container">

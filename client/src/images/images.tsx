@@ -6,6 +6,7 @@ const IMAGES = {
   addFriendsIcon: new URL("./add_friends_icon.png", import.meta.url).href,
   closeWindow: new URL("./close.png", import.meta.url).href,
   backArrow: new URL("./arrow.png", import.meta.url).href,
+  undo: new URL("./undo.png", import.meta.url).href,
 };
 
 export default IMAGES;
