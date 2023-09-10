@@ -174,11 +174,19 @@ export const PlayDaily = () => {
     navigate(`/challenge-history/`);
   };
 
+  const handleGoBack = () => {
+    navigate("/");
+  };
+
   return (
     <>
       <div className="play-daily-container">
-        <div></div>
         <div className="street-view-container" ref={streetviewDivRef}></div>
+
+        <div className="go-back" onClick={handleGoBack}>
+          <img src={IMAGES.backArrow}></img>
+        </div>
+
         <div className="map-picker-container">
           <div className="map-picker" ref={mapDivRef}></div>
           {markerPlaced ? (
@@ -189,6 +197,7 @@ export const PlayDaily = () => {
             <div className="submit-answer">Submit</div>
           )}
         </div>
+
         {submitResponseData && (
           <ResultsSummary
             distance={submitResponseData!.distance}

@@ -4,6 +4,30 @@
   height: 100%;
 }
 
+.go-back {
+  top: 0;
+  left: 0;
+  width: 5%;
+  background-color: rgba(1, 2, 1, 0.6) !important;
+  opacity: 0.9;
+  margin: 0.5rem;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  padding: 0.1rem;
+}
+
+.go-back:hover {
+  background-color: rgba(26, 27, 26, 0.6) !important;
+}
+
+.go-back img {
+  width: 60%;
+  filter: invert(100%);
+}
+
 .street-view-container {
   height: 100%;
   width: 100%;
