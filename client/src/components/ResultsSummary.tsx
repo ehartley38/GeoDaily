@@ -1,5 +1,6 @@
 import { Loader } from "@googlemaps/js-api-loader";
 import { useEffect, useRef } from "react";
+import IMAGES from "../images/images";
 
 type LatLngType = {
   lat: number;
@@ -95,35 +96,22 @@ export const ResultsSummary = ({
   }, []);
 
   return (
-    <div className="col-start-3 row-start-2 col-span-6 row-span-3 z-10">
-      <div className="grid grid-cols-3 h-full ">
-        <div className="col-span-2" ref={resultMapDivRef}>
-          Map
-        </div>
-        <div className="bg-white relative">
-          <h1>Distance: {distance} meters</h1>
-          <h1>Score: {score}</h1>
-
-          <div className="absolute bottom-0 right-0 m-2">
-            {isComplete ? (
-              <button
-                className="relative rounded px-5 py-2.5 overflow-hidden group bg-green-500 hover:bg-gradient-to-r hover:from-green-500 hover:to-green-400 text-white hover:ring-2 hover:ring-offset-2 hover:ring-green-400 transition-all ease-out duration-300"
-                onClick={handleSeeSummary}
-              >
-                <span className="absolute right-0 w-8 h-32 -mt-12 transition-all duration-1000 transform translate-x-12 bg-white opacity-10 rotate-12 group-hover:-translate-x-40 ease"></span>
-                <span className="relative">See summary</span>
-              </button>
-            ) : (
-              <button
-                className="relative rounded px-5 py-2.5 overflow-hidden group bg-green-500 hover:bg-gradient-to-r hover:from-green-500 hover:to-green-400 text-white hover:ring-2 hover:ring-offset-2 hover:ring-green-400 transition-all ease-out duration-300"
-                onClick={handleNext}
-              >
-                <span className="absolute right-0 w-8 h-32 -mt-12 transition-all duration-1000 transform translate-x-12 bg-white opacity-10 rotate-12 group-hover:-translate-x-40 ease"></span>
-                <span className="relative">Next</span>
-              </button>
-            )}
-          </div>
-        </div>
+    <div className="results-summary-container">
+      <div className="result-map-container" ref={resultMapDivRef}></div>
+      <div className="result-info-container">
+        <img className="logo" src={IMAGES.logo}></img>
+        <h1>Summary</h1>
+        <p>{distance} metres</p>
+        <p>{score} points</p>
+        {isComplete ? (
+          <button className="next-question" onClick={handleSeeSummary}>
+            See Summary
+          </button>
+        ) : (
+          <button className="next-question" onClick={handleNext}>
+            Next
+          </button>
+        )}
       </div>
     </div>
   );

@@ -8,6 +8,7 @@ import { question } from "../customTypings/question";
 import { latLng } from "../customTypings/latLng";
 import useUserData from "../hooks/useUserData";
 import "./playDaily.css";
+import IMAGES from "../images/images";
 
 type submitResponseType = {
   distance: number;
@@ -112,6 +113,7 @@ export const PlayDaily = () => {
 
           const placeMarker = (position: latLng, map: google.maps.Map) => {
             if (marker === null) {
+              var iconBase = "https://maps.google.com/mapfiles/kml/shapes/";
               marker = new loadedGoogle.maps.Marker({
                 position: position,
                 map: map,
@@ -169,12 +171,13 @@ export const PlayDaily = () => {
   };
 
   const handleSeeSummary = () => {
-    navigate(`/challenge-history/${challengeSubmission!.parentChallengeId}`);
+    navigate(`/challenge-history/`);
   };
 
   return (
     <>
       <div className="play-daily-container">
+        <div></div>
         <div className="street-view-container" ref={streetviewDivRef}></div>
         <div className="map-picker-container">
           <div className="map-picker" ref={mapDivRef}></div>
@@ -186,7 +189,6 @@ export const PlayDaily = () => {
             <div className="submit-answer">Submit</div>
           )}
         </div>
-
         {submitResponseData && (
           <ResultsSummary
             distance={submitResponseData!.distance}

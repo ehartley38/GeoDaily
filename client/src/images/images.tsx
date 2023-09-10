@@ -5,6 +5,7 @@ const IMAGES = {
   logo3: new URL("./logo3.png", import.meta.url).href,
   addFriendsIcon: new URL("./add_friends_icon.png", import.meta.url).href,
   closeWindow: new URL("./close.png", import.meta.url).href,
+  mapPin: new URL("./pin.png", import.meta.url).href,
 };
 
 export default IMAGES;
