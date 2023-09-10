@@ -15,6 +15,7 @@ type ResultsSummaryProps = {
   handleNext: any;
   handleSeeSummary: any;
   isComplete: boolean;
+  questionNo: number;
 };
 
 export const ResultsSummary = ({
@@ -25,6 +26,7 @@ export const ResultsSummary = ({
   handleNext,
   handleSeeSummary,
   isComplete,
+  questionNo,
 }: ResultsSummaryProps) => {
   const resultMapDivRef = useRef<HTMLDivElement | null>(null);
 
@@ -100,11 +102,11 @@ export const ResultsSummary = ({
       <div className="result-map-container" ref={resultMapDivRef}></div>
       <div className="result-info-container">
         <img className="logo" src={IMAGES.logo}></img>
-        <h1>Summary</h1>
+        <h1>{`Question ${questionNo}`}</h1>
         <p>{distance} metres</p>
         <p>{score} points</p>
         {isComplete ? (
-          <button className="next-question" onClick={handleSeeSummary}>
+          <button className="next-question summary" onClick={handleSeeSummary}>
             See Summary
           </button>
         ) : (

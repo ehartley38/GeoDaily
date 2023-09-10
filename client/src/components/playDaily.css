@@ -28,6 +28,18 @@
   filter: invert(100%);
 }
 
+.question-counter {
+  width: 5%;
+  background-color: rgba(1, 2, 1, 0.6) !important;
+  opacity: 0.9;
+  margin: 0.5rem;
+  border-radius: 5px;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .street-view-container {
   height: 100%;
   width: 100%;
@@ -124,6 +136,10 @@
   height: 10%;
   width: 50%;
   transition: transform 0.2s ease-in-out;
+}
+
+.summary {
+  width: 60%;
 }
 
 .next-question:hover {

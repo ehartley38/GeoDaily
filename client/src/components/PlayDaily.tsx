@@ -31,7 +31,8 @@ export const PlayDaily = () => {
   const [submitResponseData, setSubmitResponseData] =
     useState<submitResponseType>(null);
   const { userData, setUserData } = useUserData();
-  // const [isComplete, setIsComplete] = useState<boolean>(false);
+
+  const [questionNo, setQuestionNo] = useState<number>();
 
   useEffect(() => {
     const getSubmissionData = async () => {
@@ -49,6 +50,7 @@ export const PlayDaily = () => {
           submission.data.questionsAnswered.length
         )
       );
+      setQuestionNo(submission.data.questionsAnswered.length + 1);
     };
 
     getSubmissionData();
@@ -168,6 +170,7 @@ export const PlayDaily = () => {
     updatedQuestions.shift();
     setQuestions(updatedQuestions);
     setSubmitResponseData(null);
+    setQuestionNo(questionNo! + 1);
   };
 
   const handleSeeSummary = () => {
@@ -185,6 +188,10 @@ export const PlayDaily = () => {
 
         <div className="go-back" onClick={handleGoBack}>
           <img src={IMAGES.backArrow}></img>
+        </div>
+
+        <div className="question-counter">
+          {`${questionNo} / ${currentChallenge.questions.length}`}
         </div>
 
         <div className="map-picker-container">
@@ -207,6 +214,7 @@ export const PlayDaily = () => {
             handleNext={handleNext}
             isComplete={submitResponseData.isComplete}
             handleSeeSummary={handleSeeSummary}
+            questionNo={questionNo!}
           />
         )}
       </div>
