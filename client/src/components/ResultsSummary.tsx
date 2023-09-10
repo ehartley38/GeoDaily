@@ -103,7 +103,13 @@ export const ResultsSummary = ({
       <div className="result-info-container">
         <img className="logo" src={IMAGES.logo}></img>
         <h1>{`Question ${questionNo}`}</h1>
-        <p>{distance} metres</p>
+
+        {distance < 5000 ? (
+          <p>{distance} metres</p>
+        ) : (
+          <p>{Math.round(distance / 1609)} miles</p>
+        )}
+
         <p>{score} points</p>
         {isComplete ? (
           <button className="next-question summary" onClick={handleSeeSummary}>

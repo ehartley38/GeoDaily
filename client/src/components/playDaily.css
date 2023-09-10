@@ -49,7 +49,7 @@
 }
 
 .map-picker-container {
-  height: 25%;
+  height: 30%;
   width: 30%;
   bottom: 8%;
   right: 3%;
@@ -64,7 +64,7 @@
 }
 
 .map-picker-container:hover {
-  height: 50%;
+  height: 60%;
   width: 60%;
 }
 
@@ -113,12 +113,12 @@
 }
 
 .result-info-container h1 {
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-weight: 600;
 }
 
 .result-info-container .logo {
-  width: 40%;
+  width: 50%;
 }
 
 .next-question {
