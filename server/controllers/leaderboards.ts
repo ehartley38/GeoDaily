@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { customRequest } from "../customTypings/customRequest";
 import { Request, Response } from "express";
+import { Sql } from "@prisma/client/runtime";
 
 const prisma = new PrismaClient({});
 const leaderboardsRouter = require("express").Router();
@@ -107,24 +108,48 @@ leaderboardsRouter.post(
 );
 
 // Get highest total score for all time
+// Prisma does not as of yet support lookup queries on groupBy, so need to use queryRaw
 leaderboardsRouter.post(
   "/total-score/all-time",
-  async (req: Request, res: Response) => {
-    try {
-      // Prisma does not as of yet support lookup queries on groupBy, so need to use queryRaw
+  async (req: customRequest, res: Response) => {
+    const isFriendScope = req.body.friendScope;
+    const user = req.user;
+    let friendIds;
+    let sqlQuery;
 
-      const totalScoreAllTime =
-        await prisma.$queryRaw`SELECT "UserAccount"."id",
-    "UserAccount"."username",
-    SUM(CAST("ChallengeSubmission"."totalScore" AS BIGINT)) AS "totalScoreSum"
-FROM "UserAccount"
-JOIN "ChallengeSubmission" ON "UserAccount"."id" = "ChallengeSubmission"."playerId"
-JOIN "Challenge" ON "ChallengeSubmission"."parentChallengeId" = "Challenge"."id"
-WHERE "ChallengeSubmission"."isComplete" = TRUE
--- AND "Challenge"."startDate" >= NOW() - INTERVAL '1 month'
-GROUP BY "UserAccount"."id", "UserAccount"."username"
-ORDER BY "totalScoreSum" DESC
-LIMIT 100;`;
+    try {
+      // If filtering by friends (isFriendScope === true)
+      if (isFriendScope) {
+        friendIds = user.friends.map((friend: any) => friend.id);
+        friendIds.push(user.id);
+
+        sqlQuery = prisma.$queryRaw`
+          SELECT "UserAccount"."id",
+                 "UserAccount"."username",
+                 SUM(CAST("ChallengeSubmission"."totalScore" AS BIGINT)) AS "totalScoreSum"
+          FROM "UserAccount"
+          JOIN "ChallengeSubmission" ON "UserAccount"."id" = "ChallengeSubmission"."playerId"
+          JOIN "Challenge" ON "ChallengeSubmission"."parentChallengeId" = "Challenge"."id"
+          WHERE "ChallengeSubmission"."isComplete" = TRUE
+          AND "UserAccount"."id" = ANY(${friendIds})
+          GROUP BY "UserAccount"."id", "UserAccount"."username"
+          ORDER BY "totalScoreSum" DESC
+          LIMIT 100;
+        `;
+      } else {
+        sqlQuery = prisma.$queryRaw`SELECT "UserAccount"."id",
+        "UserAccount"."username",
+        SUM(CAST("ChallengeSubmission"."totalScore" AS BIGINT)) AS "totalScoreSum"
+    FROM "UserAccount"
+    JOIN "ChallengeSubmission" ON "UserAccount"."id" = "ChallengeSubmission"."playerId"
+    JOIN "Challenge" ON "ChallengeSubmission"."parentChallengeId" = "Challenge"."id"
+    WHERE "ChallengeSubmission"."isComplete" = TRUE
+    GROUP BY "UserAccount"."id", "UserAccount"."username"
+    ORDER BY "totalScoreSum" DESC
+    LIMIT 100;`;
+      }
+
+      const totalScoreAllTime = await sqlQuery;
 
       res.status(200).json({ totalScoreAllTime });
     } catch (err) {
@@ -134,24 +159,47 @@ LIMIT 100;`;
 );
 
 // Get highest total score for the month
+// Prisma does not as of yet support lookup queries on groupBy, so need to use queryRaw
 leaderboardsRouter.post(
   "/total-score/monthly",
   async (req: customRequest, res: Response) => {
+    const isFriendScope = req.body.friendScope;
+    const user = req.user;
+    let friendIds;
+    let sqlQuery;
     try {
-      // Prisma does not as of yet support lookup queries on groupBy, so need to use queryRaw
+      // If filtering by friends
+      if (isFriendScope) {
+        friendIds = user.friends.map((friend: any) => friend.id);
+        friendIds.push(user.id);
 
-      const totalScoreMonthly =
-        await prisma.$queryRaw`SELECT "UserAccount"."id",
-    "UserAccount"."username",
-    SUM(CAST("ChallengeSubmission"."totalScore" AS BIGINT)) AS "totalScoreSum"
-FROM "UserAccount"
-JOIN "ChallengeSubmission" ON "UserAccount"."id" = "ChallengeSubmission"."playerId"
-JOIN "Challenge" ON "ChallengeSubmission"."parentChallengeId" = "Challenge"."id"
-WHERE "ChallengeSubmission"."isComplete" = TRUE
-AND "Challenge"."startDate" >= NOW() - INTERVAL '1 month'
-GROUP BY "UserAccount"."id", "UserAccount"."username"
-ORDER BY "totalScoreSum" DESC
-LIMIT 100;`;
+        sqlQuery = prisma.$queryRaw`
+          SELECT "UserAccount"."id",
+                 "UserAccount"."username",
+                 SUM(CAST("ChallengeSubmission"."totalScore" AS BIGINT)) AS "totalScoreSum"
+          FROM "UserAccount"
+          JOIN "ChallengeSubmission" ON "UserAccount"."id" = "ChallengeSubmission"."playerId"
+          JOIN "Challenge" ON "ChallengeSubmission"."parentChallengeId" = "Challenge"."id"
+          WHERE "ChallengeSubmission"."isComplete" = TRUE
+          AND "UserAccount"."id" = ANY(${friendIds})
+          GROUP BY "UserAccount"."id", "UserAccount"."username"
+          ORDER BY "totalScoreSum" DESC
+          LIMIT 100;
+        `;
+      } else {
+        sqlQuery = prisma.$queryRaw`SELECT "UserAccount"."id",
+        "UserAccount"."username",
+        SUM(CAST("ChallengeSubmission"."totalScore" AS BIGINT)) AS "totalScoreSum"
+    FROM "UserAccount"
+    JOIN "ChallengeSubmission" ON "UserAccount"."id" = "ChallengeSubmission"."playerId"
+    JOIN "Challenge" ON "ChallengeSubmission"."parentChallengeId" = "Challenge"."id"
+    WHERE "ChallengeSubmission"."isComplete" = TRUE
+    GROUP BY "UserAccount"."id", "UserAccount"."username"
+    ORDER BY "totalScoreSum" DESC
+    LIMIT 100;`;
+      }
+
+      const totalScoreMonthly = await sqlQuery;
 
       res.status(200).json({ totalScoreMonthly });
     } catch (err) {
