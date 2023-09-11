@@ -35,8 +35,17 @@ leaderboardsRouter.post(
                 parentChallengeId: currentChallenge!.id,
                 isComplete: true,
                 OR: [{ playerId: { in: friendIds } }, { playerId: user.id }],
+                totalScore: {
+                  gt: 0,
+                },
               }
-            : { parentChallengeId: currentChallenge!.id, isComplete: true }),
+            : {
+                parentChallengeId: currentChallenge!.id,
+                isComplete: true,
+                totalScore: {
+                  gt: 0,
+                },
+              }),
         },
 
         take: 100,
@@ -91,8 +100,15 @@ leaderboardsRouter.post(
           ...(isFriendScope
             ? {
                 OR: [{ id: { in: friendIds } }, { id: user.id }],
+                challengeStreak: {
+                  gt: 0,
+                },
               }
-            : {}),
+            : {
+                challengeStreak: {
+                  gt: 0,
+                },
+              }),
         },
         orderBy: {
           challengeStreak: "desc",
@@ -133,6 +149,7 @@ leaderboardsRouter.post(
           WHERE "ChallengeSubmission"."isComplete" = TRUE
           AND "UserAccount"."id" = ANY(${friendIds})
           GROUP BY "UserAccount"."id", "UserAccount"."username"
+          HAVING SUM(CAST("ChallengeSubmission"."totalScore" AS BIGINT)) > 0
           ORDER BY "totalScoreSum" DESC
           LIMIT 100;
         `;
@@ -145,6 +162,7 @@ leaderboardsRouter.post(
     JOIN "Challenge" ON "ChallengeSubmission"."parentChallengeId" = "Challenge"."id"
     WHERE "ChallengeSubmission"."isComplete" = TRUE
     GROUP BY "UserAccount"."id", "UserAccount"."username"
+    HAVING SUM(CAST("ChallengeSubmission"."totalScore" AS BIGINT)) > 0
     ORDER BY "totalScoreSum" DESC
     LIMIT 100;`;
       }
@@ -184,6 +202,7 @@ leaderboardsRouter.post(
           AND "UserAccount"."id" = ANY(${friendIds})
           AND "Challenge"."startDate" >= NOW() - INTERVAL '1 month'
           GROUP BY "UserAccount"."id", "UserAccount"."username"
+          HAVING SUM(CAST("ChallengeSubmission"."totalScore" AS BIGINT)) > 0
           ORDER BY "totalScoreSum" DESC
           LIMIT 100;
         `;
@@ -197,6 +216,7 @@ leaderboardsRouter.post(
     WHERE "ChallengeSubmission"."isComplete" = TRUE
     AND "Challenge"."startDate" >= NOW() - INTERVAL '1 month'
     GROUP BY "UserAccount"."id", "UserAccount"."username"
+    HAVING SUM(CAST("ChallengeSubmission"."totalScore" AS BIGINT)) > 0
     ORDER BY "totalScoreSum" DESC
     LIMIT 100;`;
       }
