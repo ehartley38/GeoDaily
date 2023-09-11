@@ -19,6 +19,23 @@
   display: flex;
   justify-content: space-between;
 }
+
+.settings-right-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.friend-all-picker {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.friend-all-picker a {
+  cursor: pointer;
+}
+
 .leaderboard-type {
   display: flex;
   gap: 0.7rem;

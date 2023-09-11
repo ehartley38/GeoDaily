@@ -24,6 +24,7 @@ type TotalScoreType = {
 
 type LeaderboardType = "topDaily" | "totalScore" | "highestStreak";
 type TimeframeType = "monthly" | "allTime" | "";
+type UserType = "friend" | "all";
 
 export const Leaderboards = () => {
   const axiosPrivate = useAxiosPrivate();
@@ -33,6 +34,7 @@ export const Leaderboards = () => {
   const [totalScoreData, setTotalScoreData] = useState<TotalScoreType[]>();
   const [selectedType, setSelectedType] = useState<LeaderboardType>("topDaily");
   const [selectedTimeframe, setSelectedTimeframe] = useState<TimeframeType>("");
+  const [userType, setUserType] = useState<UserType>("all");
 
   useEffect(() => {
     getTopDaily();
@@ -77,10 +79,12 @@ export const Leaderboards = () => {
   // Check what leaderboard data to fetch
   const leaderboardRouter = async (
     type: LeaderboardType,
-    timeframe: TimeframeType
+    timeframe: TimeframeType,
+    user: UserType
   ) => {
     setSelectedType(type);
     setSelectedTimeframe(timeframe);
+    setUserType(user);
 
     if (type === "topDaily") return await getTopDaily();
 
@@ -108,7 +112,9 @@ export const Leaderboards = () => {
                 className={`timeframe-upper ${
                   selectedTimeframe === "allTime" ? "selected-timeframe" : ""
                 }`}
-                onClick={() => leaderboardRouter(selectedType, "allTime")}
+                onClick={() =>
+                  leaderboardRouter(selectedType, "allTime", userType)
+                }
               >
                 All Time
               </a>
@@ -116,34 +122,57 @@ export const Leaderboards = () => {
                 className={`timeframe-lower ${
                   selectedTimeframe === "monthly" ? "selected-timeframe" : ""
                 }`}
-                onClick={() => leaderboardRouter(selectedType, "monthly")}
+                onClick={() =>
+                  leaderboardRouter(selectedType, "monthly", userType)
+                }
               >
                 Current Month
               </a>
             </div>
           )}
-
-          <div className="leaderboard-type">
-            <a
-              className={`${selectedType === "topDaily" ? "selected" : ""}`}
-              onClick={() => leaderboardRouter("topDaily", "")}
-            >
-              Top Daily
-            </a>
-            <a
-              className={`${
-                selectedType === "highestStreak" ? "selected" : ""
-              }`}
-              onClick={() => leaderboardRouter("highestStreak", "")}
-            >
-              Highest Streak
-            </a>
-            <a
-              className={`${selectedType === "totalScore" ? "selected" : ""}`}
-              onClick={() => leaderboardRouter("totalScore", "allTime")}
-            >
-              Total Score
-            </a>
+          <div className="settings-right-content">
+            <div className="friend-all-picker">
+              <a
+                className={`${userType === "friend" ? "selected" : ""}`}
+                onClick={() =>
+                  leaderboardRouter(selectedType, selectedTimeframe, "friend")
+                }
+              >
+                Friends
+              </a>
+              <a
+                className={`${userType === "all" ? "selected" : ""}`}
+                onClick={() =>
+                  leaderboardRouter(selectedType, selectedTimeframe, "all")
+                }
+              >
+                All Users
+              </a>
+            </div>
+            <div className="leaderboard-type">
+              <a
+                className={`${selectedType === "topDaily" ? "selected" : ""}`}
+                onClick={() => leaderboardRouter("topDaily", "", userType)}
+              >
+                Top Daily
+              </a>
+              <a
+                className={`${
+                  selectedType === "highestStreak" ? "selected" : ""
+                }`}
+                onClick={() => leaderboardRouter("highestStreak", "", userType)}
+              >
+                Highest Streak
+              </a>
+              <a
+                className={`${selectedType === "totalScore" ? "selected" : ""}`}
+                onClick={() =>
+                  leaderboardRouter("totalScore", "allTime", userType)
+                }
+              >
+                Total Score
+              </a>
+            </div>
           </div>
         </div>
 
