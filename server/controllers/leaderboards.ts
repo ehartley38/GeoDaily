@@ -6,9 +6,13 @@ const prisma = new PrismaClient({});
 const leaderboardsRouter = require("express").Router();
 
 // Get top daily scores
-leaderboardsRouter.get(
+leaderboardsRouter.post(
   "/top-daily",
   async (req: customRequest, res: Response) => {
+    const isFriendScope = req.body.friendScope;
+    const user = req.user;
+    let friendIds;
+
     try {
       // Get current daily challenge
       const currentChallenge = await prisma.challenge.findFirst({
@@ -17,11 +21,21 @@ leaderboardsRouter.get(
         },
       });
 
+      // If filtering by friends, gather all the friend ID's
+      if (isFriendScope) {
+        friendIds = user.friends.map((friend: any) => friend.id);
+      }
+
       // Get top 100
       const topDaily = await prisma.challengeSubmission.findMany({
         where: {
-          parentChallengeId: currentChallenge!.id,
-          isComplete: true,
+          ...(isFriendScope
+            ? {
+                parentChallengeId: currentChallenge!.id,
+                isComplete: true,
+                OR: [{ playerId: { in: friendIds } }, { playerId: user.id }],
+              }
+            : { parentChallengeId: currentChallenge!.id, isComplete: true }),
         },
 
         take: 100,
@@ -53,7 +67,7 @@ leaderboardsRouter.get(
 );
 
 // Get highest streak
-leaderboardsRouter.get(
+leaderboardsRouter.post(
   "/highest-streak",
   async (req: Request, res: Response) => {
     try {
@@ -77,7 +91,7 @@ leaderboardsRouter.get(
 );
 
 // Get highest total score for all time
-leaderboardsRouter.get(
+leaderboardsRouter.post(
   "/total-score/all-time",
   async (req: Request, res: Response) => {
     try {
@@ -104,7 +118,7 @@ LIMIT 100;`;
 );
 
 // Get highest total score for the month
-leaderboardsRouter.get(
+leaderboardsRouter.post(
   "/total-score/monthly",
   async (req: customRequest, res: Response) => {
     try {

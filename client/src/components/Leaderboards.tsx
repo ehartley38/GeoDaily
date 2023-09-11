@@ -34,44 +34,61 @@ export const Leaderboards = () => {
   const [totalScoreData, setTotalScoreData] = useState<TotalScoreType[]>();
   const [selectedType, setSelectedType] = useState<LeaderboardType>("topDaily");
   const [selectedTimeframe, setSelectedTimeframe] = useState<TimeframeType>("");
-  const [userType, setUserType] = useState<UserType>("all");
+  // const [userType, setUserType] = useState<UserType>("all");
+  const [isUserScopeFriend, setIsUserScopeFriend] = useState<boolean>(false);
 
   useEffect(() => {
-    getTopDaily();
+    getTopDaily(isUserScopeFriend);
   }, []);
 
-  const getTopDaily = async () => {
-    const res = await axiosPrivate.get("/leaderboards/top-daily", {
-      headers: { "Content-Type": "application/json" },
-      withCredentials: true,
-    });
+  const getTopDaily = async (friendScope: boolean) => {
+    const res = await axiosPrivate.post(
+      "/leaderboards/top-daily",
+      { friendScope },
+      {
+        headers: { "Content-Type": "application/json" },
+        withCredentials: true,
+      }
+    );
 
     setTopDailyData(res.data.topDaily);
   };
 
-  const getHighestStreak = async () => {
-    const res = await axiosPrivate.get("/leaderboards/highest-streak", {
-      headers: { "Content-Type": "application/json" },
-      withCredentials: true,
-    });
+  const getHighestStreak = async (friendScope: boolean) => {
+    const res = await axiosPrivate.post(
+      "/leaderboards/highest-streak",
+      { friendScope },
+      {
+        headers: { "Content-Type": "application/json" },
+        withCredentials: true,
+      }
+    );
 
     setHighestStreakData(res.data.highestStreak);
   };
 
-  const getTotalScoreMonthly = async () => {
-    const res = await axiosPrivate.get("/leaderboards/total-score/monthly", {
-      headers: { "Content-Type": "application/json" },
-      withCredentials: true,
-    });
+  const getTotalScoreMonthly = async (friendScope: boolean) => {
+    const res = await axiosPrivate.post(
+      "/leaderboards/total-score/monthly",
+      { friendScope },
+      {
+        headers: { "Content-Type": "application/json" },
+        withCredentials: true,
+      }
+    );
 
     setTotalScoreData(res.data.totalScoreMonthly);
   };
 
-  const getTotalScoreAllTime = async () => {
-    const res = await axiosPrivate.get("/leaderboards/total-score/all-time", {
-      headers: { "Content-Type": "application/json" },
-      withCredentials: true,
-    });
+  const getTotalScoreAllTime = async (friendScope: boolean) => {
+    const res = await axiosPrivate.post(
+      "/leaderboards/total-score/all-time",
+      { friendScope },
+      {
+        headers: { "Content-Type": "application/json" },
+        withCredentials: true,
+      }
+    );
 
     setTotalScoreData(res.data.totalScoreAllTime);
   };
@@ -80,21 +97,21 @@ export const Leaderboards = () => {
   const leaderboardRouter = async (
     type: LeaderboardType,
     timeframe: TimeframeType,
-    user: UserType
+    friendScope: boolean
   ) => {
     setSelectedType(type);
     setSelectedTimeframe(timeframe);
-    setUserType(user);
+    setIsUserScopeFriend(friendScope);
 
-    if (type === "topDaily") return await getTopDaily();
+    if (type === "topDaily") return await getTopDaily(friendScope);
 
-    if (type === "highestStreak") return await getHighestStreak();
+    if (type === "highestStreak") return await getHighestStreak(friendScope);
 
     if (type === "totalScore" && timeframe === "monthly")
-      return await getTotalScoreMonthly();
+      return await getTotalScoreMonthly(friendScope);
 
     if (type === "totalScore" && timeframe === "allTime")
-      return await getTotalScoreAllTime();
+      return await getTotalScoreAllTime(friendScope);
   };
 
   return (
@@ -113,7 +130,7 @@ export const Leaderboards = () => {
                   selectedTimeframe === "allTime" ? "selected-timeframe" : ""
                 }`}
                 onClick={() =>
-                  leaderboardRouter(selectedType, "allTime", userType)
+                  leaderboardRouter(selectedType, "allTime", isUserScopeFriend)
                 }
               >
                 All Time
@@ -123,7 +140,7 @@ export const Leaderboards = () => {
                   selectedTimeframe === "monthly" ? "selected-timeframe" : ""
                 }`}
                 onClick={() =>
-                  leaderboardRouter(selectedType, "monthly", userType)
+                  leaderboardRouter(selectedType, "monthly", isUserScopeFriend)
                 }
               >
                 Current Month
@@ -133,17 +150,17 @@ export const Leaderboards = () => {
           <div className="settings-right-content">
             <div className="friend-all-picker">
               <a
-                className={`${userType === "friend" ? "selected" : ""}`}
+                className={`${isUserScopeFriend ? "selected" : ""}`}
                 onClick={() =>
-                  leaderboardRouter(selectedType, selectedTimeframe, "friend")
+                  leaderboardRouter(selectedType, selectedTimeframe, true)
                 }
               >
                 Friends
               </a>
               <a
-                className={`${userType === "all" ? "selected" : ""}`}
+                className={`${!isUserScopeFriend ? "selected" : ""}`}
                 onClick={() =>
-                  leaderboardRouter(selectedType, selectedTimeframe, "all")
+                  leaderboardRouter(selectedType, selectedTimeframe, false)
                 }
               >
                 All Users
@@ -152,7 +169,9 @@ export const Leaderboards = () => {
             <div className="leaderboard-type">
               <a
                 className={`${selectedType === "topDaily" ? "selected" : ""}`}
-                onClick={() => leaderboardRouter("topDaily", "", userType)}
+                onClick={() =>
+                  leaderboardRouter("topDaily", "", isUserScopeFriend)
+                }
               >
                 Top Daily
               </a>
@@ -160,14 +179,16 @@ export const Leaderboards = () => {
                 className={`${
                   selectedType === "highestStreak" ? "selected" : ""
                 }`}
-                onClick={() => leaderboardRouter("highestStreak", "", userType)}
+                onClick={() =>
+                  leaderboardRouter("highestStreak", "", isUserScopeFriend)
+                }
               >
                 Highest Streak
               </a>
               <a
                 className={`${selectedType === "totalScore" ? "selected" : ""}`}
                 onClick={() =>
-                  leaderboardRouter("totalScore", "allTime", userType)
+                  leaderboardRouter("totalScore", "allTime", isUserScopeFriend)
                 }
               >
                 Total Score
