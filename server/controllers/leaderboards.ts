@@ -182,6 +182,7 @@ leaderboardsRouter.post(
           JOIN "Challenge" ON "ChallengeSubmission"."parentChallengeId" = "Challenge"."id"
           WHERE "ChallengeSubmission"."isComplete" = TRUE
           AND "UserAccount"."id" = ANY(${friendIds})
+          AND "Challenge"."startDate" >= NOW() - INTERVAL '1 month'
           GROUP BY "UserAccount"."id", "UserAccount"."username"
           ORDER BY "totalScoreSum" DESC
           LIMIT 100;
@@ -194,6 +195,7 @@ leaderboardsRouter.post(
     JOIN "ChallengeSubmission" ON "UserAccount"."id" = "ChallengeSubmission"."playerId"
     JOIN "Challenge" ON "ChallengeSubmission"."parentChallengeId" = "Challenge"."id"
     WHERE "ChallengeSubmission"."isComplete" = TRUE
+    AND "Challenge"."startDate" >= NOW() - INTERVAL '1 month'
     GROUP BY "UserAccount"."id", "UserAccount"."username"
     ORDER BY "totalScoreSum" DESC
     LIMIT 100;`;
