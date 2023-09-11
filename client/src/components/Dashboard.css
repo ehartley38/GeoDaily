@@ -33,6 +33,7 @@
   cursor: pointer;
   color: white;
   text-shadow: var(--text-border);
+  box-shadow: var(--main-box-shadow);
 }
 
 .play-complete-button {
