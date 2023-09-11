@@ -69,13 +69,29 @@ leaderboardsRouter.post(
 // Get highest streak
 leaderboardsRouter.post(
   "/highest-streak",
-  async (req: Request, res: Response) => {
+  async (req: customRequest, res: Response) => {
+    const isFriendScope = req.body.friendScope;
+    const user = req.user;
+    let friendIds;
+
     try {
+      // If filtering by friends, gather all the friend ID's
+      if (isFriendScope) {
+        friendIds = user.friends.map((friend: any) => friend.id);
+      }
+
       const highestStreak = await prisma.userAccount.findMany({
         select: {
           id: true,
           username: true,
           challengeStreak: true,
+        },
+        where: {
+          ...(isFriendScope
+            ? {
+                OR: [{ id: { in: friendIds } }, { id: user.id }],
+              }
+            : {}),
         },
         orderBy: {
           challengeStreak: "desc",
