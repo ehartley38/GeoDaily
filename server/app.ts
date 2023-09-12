@@ -18,6 +18,7 @@ const challengesRouter = require("./controllers/challenges");
 const questionsRouter = require("./controllers/questions");
 const playRouter = require("./controllers/play");
 const leaderboardsRouter = require("./controllers/leaderboards");
+const playDemoRouter = require("./controllers/playDemo");
 
 app.use(credentials);
 app.use(cors(corsOptions));
@@ -30,6 +31,7 @@ app.use("/api/login", loginRouter);
 app.use("/api/register", registerRouter);
 app.use("/api/refreshTokens", refreshTokensRouter);
 app.use("/api/logout", logoutRouter);
+app.use("/api/playDemo", playDemoRouter);
 
 /* Protected routes */
 app.use(verifyJWT.verifyJWT);

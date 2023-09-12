@@ -20,6 +20,7 @@ import useUserData from "./hooks/useUserData";
 import useAxiosPrivate from "./hooks/useAxiosPrivate";
 import { Leaderboards } from "./components/Leaderboards";
 import { MainContent } from "./components/MainContent";
+import { PlayDemo } from "./components/PlayDemo";
 
 const App = () => {
   const { auth } = useAuth();
@@ -53,6 +54,7 @@ const App = () => {
           <Route path="register" element={<Register />} />
           <Route path="login" element={<Login />} />
           <Route path="unauthorized" element={<Unauthorized />} />
+          <Route path="play-demo" element={<PlayDemo />} />
 
           {/* Private routes */}
           <Route element={<PersistLogin />}>

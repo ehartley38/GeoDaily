@@ -13,7 +13,7 @@ type ResultsSummaryProps = {
   correctPos: LatLngType;
   markerPos: LatLngType;
   handleNext: any;
-  handleSeeSummary: any;
+  handleSeeSummary?: any;
   isComplete: boolean;
   questionNo: number;
 };
