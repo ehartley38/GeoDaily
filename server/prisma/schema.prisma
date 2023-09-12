@@ -57,11 +57,12 @@ model ChallengeSubmission {
 }
 
 model Question {
-  id                String               @id @default(uuid())
-  parentChallenge   Challenge            @relation(fields: [parentChallengeId], references: [id])
+  id                String                   @id @default(uuid())
+  parentChallenge   Challenge                @relation(fields: [parentChallengeId], references: [id])
   parentChallengeId String
   correctPos        Json
   submissions       QuestionSubmission[]
+  tempSubmissions   TempQuestionSubmission[]
 }
 
 model QuestionSubmission {
@@ -75,4 +76,14 @@ model QuestionSubmission {
   attemptPos                  Json
   score                       Int
   distance                    Int
+}
+
+model TempQuestionSubmission {
+  id               String   @id @default(uuid())
+  token            String   @default("")
+  parentQuestion   Question @relation(fields: [parentQuestionId], references: [id])
+  parentQuestionId String
+  attemptPos       Json
+  score            Int
+  distance         Int
 }

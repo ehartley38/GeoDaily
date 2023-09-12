@@ -79,7 +79,7 @@ playRouter.post(
       distance = Math.round(
         haversine_distance(body.question.correctPos, body.markerPosition)
       );
-
+      // Tidy up
       // Calculate the score for the question / 10,000 based on exponential decay
       const maxDistance = 3000000;
       if (distance <= maxDistance) {

@@ -128,7 +128,7 @@ export const PlayDemo = () => {
 
     try {
       // Create temp submission
-      const submitResponse = await axios.post("/play-demo/submitQuestion", {
+      const submitResponse = await axios.post("/playDemo/submitTempQuestion", {
         question,
         markerPosition,
       });
@@ -190,7 +190,7 @@ export const PlayDemo = () => {
             correctPos={question!.correctPos}
             markerPos={markerPosition!}
             handleNext={handleNext}
-            isComplete={submitResponseData.isComplete}
+            isComplete={false}
             questionNo={1}
           />
         )}
