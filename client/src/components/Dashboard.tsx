@@ -23,6 +23,7 @@ export const Dashboard = () => {
   const axiosPrivate = useAxiosPrivate();
   const navigate = useNavigate();
   const { userData } = useUserData();
+  const demoToken = localStorage.getItem("demoToken");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -48,6 +49,11 @@ export const Dashboard = () => {
       }
     };
     fetchData();
+
+    if (demoToken) {
+      handlePlay();
+      localStorage.removeItem("demoToken");
+    }
   }, []);
 
   const handlePlay = async () => {
@@ -82,7 +88,8 @@ export const Dashboard = () => {
   }
 
   return (
-    userData && (
+    userData &&
+    !demoToken && (
       <>
         <div className="dashboard-wrapper">
           <div className="play">
