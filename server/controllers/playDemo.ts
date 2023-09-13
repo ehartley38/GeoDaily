@@ -29,7 +29,7 @@ playDemoRouter.get("/", async (req: Request, res: Response) => {
   }
 });
 
-// Get submission data using submitted token
+// Get temp submission data using submitted token
 playDemoRouter.post("/temp-submission", async (req: Request, res: Response) => {
   const body = req.body;
   console.log(body.token);
@@ -47,6 +47,7 @@ playDemoRouter.post("/temp-submission", async (req: Request, res: Response) => {
   }
 });
 
+// Submit the temp question
 playDemoRouter.post(
   "/submitTempQuestion",
   async (req: Request, res: Response) => {

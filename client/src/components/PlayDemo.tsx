@@ -38,13 +38,20 @@ export const PlayDemo = () => {
       setQuestion(currentChallenge.data.currentChallenge.questions[0]);
     };
 
+    // Get submit response data, if user has a token in local storage.
+    // If they have an invalid token, remove it, because there will have been a new daily challenge generated which deletes all temp submissions
     const getSubmitResponseData = async (token: string) => {
       const tempSubmission = await axios.post("playDemo/temp-submission", {
         token,
       });
-      setSubmitResponseData(tempSubmission.data.tempSubmission);
-      setMarkerPosition(tempSubmission.data.tempSubmission.attemptPos);
-      console.log(tempSubmission.data.tempSubmission);
+      const data = tempSubmission.data;
+
+      if (!data.tempSubmission) {
+        localStorage.removeItem("demoToken");
+      } else {
+        setSubmitResponseData(tempSubmission.data.tempSubmission);
+        setMarkerPosition(tempSubmission.data.tempSubmission.attemptPos);
+      }
     };
 
     getCurrentChallenge();

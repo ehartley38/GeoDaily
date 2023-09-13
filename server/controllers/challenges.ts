@@ -230,6 +230,10 @@ challengesRouter.post(
         data: challengeData,
       });
 
+      // Finally, delete all temp question submissions
+      const deleteTempSubmissions =
+        await prisma.tempQuestionSubmission.deleteMany({});
+
       res.status(201).json(challenge);
     } catch (err) {
       console.log(err);
