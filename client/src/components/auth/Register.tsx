@@ -12,10 +12,12 @@ export const Register = () => {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
+    const demoToken = localStorage.getItem("demoToken");
+
     try {
       const res = await axios.post(
         "/register",
-        { email, username, password, confirmPassword },
+        { email, username, password, confirmPassword, demoToken },
         {
           headers: { "Content-Type": "application/json" },
           withCredentials: true,

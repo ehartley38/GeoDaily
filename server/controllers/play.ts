@@ -10,7 +10,6 @@ const playRouter = require("express").Router();
 playRouter.get("/", async (req: customRequest, res: Response) => {
   try {
     // Get the current challenge
-    // TODO
     const currentChallenge = await prisma.challenge.findFirst({
       where: {
         isActive: true,
