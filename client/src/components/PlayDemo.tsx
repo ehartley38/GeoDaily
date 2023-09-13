@@ -10,7 +10,8 @@ import { ResultsSummary } from "./ResultsSummary";
 type submitResponseType = {
   distance: number;
   score: number;
-  isComplete: boolean;
+  token: string;
+  attemptPos: latLng;
 } | null;
 
 export const PlayDemo = () => {
@@ -23,12 +24,11 @@ export const PlayDemo = () => {
   const [markerPosition, setMarkerPosition] = useState<latLng | null>(null);
   const [submitResponseData, setSubmitResponseData] =
     useState<submitResponseType>(null);
-
-  //   const [questionNo, setQuestionNo] = useState<number>(1);
   const [initialQuestionCoords, setInitialQuestionCoords] =
     useState<latLng | null>(null);
   const [streetViewInstance, setStreetViewInstance] =
     useState<google.maps.StreetViewPanorama | null>(null);
+  const [demoToken, setDemoToken] = useState<string | null>();
 
   useEffect(() => {
     // Get current challenge from unprotected endpoint
@@ -36,17 +36,27 @@ export const PlayDemo = () => {
       const currentChallenge = await axios.get("playDemo");
       setCurrentChallenge(currentChallenge.data);
       setQuestion(currentChallenge.data.currentChallenge.questions[0]);
-      console.log(currentChallenge.data.currentChallenge.questions[0]);
+    };
+
+    const getSubmitResponseData = async (token: string) => {
+      const tempSubmission = await axios.post("playDemo/temp-submission", {
+        token,
+      });
+      setSubmitResponseData(tempSubmission.data.tempSubmission);
+      setMarkerPosition(tempSubmission.data.tempSubmission.attemptPos);
+      console.log(tempSubmission.data.tempSubmission);
     };
 
     getCurrentChallenge();
+
+    const token = localStorage.getItem("demoToken");
+    setDemoToken(token);
+
+    // If token exists in local storage (ie user has already completed the demo), then retrieve submitResponseData
+    if (token) getSubmitResponseData(token);
   }, []);
 
   useEffect(() => {
-    // console.log("Challenge data:", currentChallenge);
-    // console.log("Submission data:", challengeSubmission);
-    // console.log("Questions:", questions);
-
     if (question) {
       const coords = {
         lat: question.correctPos.lat,
@@ -134,6 +144,9 @@ export const PlayDemo = () => {
       });
 
       setSubmitResponseData(submitResponse.data);
+
+      // Store token in local storage
+      localStorage.setItem("demoToken", submitResponse.data.token);
     } catch (err) {
       console.log(err);
     }
@@ -143,6 +156,7 @@ export const PlayDemo = () => {
   const handleNext = () => {
     // Redirect to sign-up page
     setSubmitResponseData(null);
+    navigate("/register");
   };
 
   const handleGoBack = () => {
@@ -183,7 +197,7 @@ export const PlayDemo = () => {
           )}
         </div>
 
-        {submitResponseData && (
+        {submitResponseData && markerPosition && question && (
           <ResultsSummary
             distance={submitResponseData!.distance}
             score={submitResponseData!.score}

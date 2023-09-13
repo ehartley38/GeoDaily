@@ -29,6 +29,24 @@ playDemoRouter.get("/", async (req: Request, res: Response) => {
   }
 });
 
+// Get submission data using submitted token
+playDemoRouter.post("/temp-submission", async (req: Request, res: Response) => {
+  const body = req.body;
+  console.log(body.token);
+
+  try {
+    const tempSubmission = await prisma.tempQuestionSubmission.findFirst({
+      where: {
+        token: body.token,
+      },
+    });
+
+    res.status(200).json({ tempSubmission });
+  } catch (err) {
+    console.log(err);
+  }
+});
+
 playDemoRouter.post(
   "/submitTempQuestion",
   async (req: Request, res: Response) => {
@@ -67,7 +85,6 @@ playDemoRouter.post(
 
       // Generate a token value for temp question submission by b64 encoding
       const token = btoa(createTempSubmission.id);
-      console.log(token);
 
       const updatedTempSubmission = await prisma.tempQuestionSubmission.update({
         where: {

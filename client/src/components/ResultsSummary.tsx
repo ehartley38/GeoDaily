@@ -47,13 +47,13 @@ export const ResultsSummary = ({
       minZoom: 1,
     };
 
-    let bounds = new google.maps.LatLngBounds();
-    bounds.extend(correctPos);
-    bounds.extend(markerPos);
-
     const pathCoords = [correctPos, markerPos];
 
     loader.load().then(async (loadedGoogle) => {
+      let bounds = new google.maps.LatLngBounds();
+      bounds.extend(correctPos);
+      bounds.extend(markerPos);
+
       const mapInstance = new loadedGoogle.maps.Map(
         resultMapDivRef.current!,
         mapOptions
