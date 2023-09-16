@@ -23,7 +23,7 @@
 }
 
 .htp-container .logo {
-  width: 30%;
+  width: 35%;
 }
 
 .htp-container .close-btn {
@@ -54,4 +54,5 @@
 
 .end-summary {
   font-weight: 600;
+  text-align: center;
 }
