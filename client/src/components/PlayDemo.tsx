@@ -6,6 +6,7 @@ import { latLng } from "../customTypings/latLng";
 import { Loader } from "@googlemaps/js-api-loader";
 import IMAGES from "../images/images";
 import { ResultsSummary } from "./ResultsSummary";
+import { HowToPlay } from "./HowToPlay";
 
 type submitResponseType = {
   distance: number;
@@ -29,6 +30,7 @@ export const PlayDemo = () => {
   const [streetViewInstance, setStreetViewInstance] =
     useState<google.maps.StreetViewPanorama | null>(null);
   const [demoToken, setDemoToken] = useState<string | null>();
+  const [displayHowToPlay, setDisplayHowToPlay] = useState<boolean>(false);
 
   useEffect(() => {
     // Get current challenge from unprotected endpoint
@@ -60,7 +62,11 @@ export const PlayDemo = () => {
     setDemoToken(token);
 
     // If token exists in local storage (ie user has already completed the demo), then retrieve submitResponseData
-    if (token) getSubmitResponseData(token);
+    if (token) {
+      getSubmitResponseData(token);
+    } else {
+      setDisplayHowToPlay(true);
+    }
   }, []);
 
   useEffect(() => {
@@ -190,6 +196,12 @@ export const PlayDemo = () => {
             <div className="location-reset" onClick={handlePositionReset}>
               <img src={IMAGES.undo}></img>
             </div>
+            <div
+              className="htp-button"
+              onClick={() => setDisplayHowToPlay(true)}
+            >
+              <img src={IMAGES.help}></img>
+            </div>
           </div>
         </div>
 
@@ -214,6 +226,10 @@ export const PlayDemo = () => {
             isComplete={false}
             questionNo={1}
           />
+        )}
+
+        {displayHowToPlay && (
+          <HowToPlay setDisplayHowToPlay={setDisplayHowToPlay} />
         )}
       </div>
     </>
