@@ -168,8 +168,9 @@ export const PlayDemo = () => {
   // Handle the transition to the next question in the challenge
   const handleNext = () => {
     // Redirect to sign-up page
+
     setSubmitResponseData(null);
-    navigate("/register");
+    navigate("/register?displayRegMsg=true");
   };
 
   const handleGoBack = () => {

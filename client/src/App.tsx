@@ -21,6 +21,7 @@ import useAxiosPrivate from "./hooks/useAxiosPrivate";
 import { Leaderboards } from "./components/Leaderboards";
 import { MainContent } from "./components/MainContent";
 import { PlayDemo } from "./components/PlayDemo";
+import { HowToPlay } from "./components/HowToPlay";
 
 const App = () => {
   const { auth } = useAuth();
