@@ -41,7 +41,9 @@
   width: 5%;
 }
 
-.question-counter {
+.question-counter,
+.location-reset,
+.htp-button {
   background-color: rgba(1, 2, 1, 0.6) !important;
   opacity: 0.9;
   border-radius: 5px;
@@ -54,16 +56,12 @@
 }
 
 .location-reset {
-  background-color: rgba(1, 2, 1, 0.6) !important;
-  opacity: 0.9;
-  border-radius: 5px;
-  color: white;
-  padding: 0.5rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 40px;
   cursor: pointer;
+}
+
+.location-reset:hover,
+.htp-button:hover {
+  background-color: rgba(26, 27, 26, 0.6) !important;
 }
 
 .location-reset img {
@@ -71,8 +69,17 @@
   filter: invert(100%);
 }
 
-.location-reset:hover {
-  background-color: rgba(26, 27, 26, 0.6) !important;
+.htp-button {
+  padding: 0;
+  height: 30px;
+  cursor: pointer;
+  width: 50%;
+  margin-left: auto;
+}
+
+.htp-button img {
+  height: 70%;
+  filter: invert(100%);
 }
 
 .street-view-container {

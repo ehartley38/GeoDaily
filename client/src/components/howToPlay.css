@@ -1,0 +1,49 @@
+.htp-container {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  width: 40%;
+  height: 70%;
+  z-index: 20;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  border-radius: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: -1rem 2rem 2rem 2rem;
+  overflow: auto;
+  text-align: center;
+}
+
+.htp-container .logo {
+  width: 25%;
+}
+
+.htp-container .close-btn {
+  position: absolute;
+  right: 0;
+  width: 7%;
+  margin: 0.2rem;
+  cursor: pointer;
+}
+
+.htp-container h1 {
+  font-size: 2rem;
+  font-weight: 600;
+  /* margin: 1rem; */
+}
+
+.htp-container h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0 1rem 0 1rem;
+  transform: rotate(12deg);
+}
+
+.step {
+  display: flex;
+  align-items: center;
+  /* width: 90%; */
+  margin-bottom: 1rem;
+}

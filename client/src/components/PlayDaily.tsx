@@ -9,6 +9,7 @@ import { latLng } from "../customTypings/latLng";
 import useUserData from "../hooks/useUserData";
 import "./playDaily.css";
 import IMAGES from "../images/images";
+import { HowToPlay } from "./HowToPlay";
 
 type submitResponseType = {
   distance: number;
@@ -36,6 +37,7 @@ export const PlayDaily = () => {
     useState<latLng | null>(null);
   const [streetViewInstance, setStreetViewInstance] =
     useState<google.maps.StreetViewPanorama | null>(null);
+  const [displayHowToPlay, setDisplayHowToPlay] = useState<boolean>(false);
 
   useEffect(() => {
     const getSubmissionData = async () => {
@@ -209,6 +211,12 @@ export const PlayDaily = () => {
             <div className="location-reset" onClick={handlePositionReset}>
               <img src={IMAGES.undo}></img>
             </div>
+            <div
+              className="htp-button"
+              onClick={() => setDisplayHowToPlay(true)}
+            >
+              <img src={IMAGES.help}></img>
+            </div>
           </div>
         </div>
 
@@ -234,6 +242,10 @@ export const PlayDaily = () => {
             handleSeeSummary={handleSeeSummary}
             questionNo={questionNo!}
           />
+        )}
+
+        {displayHowToPlay && (
+          <HowToPlay setDisplayHowToPlay={setDisplayHowToPlay} />
         )}
       </div>
     </>
