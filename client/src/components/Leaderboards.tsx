@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import "./leaderboards.css";
+import { Loading } from "./Loading";
 
 type TopDailyType = {
   playerId: string;
@@ -36,64 +37,93 @@ export const Leaderboards = () => {
   const [selectedTimeframe, setSelectedTimeframe] = useState<TimeframeType>("");
   // const [userType, setUserType] = useState<UserType>("all");
   const [isUserScopeFriend, setIsUserScopeFriend] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
     getTopDaily(isUserScopeFriend);
   }, []);
 
   const getTopDaily = async (friendScope: boolean) => {
-    const res = await axiosPrivate.post(
-      "/leaderboards/top-daily",
-      { friendScope },
-      {
-        headers: { "Content-Type": "application/json" },
-        withCredentials: true,
-      }
-    );
+    setIsLoading(true);
+    try {
+      const res = await axiosPrivate.post(
+        "/leaderboards/top-daily",
+        { friendScope },
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      );
 
-    setTopDailyData(res.data.topDaily);
+      setTopDailyData(res.data.topDaily);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const getHighestStreak = async (friendScope: boolean) => {
-    const res = await axiosPrivate.post(
-      "/leaderboards/highest-streak",
-      { friendScope },
-      {
-        headers: { "Content-Type": "application/json" },
-        withCredentials: true,
-      }
-    );
+    setIsLoading(true);
+    try {
+      const res = await axiosPrivate.post(
+        "/leaderboards/highest-streak",
+        { friendScope },
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      );
 
-    setHighestStreakData(res.data.highestStreak);
+      setHighestStreakData(res.data.highestStreak);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const getTotalScoreMonthly = async (friendScope: boolean) => {
-    const res = await axiosPrivate.post(
-      "/leaderboards/total-score/monthly",
-      { friendScope },
-      {
-        headers: { "Content-Type": "application/json" },
-        withCredentials: true,
-      }
-    );
+    setIsLoading(true);
+    try {
+      const res = await axiosPrivate.post(
+        "/leaderboards/total-score/monthly",
+        { friendScope },
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      );
 
-    setTotalScoreData(res.data.totalScoreMonthly);
+      setTotalScoreData(res.data.totalScoreMonthly);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const getTotalScoreAllTime = async (friendScope: boolean) => {
-    const res = await axiosPrivate.post(
-      "/leaderboards/total-score/all-time",
-      { friendScope },
-      {
-        headers: { "Content-Type": "application/json" },
-        withCredentials: true,
-      }
-    );
+    setIsLoading(true);
+    try {
+      const res = await axiosPrivate.post(
+        "/leaderboards/total-score/all-time",
+        { friendScope },
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      );
 
-    setTotalScoreData(res.data.totalScoreAllTime);
+      setTotalScoreData(res.data.totalScoreAllTime);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  // Check what leaderboard data to fetch
+  // Identify what leaderboard data to fetch
   const leaderboardRouter = async (
     type: LeaderboardType,
     timeframe: TimeframeType,
@@ -224,55 +254,59 @@ export const Leaderboards = () => {
             )}
           </div>
           <div className="leaderboard-card-inner-lower">
-            <div className="leaderboard-data">
-              {topDailyData && selectedType === "topDaily" ? (
-                topDailyData.map((submission, i) => (
-                  <div className="submission" key={i}>
-                    <div>{`${i + 1} ${submission.player.username}`}</div>
-                    <div>{submission.totalScore}</div>
-                  </div>
-                ))
-              ) : (
-                <></>
-              )}
+            {isLoading ? (
+              <Loading isFullPage={false} />
+            ) : (
+              <div className="leaderboard-data">
+                {topDailyData && selectedType === "topDaily" ? (
+                  topDailyData.map((submission, i) => (
+                    <div className="submission" key={i}>
+                      <div>{`${i + 1} ${submission.player.username}`}</div>
+                      <div>{submission.totalScore}</div>
+                    </div>
+                  ))
+                ) : (
+                  <></>
+                )}
 
-              {highestStreakData && selectedType === "highestStreak" ? (
-                highestStreakData.map((user, i) => (
-                  <div className="submission" key={i}>
-                    <div>{`${i + 1} ${user.username}`}</div>
-                    <div>{user.challengeStreak}</div>
-                  </div>
-                ))
-              ) : (
-                <></>
-              )}
+                {highestStreakData && selectedType === "highestStreak" ? (
+                  highestStreakData.map((user, i) => (
+                    <div className="submission" key={i}>
+                      <div>{`${i + 1} ${user.username}`}</div>
+                      <div>{user.challengeStreak}</div>
+                    </div>
+                  ))
+                ) : (
+                  <></>
+                )}
 
-              {totalScoreData &&
-              selectedType === "totalScore" &&
-              selectedTimeframe === "allTime" ? (
-                totalScoreData.map((user, i) => (
-                  <div className="submission" key={i}>
-                    <div>{`${i + 1} ${user.username}`}</div>
-                    <div>{user.totalScoreSum}</div>
-                  </div>
-                ))
-              ) : (
-                <></>
-              )}
+                {totalScoreData &&
+                selectedType === "totalScore" &&
+                selectedTimeframe === "allTime" ? (
+                  totalScoreData.map((user, i) => (
+                    <div className="submission" key={i}>
+                      <div>{`${i + 1} ${user.username}`}</div>
+                      <div>{user.totalScoreSum}</div>
+                    </div>
+                  ))
+                ) : (
+                  <></>
+                )}
 
-              {totalScoreData &&
-              selectedType === "totalScore" &&
-              selectedTimeframe === "monthly" ? (
-                totalScoreData.map((user, i) => (
-                  <div className="submission" key={i}>
-                    <div>{`${i + 1} ${user.username}`}</div>
-                    <div>{user.totalScoreSum}</div>
-                  </div>
-                ))
-              ) : (
-                <></>
-              )}
-            </div>
+                {totalScoreData &&
+                selectedType === "totalScore" &&
+                selectedTimeframe === "monthly" ? (
+                  totalScoreData.map((user, i) => (
+                    <div className="submission" key={i}>
+                      <div>{`${i + 1} ${user.username}`}</div>
+                      <div>{user.totalScoreSum}</div>
+                    </div>
+                  ))
+                ) : (
+                  <></>
+                )}
+              </div>
+            )}
           </div>
         </div>
       </div>
