@@ -30,6 +30,7 @@
   align-items: center;
   flex: 1;
   padding: 0.5rem;
+  box-shadow: var(--main-box-shadow);
 }
 
 .popup-content h1 {
