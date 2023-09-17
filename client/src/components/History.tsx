@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { SubmissionPanel } from "./SubmissionPanel";
 import "./history.css";
 import ReactPaginate from "react-paginate";
+import { Loading } from "./Loading";
 
 type SubmissionsProps = {
   currentItems: challengeSubmission[] | null;
@@ -31,6 +32,7 @@ export const History = () => {
   const [pageCount, setPageCount] = useState<number>(0);
   const [itemOffset, setItemOffset] = useState<number>(0);
   const itemsPerPage = 10;
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchSubmissionHistory = async () => {
@@ -49,6 +51,8 @@ export const History = () => {
         }
       } catch (err) {
         console.log(err);
+      } finally {
+        setIsLoading(false);
       }
     };
     fetchSubmissionHistory();
@@ -59,7 +63,6 @@ export const History = () => {
       const endOffSet = itemOffset + itemsPerPage;
       setCurrentItems(submissionHistory?.slice(itemOffset, endOffSet));
       setPageCount(Math.ceil(submissionHistory?.length / itemsPerPage));
-      console.log(submissionHistory?.slice(itemOffset, endOffSet));
     }
   }, [itemOffset, itemsPerPage, submissionHistory]);
 
@@ -69,6 +72,14 @@ export const History = () => {
       setItemOffset(newOffset);
     }
   };
+
+  if (isLoading)
+    return (
+      <div className="history-page">
+        <h1>History</h1>
+        <Loading isFullPage={false} />
+      </div>
+    );
 
   return (
     <div className="history-page">
