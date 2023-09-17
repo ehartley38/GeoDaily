@@ -3,20 +3,24 @@ import { Response } from "express";
 import { customRequest } from "../customTypings/customRequest";
 const prisma = new PrismaClient();
 const usersRouter = require("express").Router();
-const verifyRoles = require("../middleware/verifyRoles");
+import { verifyRoles } from "../middleware/verifyRoles";
 
-usersRouter.get("/", async (req: customRequest, res: Response) => {
-  try {
-    const users = await prisma.userAccount.findMany();
-    res.status(200).json(users).end();
-  } catch (err) {
-    console.log(err);
+usersRouter.get(
+  "/",
+  verifyRoles(["ADMIN"]),
+  async (req: customRequest, res: Response) => {
+    try {
+      const users = await prisma.userAccount.findMany();
+      res.status(200).json(users).end();
+    } catch (err) {
+      console.log(err);
+    }
   }
-});
+);
 
 usersRouter.get(
   "/data",
-  verifyRoles.verifyRoles(["BASIC"]),
+  verifyRoles(["BASIC"]),
   async (req: customRequest, res: Response) => {
     try {
       const userData = await prisma.userAccount.findUnique({
@@ -44,6 +48,7 @@ usersRouter.get(
 // Get all a users incoming friend requests
 usersRouter.get(
   "/get-friend-requests",
+  verifyRoles(["BASIC"]),
   async (req: customRequest, res: Response) => {
     try {
       const friendRequests = await prisma.friendRequest.findMany({
@@ -67,6 +72,7 @@ usersRouter.get(
 // Send a friend request
 usersRouter.post(
   "/send-friend-request",
+  verifyRoles(["BASIC"]),
   async (req: customRequest, res: Response) => {
     const body = req.body;
     const user = req.user;
@@ -149,6 +155,7 @@ usersRouter.post(
 
 usersRouter.post(
   "/accept-friend-request",
+  verifyRoles(["BASIC"]),
   async (req: customRequest, res: Response) => {
     const body = req.body;
     const user = req.user;
@@ -208,6 +215,7 @@ usersRouter.post(
 
 usersRouter.post(
   "/reject-friend-request",
+  verifyRoles(["BASIC"]),
   async (req: customRequest, res: Response) => {
     const body = req.body;
 

@@ -3,29 +3,15 @@ import { customRequest } from "../customTypings/customRequest";
 
 import { PrismaClient } from "@prisma/client";
 import { getValidStreetView } from "../utils/getValidStreetView";
+import { verifyRoles } from "../middleware/verifyRoles";
 
 const prisma = new PrismaClient({});
 const challengesRouter = require("express").Router();
 
-// Get the current challenge (Hard-code id for now)
-challengesRouter.get("/", async (req: customRequest, res: Response) => {
-  try {
-    const challenge = await prisma.challenge.findUnique({
-      where: {
-        id: "e86566c6-a510-48ae-bf62-84bafe5d839c",
-      },
-      include: {
-        questions: true,
-      },
-    });
-
-    res.status(200).json(challenge);
-  } catch (err) {}
-});
-
 // Get a users challenge submission for current challenge
 challengesRouter.get(
   "/current-submission",
+  verifyRoles(["BASIC"]),
   async (req: customRequest, res: Response) => {
     try {
       const currentChallenge = await prisma.challenge.findFirst({
@@ -58,6 +44,7 @@ challengesRouter.get(
 // Check if a user has completed the current challenge (return isComplete)
 challengesRouter.get(
   "/current-submission/isComplete",
+  verifyRoles(["BASIC"]),
   async (req: customRequest, res: Response) => {
     try {
       const currentChallenge = await prisma.challenge.findFirst({
@@ -89,27 +76,32 @@ challengesRouter.get(
 );
 
 // Get a users submission history for all challenges
-challengesRouter.get("/history", async (req: customRequest, res: Response) => {
-  try {
-    // I cant seem to work out how to order by a nested property...
-    const submissionHistory = await prisma.challengeSubmission.findMany({
-      where: {
-        playerId: req.user.id,
-        isComplete: true,
-      },
-      include: {
-        parentChallenge: true,
-      },
-    });
-    return res.status(200).json(submissionHistory.reverse());
-  } catch (err) {
-    console.log(err);
+challengesRouter.get(
+  "/history",
+  verifyRoles(["BASIC"]),
+  async (req: customRequest, res: Response) => {
+    try {
+      // I cant seem to work out how to order by a nested property...
+      const submissionHistory = await prisma.challengeSubmission.findMany({
+        where: {
+          playerId: req.user.id,
+          isComplete: true,
+        },
+        include: {
+          parentChallenge: true,
+        },
+      });
+      return res.status(200).json(submissionHistory.reverse());
+    } catch (err) {
+      console.log(err);
+    }
   }
-});
+);
 
 // Get a users submission history for a specific challenge
 challengesRouter.get(
   "/summary/:challengeId",
+  verifyRoles(["BASIC"]),
   async (req: customRequest, res: Response) => {
     const challengeId = req.params.challengeId;
     try {
@@ -140,29 +132,34 @@ challengesRouter.get(
 );
 
 // Create a new challenge
-challengesRouter.post("/", async (req: customRequest, res: Response) => {
-  const body = req.body;
+challengesRouter.post(
+  "/",
+  verifyRoles(["ADMIN"]),
+  async (req: customRequest, res: Response) => {
+    const body = req.body;
 
-  const challengeData = {
-    startDate: new Date(),
-    endDate: new Date(new Date().setFullYear(new Date().getFullYear() + 1)),
-  };
+    const challengeData = {
+      startDate: new Date(),
+      endDate: new Date(new Date().setFullYear(new Date().getFullYear() + 1)),
+    };
 
-  try {
-    const challenge = await prisma.challenge.create({
-      data: challengeData,
-    });
+    try {
+      const challenge = await prisma.challenge.create({
+        data: challengeData,
+      });
 
-    res.status(201).json(challenge);
-  } catch (err) {
-    console.log(err);
-    res.status(400).json(err);
+      res.status(201).json(challenge);
+    } catch (err) {
+      console.log(err);
+      res.status(400).json(err);
+    }
   }
-});
+);
 
 // Create a new daily challenge
 challengesRouter.post(
   "/create-daily",
+  verifyRoles(["ADMIN"]),
   async (req: customRequest, res: Response) => {
     const challengeData = {
       startDate: new Date(),

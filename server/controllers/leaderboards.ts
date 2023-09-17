@@ -2,6 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import { customRequest } from "../customTypings/customRequest";
 import { Request, Response } from "express";
 import { Sql } from "@prisma/client/runtime";
+import { verifyRoles } from "../middleware/verifyRoles";
 
 const prisma = new PrismaClient({});
 const leaderboardsRouter = require("express").Router();
@@ -9,6 +10,7 @@ const leaderboardsRouter = require("express").Router();
 // Get top daily scores
 leaderboardsRouter.post(
   "/top-daily",
+  verifyRoles(["BASIC"]),
   async (req: customRequest, res: Response) => {
     const isFriendScope = req.body.friendScope;
     const user = req.user;
@@ -79,6 +81,7 @@ leaderboardsRouter.post(
 // Get highest streak
 leaderboardsRouter.post(
   "/highest-streak",
+  verifyRoles(["BASIC"]),
   async (req: customRequest, res: Response) => {
     const isFriendScope = req.body.friendScope;
     const user = req.user;
@@ -127,6 +130,7 @@ leaderboardsRouter.post(
 // Prisma does not as of yet support lookup queries on groupBy, so need to use queryRaw
 leaderboardsRouter.post(
   "/total-score/all-time",
+  verifyRoles(["BASIC"]),
   async (req: customRequest, res: Response) => {
     const isFriendScope = req.body.friendScope;
     const user = req.user;
@@ -180,6 +184,7 @@ leaderboardsRouter.post(
 // Prisma does not as of yet support lookup queries on groupBy, so need to use queryRaw
 leaderboardsRouter.post(
   "/total-score/monthly",
+  verifyRoles(["BASIC"]),
   async (req: customRequest, res: Response) => {
     const isFriendScope = req.body.friendScope;
     const user = req.user;

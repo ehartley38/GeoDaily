@@ -3,70 +3,80 @@ import { customRequest } from "../customTypings/customRequest";
 
 import { PrismaClient } from "@prisma/client";
 import { haversine_distance } from "../utils/haversineDistance";
+import { verifyRoles } from "../middleware/verifyRoles";
 
 const prisma = new PrismaClient({});
 const playRouter = require("express").Router();
 
-playRouter.get("/", async (req: customRequest, res: Response) => {
-  try {
-    // Get the current challenge
-    const currentChallenge = await prisma.challenge.findFirst({
-      where: {
-        isActive: true,
-      },
-      include: {
-        questions: true,
-      },
-    });
-
-    if (!currentChallenge) {
-      return res.status(400).json({ msg: "No current challenge found" });
-    }
-
-    // Fetch or Create a challenge submission
-    let challengeSubmission = null;
-    challengeSubmission = await prisma.challengeSubmission.findFirst({
-      where: {
-        parentChallengeId: currentChallenge!.id,
-        playerId: req.user.id,
-      },
-      include: {
-        questionsAnswered: true,
-      },
-    });
-
-    if (!challengeSubmission) {
-      challengeSubmission = await prisma.challengeSubmission.create({
-        data: {
-          playerId: req.user.id,
-          parentChallengeId: currentChallenge!.id,
+playRouter.get(
+  "/",
+  verifyRoles(["BASIC"]),
+  async (req: customRequest, res: Response) => {
+    try {
+      // Get the current challenge
+      const currentChallenge = await prisma.challenge.findFirst({
+        where: {
+          isActive: true,
+        },
+        include: {
+          questions: true,
         },
       });
-    }
 
-    res.status(200).json({ currentChallenge, challengeSubmission });
-  } catch (err) {
-    console.log(err);
+      if (!currentChallenge) {
+        return res.status(400).json({ msg: "No current challenge found" });
+      }
+
+      // Fetch or Create a challenge submission
+      let challengeSubmission = null;
+      challengeSubmission = await prisma.challengeSubmission.findFirst({
+        where: {
+          parentChallengeId: currentChallenge!.id,
+          playerId: req.user.id,
+        },
+        include: {
+          questionsAnswered: true,
+        },
+      });
+
+      if (!challengeSubmission) {
+        challengeSubmission = await prisma.challengeSubmission.create({
+          data: {
+            playerId: req.user.id,
+            parentChallengeId: currentChallenge!.id,
+          },
+        });
+      }
+
+      res.status(200).json({ currentChallenge, challengeSubmission });
+    } catch (err) {
+      console.log(err);
+    }
   }
-});
+);
 
 // Get time until the next challenge is available
-playRouter.get("/time-remaining", (req: Request, res: Response) => {
-  const currentDate = new Date();
+playRouter.get(
+  "/time-remaining",
+  verifyRoles(["BASIC"]),
+  (req: Request, res: Response) => {
+    const currentDate = new Date();
 
-  // Set the time to midnight tonight
-  const midnightTonight = new Date();
-  midnightTonight.setHours(24, 0, 0, 0); // Set hours, minutes, seconds, and milliseconds to 0 for midnight
+    // Set the time to midnight tonight
+    const midnightTonight = new Date();
+    midnightTonight.setHours(24, 0, 0, 0); // Set hours, minutes, seconds, and milliseconds to 0 for midnight
 
-  // Calculate the time remaining in milliseconds
-  const timeRemaining = midnightTonight.getTime() - currentDate.getTime();
+    // Calculate the time remaining in milliseconds
+    const timeRemaining = midnightTonight.getTime() - currentDate.getTime();
 
-  res.status(200).json({ timeRemaining });
-});
+    res.status(200).json({ timeRemaining });
+  }
+);
 
 // Submit a question in a challenge
 playRouter.post(
   "/submitQuestion",
+  verifyRoles(["BASIC"]),
   async (req: customRequest, res: Response) => {
     const body = req.body;
     let distance,

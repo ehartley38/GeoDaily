@@ -15,7 +15,7 @@ const registerRouter = require("./controllers/register");
 const refreshTokensRouter = require("./controllers/refreshTokens");
 const logoutRouter = require("./controllers/logout");
 const challengesRouter = require("./controllers/challenges");
-const questionsRouter = require("./controllers/questions");
+// const questionsRouter = require("./controllers/questions");
 const playRouter = require("./controllers/play");
 const leaderboardsRouter = require("./controllers/leaderboards");
 const playDemoRouter = require("./controllers/playDemo");
@@ -37,7 +37,7 @@ app.use("/api/playDemo", playDemoRouter);
 app.use(verifyJWT.verifyJWT);
 app.use("/api/users", usersRouter);
 app.use("/api/challenges", challengesRouter);
-app.use("/api/questions", questionsRouter);
+// app.use("/api/questions", questionsRouter);
 app.use("/api/play", playRouter);
 app.use("/api/leaderboards", leaderboardsRouter);
 

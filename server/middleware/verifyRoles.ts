@@ -1,7 +1,7 @@
 import { Response, NextFunction } from "express";
 import { customRequest } from "../customTypings/customRequest";
 
-const verifyRoles = (allowedRoles: string[]) => {
+export const verifyRoles = (allowedRoles: string[]) => {
   return (req: customRequest, res: Response, next: NextFunction) => {
     if (!req?.roleList) return res.sendStatus(401);
     const rolesArray = [...allowedRoles];
@@ -18,5 +18,3 @@ const verifyRoles = (allowedRoles: string[]) => {
     next();
   };
 };
-
-module.exports = { verifyRoles };
