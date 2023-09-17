@@ -3,6 +3,7 @@ import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import "./friends.css";
 import IMAGES from "../images/images";
 import axios, { AxiosError } from "axios";
+import { Loading } from "./Loading";
 
 type friendRequestType = {
   id: string;
@@ -21,42 +22,59 @@ export const Friends = () => {
   const [friendRequests, setFriendRequests] = useState<
     friendRequestType[] | null
   >();
-
   const [friendData, setFriendData] = useState<friendDataType[] | null>();
   const [showPopup, setShowPopup] = useState<boolean>(false);
   const [friendRequestResMsg, setFriendRequestResMsg] = useState<string>("");
   const [friendRequestResMsgErr, setFriendRequestResMsgErr] =
     useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [displaySubmitSpinner, setDisplaySubmitSpinner] =
+    useState<boolean>(false);
 
   useEffect(() => {
     const getFriendRequestData = async () => {
-      const friendRequests = await axiosPrivate.get(
-        "/users/get-friend-requests",
-        {
-          headers: { "Content-Type": "application/json" },
-          withCredentials: true,
-        }
-      );
+      try {
+        const friendRequests = await axiosPrivate.get(
+          "/users/get-friend-requests",
+          {
+            headers: { "Content-Type": "application/json" },
+            withCredentials: true,
+          }
+        );
 
-      setFriendRequests(friendRequests.data);
+        setFriendRequests(friendRequests.data);
+      } catch (err) {
+        console.log(err);
+      }
     };
 
     const getFriendData = async () => {
-      const friendData = await axiosPrivate.get("/users/data", {
-        headers: { "Content-Type": "application/json" },
-        withCredentials: true,
-      });
+      try {
+        const friendData = await axiosPrivate.get("/users/data", {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        });
 
-      setFriendData(friendData.data.friends);
+        setFriendData(friendData.data.friends);
+      } catch (err) {
+        console.log(err);
+      }
     };
 
-    getFriendRequestData();
-    getFriendData();
+    try {
+      getFriendRequestData();
+      getFriendData();
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setIsLoading(false);
+    }
   }, []);
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     setFriendRequestResMsg("");
+    setDisplaySubmitSpinner(true);
     try {
       const friendRequestResponse = await axiosPrivate.post(
         "/users/send-friend-request",
@@ -74,6 +92,8 @@ export const Friends = () => {
       } else {
         setFriendRequestResMsgErr("Error");
       }
+    } finally {
+      setDisplaySubmitSpinner(false);
     }
   };
 
@@ -150,7 +170,7 @@ export const Friends = () => {
         <img src={IMAGES.closeWindow} onClick={handleClosePopup}></img>
         <div className="popup-content">
           <h1>Add Friend</h1>
-          <form className="search-username" onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit}>
             {/* <label htmlFor="search">Search friends by username</label> */}
             <input
               type="text"
@@ -159,7 +179,12 @@ export const Friends = () => {
               value={username}
               onChange={({ target }) => handleUsernameChange(target)}
             ></input>
-            <button type="submit">Go</button>
+            <button
+              type="submit"
+              className={`${displaySubmitSpinner ? "cursor-loading" : ""}`}
+            >
+              Go
+            </button>
           </form>
           {friendRequestResMsgErr ? (
             <div className="error-msg">{friendRequestResMsgErr}</div>
@@ -191,6 +216,7 @@ export const Friends = () => {
             </div>
             <div className="friends-card-inner-lower">
               <div className="friends-card-data">
+                {isLoading && <Loading isFullPage={false} />}
                 {friendData &&
                   friendData.map((user: any) => (
                     <div key={user.id} className="friend">
@@ -206,6 +232,7 @@ export const Friends = () => {
           <div className="friends-card-inner-upper">Friend Requests</div>
           <div className="friends-card-inner-lower">
             <div className="friend-request-card-data">
+              {isLoading && <Loading isFullPage={false} />}
               {friendRequests &&
                 friendRequests.map((request: any) => (
                   <div key={request.id}>
