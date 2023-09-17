@@ -38,6 +38,8 @@ export const PlayDaily = () => {
   const [streetViewInstance, setStreetViewInstance] =
     useState<google.maps.StreetViewPanorama | null>(null);
   const [displayHowToPlay, setDisplayHowToPlay] = useState<boolean>(false);
+  const [displayLoadingCursor, setDisplayLoadingCursor] =
+    useState<boolean>(false);
 
   useEffect(() => {
     const getSubmissionData = async () => {
@@ -147,6 +149,7 @@ export const PlayDaily = () => {
   const handleSubmit = async (e: any) => {
     const question = questions![0];
     setMarkerPlaced(false);
+    setDisplayLoadingCursor(true);
 
     try {
       const submitResponse = await axiosPrivate.post(
@@ -169,6 +172,8 @@ export const PlayDaily = () => {
       setSubmitResponseData(submitResponse.data);
     } catch (err) {
       console.log(err);
+    } finally {
+      setDisplayLoadingCursor(false);
     }
   };
 
@@ -205,7 +210,8 @@ export const PlayDaily = () => {
           </div>
           <div className="top-ui-right">
             <div className="question-counter">
-              {`${questionNo} / ${currentChallenge.questions.length}`}
+              {questionNo &&
+                `${questionNo} / ${currentChallenge.questions.length}`}
             </div>
 
             <div className="location-reset" onClick={handlePositionReset}>
@@ -227,7 +233,13 @@ export const PlayDaily = () => {
               Submit
             </div>
           ) : (
-            <div className="submit-answer">Submit</div>
+            <div
+              className={`submit-answer  ${
+                displayLoadingCursor ? "cursor-loading" : ""
+              }`}
+            >
+              Submit
+            </div>
           )}
         </div>
 

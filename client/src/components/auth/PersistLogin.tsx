@@ -3,6 +3,7 @@ import { useRefreshToken } from "../../hooks/useRefreshToken";
 import useAuth from "../../hooks/useAuth";
 import { Outlet } from "react-router-dom";
 import { AuthType } from "../../customTypings/auth";
+import { Loading } from "../Loading";
 
 export const PersistLogin = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -36,6 +37,14 @@ export const PersistLogin = () => {
   }, []);
 
   return (
-    <>{!persist ? <Outlet /> : isLoading ? <p>Loading...</p> : <Outlet />}</>
+    <>
+      {!persist ? (
+        <Outlet />
+      ) : isLoading ? (
+        <Loading isFullPage={true} />
+      ) : (
+        <Outlet />
+      )}
+    </>
   );
 };

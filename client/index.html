@@ -30,10 +30,55 @@
       margin: 0;
       padding: 0;
     }
+    .loading-container-index {
+      width: 100%;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
   </style>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
+    <div id="root">
+      <div class="loading-container-index">
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <style>
+            .spinner_qM83 {
+              animation: spinner_8HQG 1.05s infinite;
+            }
+            .spinner_oXPr {
+              animation-delay: 0.1s;
+            }
+            .spinner_ZTLf {
+              animation-delay: 0.2s;
+            }
+            @keyframes spinner_8HQG {
+              0%,
+              57.14% {
+                animation-timing-function: cubic-bezier(0.33, 0.66, 0.66, 1);
+                transform: translate(0);
+              }
+              28.57% {
+                animation-timing-function: cubic-bezier(0.33, 0, 0.66, 0.33);
+                transform: translateY(-6px);
+              }
+              100% {
+                transform: translate(0);
+              }
+            }
+          </style>
+          <circle class="spinner_qM83" cx="4" cy="12" r="3" />
+          <circle class="spinner_qM83 spinner_oXPr" cx="12" cy="12" r="3" />
+          <circle class="spinner_qM83 spinner_ZTLf" cx="20" cy="12" r="3" />
+        </svg>
+      </div>
+    </div>
     <script type="module" src="/src/index.tsx"></script>
   </body>
 </html>

@@ -10,6 +10,7 @@ import "./Dashboard.css";
 import { Timer } from "./Timer";
 import { UserDataType } from "../customTypings/userData";
 import useUserData from "../hooks/useUserData";
+import { Loading } from "./Loading";
 
 type ResponseDataType = {
   currentChallenge: currentChallenge;
@@ -84,7 +85,7 @@ export const Dashboard = () => {
   };
 
   if (isLoading) {
-    return <div>Loading!</div>;
+    return <Loading isFullPage={true} />;
   }
 
   return (

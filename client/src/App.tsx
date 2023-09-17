@@ -22,6 +22,7 @@ import { Leaderboards } from "./components/Leaderboards";
 import { MainContent } from "./components/MainContent";
 import { PlayDemo } from "./components/PlayDemo";
 import { HowToPlay } from "./components/HowToPlay";
+import { Loading } from "./components/Loading";
 
 const App = () => {
   const { auth } = useAuth();

@@ -4,12 +4,15 @@ import { NavBar } from "./NavBar";
 import "./mainContent.css";
 import IMAGES from "../images/images";
 import { PlayDaily } from "./PlayDaily";
+import { Loading } from "./Loading";
 
 export const MainContent = () => {
   const { userData } = useUserData();
   const location = useLocation();
 
   const isNotPlayDailyRoute = !location.pathname.startsWith("/play-daily");
+
+  if (!userData) return <Loading isFullPage={true} />;
 
   return (
     <>

@@ -130,6 +130,10 @@
   cursor: pointer;
 }
 
+.cursor-loading {
+  cursor: wait;
+}
+
 .results-summary-container {
   position: fixed;
   left: 50%;

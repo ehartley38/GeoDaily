@@ -31,6 +31,8 @@ export const PlayDemo = () => {
     useState<google.maps.StreetViewPanorama | null>(null);
   const [demoToken, setDemoToken] = useState<string | null>();
   const [displayHowToPlay, setDisplayHowToPlay] = useState<boolean>(false);
+  const [displayLoadingCursor, setDisplayLoadingCursor] =
+    useState<boolean>(false);
 
   useEffect(() => {
     // Get current challenge from unprotected endpoint
@@ -213,7 +215,13 @@ export const PlayDemo = () => {
               Submit
             </div>
           ) : (
-            <div className="submit-answer">Submit</div>
+            <div
+              className={`submit-answer  ${
+                displayLoadingCursor ? "cursor-loading" : ""
+              }`}
+            >
+              Submit
+            </div>
           )}
         </div>
 
