@@ -164,6 +164,31 @@ export const Friends = () => {
     setFriendRequestResMsg("");
   };
 
+  const handleRemoveFriend = async (friendId: string) => {
+    console.log("Friend data: ", friendData);
+
+    try {
+      const removeFriend = await axiosPrivate.post(
+        "/users/remove-friend",
+        { friendId },
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      );
+
+      // Update friend state
+      const updatedFriends = friendData?.filter(
+        (friend) => friend.id !== friendId
+      );
+      console.log("Updated data: ", updatedFriends);
+
+      setFriendData(updatedFriends);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <>
       <div className={showPopup ? "add-friend-popup" : "add-friend-popup-hide"}>
@@ -202,7 +227,7 @@ export const Friends = () => {
         <div className="friends-card-wrapper">
           <div className="friends-card">
             <div className="friends-card-inner-upper">
-              <div>Your Friends</div>
+              <div>Your Friends ({friendData && friendData.length})</div>
               <div
                 className="add-friend-button"
                 onClick={() => setShowPopup(true)}
@@ -220,8 +245,15 @@ export const Friends = () => {
                 {friendData &&
                   friendData.map((user: any) => (
                     <div key={user.id} className="friend">
-                      <img src={IMAGES.profilePicture} alt="avatar"></img>
-                      <div>{user.username}</div>
+                      <div className="friend-left">
+                        <img src={IMAGES.profilePicture} alt="avatar"></img>
+                        <div>{user.username}</div>
+                      </div>
+                      <div className="friend-right">
+                        <button onClick={() => handleRemoveFriend(user.id)}>
+                          Remove
+                        </button>
+                      </div>
                     </div>
                   ))}
               </div>

@@ -234,4 +234,41 @@ usersRouter.post(
   }
 );
 
+usersRouter.post(
+  "/remove-friend",
+  verifyRoles(["BASIC"]),
+  async (req: customRequest, res: Response) => {
+    const body = req.body;
+    const user = req.user;
+
+    try {
+      await prisma.userAccount.update({
+        where: { id: user.id },
+        data: {
+          friends: {
+            disconnect: {
+              id: body.friendId,
+            },
+          },
+        },
+      });
+
+      await prisma.userAccount.update({
+        where: { id: body.friendId },
+        data: {
+          friends: {
+            disconnect: {
+              id: user.id,
+            },
+          },
+        },
+      });
+
+      return res.status(200).json({ msg: "Friend removed" });
+    } catch (err) {
+      console.log(err);
+    }
+  }
+);
+
 module.exports = usersRouter;

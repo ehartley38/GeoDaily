@@ -78,6 +78,7 @@
   padding: 2rem;
   display: flex;
   gap: 3rem;
+  overflow: auto;
 }
 
 .friends-card-wrapper {
@@ -145,21 +146,31 @@
 
 .friends-card-data {
   height: 100%;
-  /* overflow: auto; */
   display: flex;
-  flex-wrap: wrap;
-  gap: 2rem;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 .friend {
-  width: 30%;
+  width: 100%;
   height: 25%;
   display: flex;
   justify-content: space-between;
+  gap: 0.5rem;
   align-items: center;
   border: 1px solid black;
-  border-radius: 0.5rem;
+  border-radius: 0.3rem;
   padding: 1rem;
+}
+
+.friend-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-weight: 600;
+}
+
+.friend-right {
 }
 
 .friend img {
