@@ -246,7 +246,11 @@ export const Friends = () => {
                   friendData.map((user: any) => (
                     <div key={user.id} className="friend">
                       <div className="friend-left">
-                        <img src={IMAGES.profilePicture} alt="avatar"></img>
+                        <img
+                          src={IMAGES.profilePicture}
+                          alt="avatar"
+                          className="friend-avatar"
+                        ></img>
                         <div>{user.username}</div>
                       </div>
                       <div className="friend-right">

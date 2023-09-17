@@ -161,6 +161,7 @@
   border: 1px solid black;
   border-radius: 0.3rem;
   padding: 1rem;
+  box-shadow: var(--main-box-shadow);
 }
 
 .friend-left {
@@ -170,11 +171,12 @@
   font-weight: 600;
 }
 
-.friend-right {
+.friend-avatar {
+  width: 10%;
+  border-radius: 5px;
 }
 
-.friend img {
-  width: 3rem;
+.friend-right {
 }
 
 .friend-request-card-wrapper {
