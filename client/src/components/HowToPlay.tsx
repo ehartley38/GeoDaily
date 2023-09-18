@@ -2,15 +2,15 @@ import IMAGES from "../images/images";
 import "./howToPlay.css";
 
 type HowToPlayProps = {
-  setDisplayHowToPlay: React.Dispatch<React.SetStateAction<boolean>>;
+  handleHtpClose: () => void;
 };
 
-export const HowToPlay = ({ setDisplayHowToPlay }: HowToPlayProps) => {
+export const HowToPlay = ({ handleHtpClose }: HowToPlayProps) => {
   return (
     <div className="htp-container">
       <img
         src={IMAGES.closeWindow}
-        onClick={() => setDisplayHowToPlay(false)}
+        onClick={handleHtpClose}
         className="close-btn"
       ></img>
       <img src={IMAGES.logo} className="logo"></img>

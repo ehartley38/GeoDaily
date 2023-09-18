@@ -205,6 +205,16 @@ export const PlayDaily = () => {
     }
   };
 
+  const handleHtpOpen = () => {
+    setIsBackgroundDisabled(true);
+    setDisplayHowToPlay(true);
+  };
+
+  const handleHtpClose = () => {
+    setIsBackgroundDisabled(false);
+    setDisplayHowToPlay(false);
+  };
+
   return (
     <>
       <div className="play-daily-container">
@@ -222,10 +232,7 @@ export const PlayDaily = () => {
             <div className="location-reset" onClick={handlePositionReset}>
               <img src={IMAGES.undo}></img>
             </div>
-            <div
-              className="htp-button"
-              onClick={() => setDisplayHowToPlay(true)}
-            >
+            <div className="htp-button" onClick={handleHtpOpen}>
               <img src={IMAGES.help}></img>
             </div>
           </div>
@@ -261,9 +268,7 @@ export const PlayDaily = () => {
           />
         )}
 
-        {displayHowToPlay && (
-          <HowToPlay setDisplayHowToPlay={setDisplayHowToPlay} />
-        )}
+        {displayHowToPlay && <HowToPlay handleHtpClose={handleHtpClose} />}
       </div>
     </>
   );

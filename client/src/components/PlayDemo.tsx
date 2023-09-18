@@ -7,6 +7,7 @@ import { Loader } from "@googlemaps/js-api-loader";
 import IMAGES from "../images/images";
 import { ResultsSummary } from "./ResultsSummary";
 import { HowToPlay } from "./HowToPlay";
+import useIsBackgroundDisabled from "../hooks/useIsBackgroundDisabled";
 
 type submitResponseType = {
   distance: number;
@@ -18,6 +19,7 @@ type submitResponseType = {
 export const PlayDemo = () => {
   const [currentChallenge, setCurrentChallenge] = useState<question[]>();
   const navigate = useNavigate();
+  const { setIsBackgroundDisabled } = useIsBackgroundDisabled();
   const streetviewDivRef = useRef<HTMLDivElement | null>(null);
   const mapDivRef = useRef<HTMLDivElement | null>(null);
   const [question, setQuestion] = useState<question | null>(null);
@@ -150,6 +152,7 @@ export const PlayDemo = () => {
   // Handle the submit of a question
   const handleSubmit = async (e: any) => {
     setMarkerPlaced(false);
+    setIsBackgroundDisabled(true);
 
     try {
       // Create temp submission
@@ -172,11 +175,13 @@ export const PlayDemo = () => {
     // Redirect to sign-up page
 
     setSubmitResponseData(null);
+    setIsBackgroundDisabled(false);
     navigate("/register?displayRegMsg=true");
   };
 
   const handleGoBack = () => {
     navigate("/login");
+    setIsBackgroundDisabled(false);
   };
 
   const handlePositionReset = () => {
