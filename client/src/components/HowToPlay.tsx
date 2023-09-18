@@ -29,7 +29,7 @@ export const HowToPlay = ({
         </div>
         <div className="step">
           <h2>#2</h2>
-          <div>Use clues to identify where you are</div>
+          <div>Navigate around and use clues to identify where you are</div>
         </div>
         <div className="step">
           <h2>#3</h2>
@@ -37,7 +37,7 @@ export const HowToPlay = ({
         </div>
       </div>
       <div className="end-summary">
-        A new challenge is generated at midnight (GMT) each day.
+        A new challenge is generated at midnight (GMT) each day!
       </div>
       {isFirstTimeDemo && (
         <div className="lets-go-button" onClick={handleHtpLetsGo}>
