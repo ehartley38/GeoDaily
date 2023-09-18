@@ -52,7 +52,9 @@ export const MainContent = () => {
           </div>
         </div>
       ) : (
-        <PlayDaily />
+        <div className={isBackgroundDisabled ? "pointer-events-disabled" : ""}>
+          <PlayDaily />
+        </div>
       )}
     </>
   );

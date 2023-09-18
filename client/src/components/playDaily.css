@@ -144,6 +144,7 @@
   transform: translate(-50%, -50%);
   display: flex;
   border: 2px solid black;
+  pointer-events: all;
 }
 
 .result-map-container {

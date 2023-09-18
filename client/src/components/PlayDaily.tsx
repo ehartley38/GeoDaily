@@ -10,6 +10,7 @@ import useUserData from "../hooks/useUserData";
 import "./playDaily.css";
 import IMAGES from "../images/images";
 import { HowToPlay } from "./HowToPlay";
+import useIsBackgroundDisabled from "../hooks/useIsBackgroundDisabled";
 
 type submitResponseType = {
   distance: number;
@@ -19,6 +20,7 @@ type submitResponseType = {
 
 export const PlayDaily = () => {
   const { state } = useLocation();
+  const { setIsBackgroundDisabled } = useIsBackgroundDisabled();
   const navigate = useNavigate();
   const axiosPrivate = useAxiosPrivate();
   const streetviewDivRef = useRef<HTMLDivElement | null>(null);
@@ -150,6 +152,7 @@ export const PlayDaily = () => {
     const question = questions![0];
     setMarkerPlaced(false);
     setDisplayLoadingCursor(true);
+    setIsBackgroundDisabled(true);
 
     try {
       const submitResponse = await axiosPrivate.post(
@@ -184,10 +187,12 @@ export const PlayDaily = () => {
     setQuestions(updatedQuestions);
     setSubmitResponseData(null);
     setQuestionNo(questionNo! + 1);
+    setIsBackgroundDisabled(false);
   };
 
   const handleSeeSummary = () => {
     navigate(`/challenge-history/`);
+    setIsBackgroundDisabled(false);
   };
 
   const handleGoBack = () => {
