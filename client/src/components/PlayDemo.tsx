@@ -19,7 +19,8 @@ type submitResponseType = {
 export const PlayDemo = () => {
   const [currentChallenge, setCurrentChallenge] = useState<question[]>();
   const navigate = useNavigate();
-  const { setIsBackgroundDisabled } = useIsBackgroundDisabled();
+  const { setIsBackgroundDisabled, isBackgroundDisabled } =
+    useIsBackgroundDisabled();
   const streetviewDivRef = useRef<HTMLDivElement | null>(null);
   const mapDivRef = useRef<HTMLDivElement | null>(null);
   const [question, setQuestion] = useState<question | null>(null);
@@ -71,6 +72,7 @@ export const PlayDemo = () => {
     } else {
       setDisplayHowToPlay(true);
     }
+    setIsBackgroundDisabled(true);
   }, []);
 
   useEffect(() => {
@@ -190,9 +192,25 @@ export const PlayDemo = () => {
     }
   };
 
+  const handleHtpOpen = () => {
+    setIsBackgroundDisabled(true);
+    setDisplayHowToPlay(true);
+  };
+
+  const handleHtpClose = () => {
+    setDisplayHowToPlay(false);
+    setIsBackgroundDisabled(false);
+  };
+
   return (
     <>
-      <div className="play-daily-container">
+      <div
+        className={
+          isBackgroundDisabled
+            ? "play-daily-container pointer-events-disabled"
+            : "play-daily-container"
+        }
+      >
         <div className="street-view-container" ref={streetviewDivRef}></div>
         <div className="top-ui-wrapper">
           <div className="go-back" onClick={handleGoBack}>
@@ -204,10 +222,7 @@ export const PlayDemo = () => {
             <div className="location-reset" onClick={handlePositionReset}>
               <img src={IMAGES.undo}></img>
             </div>
-            <div
-              className="htp-button"
-              onClick={() => setDisplayHowToPlay(true)}
-            >
+            <div className="htp-button" onClick={handleHtpOpen}>
               <img src={IMAGES.help}></img>
             </div>
           </div>
@@ -242,9 +257,7 @@ export const PlayDemo = () => {
           />
         )}
 
-        {displayHowToPlay && (
-          <HowToPlay setDisplayHowToPlay={setDisplayHowToPlay} />
-        )}
+        {displayHowToPlay && <HowToPlay handleHtpClose={handleHtpClose} />}
       </div>
     </>
   );
