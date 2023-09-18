@@ -86,3 +86,9 @@
     height: 50%;
   }
 }
+
+@media (width > 1200px) {
+  .htp-container {
+    width: 30%;
+  }
+}
