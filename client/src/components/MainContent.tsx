@@ -6,9 +6,11 @@ import IMAGES from "../images/images";
 import { PlayDaily } from "./PlayDaily";
 import { Loading } from "./Loading";
 import { useEffect } from "react";
+import useIsBackgroundDisabled from "../hooks/useIsBackgroundDisabled";
 
 export const MainContent = () => {
   const { userData } = useUserData();
+  const { isBackgroundDisabled } = useIsBackgroundDisabled();
   const location = useLocation();
 
   const isNotPlayDailyRoute = !location.pathname.startsWith("/play-daily");
@@ -18,7 +20,13 @@ export const MainContent = () => {
   return (
     <>
       {isNotPlayDailyRoute ? (
-        <div className="main-container">
+        <div
+          className={
+            isBackgroundDisabled
+              ? "main-container pointer-events-disabled"
+              : "main-container"
+          }
+        >
           <header className="main-header">
             <img className="logo" src={IMAGES.logo}></img>
             <div className="user-info-wrapper">

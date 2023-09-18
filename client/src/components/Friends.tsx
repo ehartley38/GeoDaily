@@ -4,6 +4,7 @@ import "./friends.css";
 import IMAGES from "../images/images";
 import axios, { AxiosError } from "axios";
 import { Loading } from "./Loading";
+import useIsBackgroundDisabled from "../hooks/useIsBackgroundDisabled";
 
 type friendRequestType = {
   id: string;
@@ -18,6 +19,7 @@ type friendDataType = {
 
 export const Friends = () => {
   const axiosPrivate = useAxiosPrivate();
+  const { setIsBackgroundDisabled } = useIsBackgroundDisabled();
   const [username, setUsername] = useState<string>("");
   const [friendRequests, setFriendRequests] = useState<
     friendRequestType[] | null
@@ -151,11 +153,17 @@ export const Friends = () => {
     }
   };
 
+  const handleOpenPopup = () => {
+    setShowPopup(true);
+    setIsBackgroundDisabled(true);
+  };
+
   const handleClosePopup = () => {
     setShowPopup(false);
     setUsername("");
     setFriendRequestResMsg("");
     setFriendRequestResMsgErr("");
+    setIsBackgroundDisabled(false);
   };
 
   const handleUsernameChange = (target: EventTarget & HTMLInputElement) => {
@@ -230,10 +238,7 @@ export const Friends = () => {
               <div className="your-friends-title">
                 Your Friends ({friendData && friendData.length})
               </div>
-              <div
-                className="add-friend-button"
-                onClick={() => setShowPopup(true)}
-              >
+              <div className="add-friend-button" onClick={handleOpenPopup}>
                 <img
                   src={IMAGES.addFriendsIcon}
                   className="add-friend-icon"

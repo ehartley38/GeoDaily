@@ -6,6 +6,7 @@ import { BrowserRouter } from "react-router-dom";
 import { AuthProvider } from "./context/AuthProvider";
 import React from "react";
 import { UserDataProvider } from "./context/UserDataProvider";
+import { IsBackgroundDisabledProvider } from "./context/isBackgroundDisabledProvider";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -14,9 +15,11 @@ root.render(
   <BrowserRouter>
     <AuthProvider>
       <UserDataProvider>
-        <React.StrictMode>
-          <App />
-        </React.StrictMode>
+        <IsBackgroundDisabledProvider>
+          <React.StrictMode>
+            <App />
+          </React.StrictMode>
+        </IsBackgroundDisabledProvider>
       </UserDataProvider>
     </AuthProvider>
   </BrowserRouter>

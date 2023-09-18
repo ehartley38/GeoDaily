@@ -23,10 +23,12 @@ import { MainContent } from "./components/MainContent";
 import { PlayDemo } from "./components/PlayDemo";
 import { HowToPlay } from "./components/HowToPlay";
 import { Loading } from "./components/Loading";
+import useIsBackgroundDisabled from "./hooks/useIsBackgroundDisabled";
 
 const App = () => {
   const { auth } = useAuth();
   const { setUserData } = useUserData();
+  const { setIsBackgroundDisabled } = useIsBackgroundDisabled();
   const authType = auth as AuthType;
   const axiosPrivate = useAxiosPrivate();
 

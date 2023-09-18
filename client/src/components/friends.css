@@ -10,6 +10,7 @@
   display: flex;
   justify-content: center;
   z-index: 1;
+  pointer-events: all;
 }
 
 .add-friend-popup-hide {
