@@ -5,6 +5,7 @@ import "./mainContent.css";
 import IMAGES from "../images/images";
 import { PlayDaily } from "./PlayDaily";
 import { Loading } from "./Loading";
+import { useEffect } from "react";
 
 export const MainContent = () => {
   const { userData } = useUserData();
@@ -12,7 +13,7 @@ export const MainContent = () => {
 
   const isNotPlayDailyRoute = !location.pathname.startsWith("/play-daily");
 
-  if (!userData) return <Loading isFullPage={true} />;
+  // if (!userData) return <Loading isFullPage={true} />;
 
   return (
     <>
