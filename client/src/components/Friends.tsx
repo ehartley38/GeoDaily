@@ -227,7 +227,9 @@ export const Friends = () => {
         <div className="friends-card-wrapper">
           <div className="friends-card">
             <div className="friends-card-inner-upper">
-              <div>Your Friends ({friendData && friendData.length})</div>
+              <div className="your-friends-title">
+                Your Friends ({friendData && friendData.length})
+              </div>
               <div
                 className="add-friend-button"
                 onClick={() => setShowPopup(true)}
@@ -251,6 +253,7 @@ export const Friends = () => {
                           alt="avatar"
                           className="friend-avatar"
                         ></img>
+
                         <div>{user.username}</div>
                       </div>
                       <div className="friend-right">

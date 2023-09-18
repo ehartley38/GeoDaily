@@ -56,3 +56,9 @@
   font-weight: 600;
   text-align: center;
 }
+
+@media (height > 600px) {
+  .htp-container {
+    height: 50%;
+  }
+}

@@ -156,6 +156,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 0.5rem;
 }
 
 .result-info-container h1 {
@@ -180,6 +181,8 @@
   height: 10%;
   width: 50%;
   transition: transform 0.2s ease-in-out;
+  margin-top: auto;
+  /* padding: 0.1rem; */
 }
 
 .summary {
@@ -189,4 +192,26 @@
 .next-question:hover {
   background-color: rgb(140, 219, 44);
   transform: scale(1.1);
+}
+
+@media (width > 1350px) and (height > 700px) {
+  .result-info-container h1 {
+    font-size: 2rem;
+  }
+
+  .result-info-container p {
+    font-size: 1.5rem;
+  }
+}
+
+@media (width < 1152px) {
+  .summary {
+    width: 80%;
+  }
+}
+
+@media (width < 900px) {
+  .summary {
+    font-size: 0.8rem;
+  }
 }

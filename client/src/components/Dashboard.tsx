@@ -11,6 +11,7 @@ import { Timer } from "./Timer";
 import { UserDataType } from "../customTypings/userData";
 import useUserData from "../hooks/useUserData";
 import { Loading } from "./Loading";
+import IMAGES from "../images/images";
 
 type ResponseDataType = {
   currentChallenge: currentChallenge;

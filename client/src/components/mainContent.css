@@ -16,21 +16,14 @@
 
 .main-header {
   display: flex;
-  align-items: center;
+  /* align-items: center; */
   justify-content: space-between;
-  height: 80px;
   margin: 0 0.5rem 0.5rem 0.5rem;
 }
 
 .logo {
-  width: 10rem;
-  margin: 2.5rem 0 0 0;
-}
-
-.website-name {
-  font-size: 3rem;
-  margin: 0.5rem;
-  font-weight: 800;
+  width: 13%;
+  margin: 0.5rem 0 0 1rem;
 }
 
 .user-info {
