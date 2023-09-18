@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { Dashboard } from "./components/Dashboard";
 import { Login } from "./components/auth/Login";
 import { Register } from "./components/auth/Register";
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import { RequireAuth } from "./components/auth/RequireAuth";
 import useAuth from "./hooks/useAuth";
 import { SignOut } from "./components/auth/SignOut";

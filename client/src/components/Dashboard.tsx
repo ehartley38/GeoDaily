@@ -115,39 +115,14 @@ export const Dashboard = () => {
               setTimeRemaining={setTimeRemaining}
             />
             <div className="streak">
-              Current DailyGeo streak: <span>{userData?.challengeStreak}</span>
+              Current DailyGeo streak:{" "}
+              <span>
+                {userData?.challengeStreak}{" "}
+                {userData.challengeStreak > 0 ? "🔥" : ""}
+              </span>
             </div>
           </div>
         </div>
-
-        {/* <h1>Dashboard</h1>
-      <SignOut />
-      <h2>{userData?.username}</h2>
-      <div className="p-2">
-        <button
-          className="relative rounded px-5 py-2.5 overflow-hidden group bg-green-500 hover:bg-gradient-to-r hover:from-green-500 hover:to-green-400 text-white hover:ring-2 hover:ring-offset-2 hover:ring-green-400 transition-all ease-out duration-300"
-          onClick={handlePlay}
-        >
-          <span className="absolute right-0 w-8 h-32 -mt-12 transition-all duration-1000 transform translate-x-12 bg-white opacity-10 rotate-12 group-hover:-translate-x-40 ease"></span>
-          <span className="relative">Play</span>
-        </button>
-
-        <button
-          className="relative rounded px-5 py-2.5 overflow-hidden group bg-green-500 hover:bg-gradient-to-r hover:from-green-500 hover:to-green-400 text-white hover:ring-2 hover:ring-offset-2 hover:ring-green-400 transition-all ease-out duration-300"
-          onClick={() => navigate("friends")}
-        >
-          <span className="absolute right-0 w-8 h-32 -mt-12 transition-all duration-1000 transform translate-x-12 bg-white opacity-10 rotate-12 group-hover:-translate-x-40 ease"></span>
-          <span className="relative">Friends</span>
-        </button>
-
-        <button
-          className="relative rounded px-5 py-2.5 overflow-hidden group bg-green-500 hover:bg-gradient-to-r hover:from-green-500 hover:to-green-400 text-white hover:ring-2 hover:ring-offset-2 hover:ring-green-400 transition-all ease-out duration-300"
-          onClick={() => navigate("/challenge-history")}
-        >
-          <span className="absolute right-0 w-8 h-32 -mt-12 transition-all duration-1000 transform translate-x-12 bg-white opacity-10 rotate-12 group-hover:-translate-x-40 ease"></span>
-          <span className="relative">History</span>
-        </button>
-      </div> */}
       </>
     )
   );
