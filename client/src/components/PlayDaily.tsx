@@ -268,7 +268,9 @@ export const PlayDaily = () => {
           />
         )}
 
-        {displayHowToPlay && <HowToPlay handleHtpClose={handleHtpClose} />}
+        {displayHowToPlay && (
+          <HowToPlay handleHtpClose={handleHtpClose} isFirstTimeDemo={false} />
+        )}
       </div>
     </>
   );

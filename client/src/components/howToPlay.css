@@ -58,6 +58,29 @@
   text-align: center;
 }
 
+/* https://codepen.io/halvo/pen/NdwgNP */
+
+.lets-go-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  background-color: aqua;
+  width: 30%;
+  height: 15%;
+  background-color: #339dff;
+  color: #fff;
+  border-radius: 50px;
+  transition: all 0.3s;
+  margin-top: 1rem;
+}
+
+.lets-go-button:hover {
+  background: #fff;
+  color: #339dff;
+  box-shadow: 0 4px 4px rgba(83, 100, 255, 0.32);
+}
+
 @media (height > 600px) {
   .htp-container {
     height: 50%;

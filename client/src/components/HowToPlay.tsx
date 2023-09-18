@@ -3,9 +3,15 @@ import "./howToPlay.css";
 
 type HowToPlayProps = {
   handleHtpClose: () => void;
+  handleHtpLetsGo?: () => void;
+  isFirstTimeDemo: boolean;
 };
 
-export const HowToPlay = ({ handleHtpClose }: HowToPlayProps) => {
+export const HowToPlay = ({
+  handleHtpClose,
+  handleHtpLetsGo,
+  isFirstTimeDemo,
+}: HowToPlayProps) => {
   return (
     <div className="htp-container">
       <img
@@ -31,8 +37,13 @@ export const HowToPlay = ({ handleHtpClose }: HowToPlayProps) => {
         </div>
       </div>
       <div className="end-summary">
-        A new challenge is generated at midnight (GMT) each day!
+        A new challenge is generated at midnight (GMT) each day.
       </div>
+      {isFirstTimeDemo && (
+        <div className="lets-go-button" onClick={handleHtpLetsGo}>
+          Lets go!
+        </div>
+      )}
     </div>
   );
 };

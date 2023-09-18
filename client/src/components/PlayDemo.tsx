@@ -36,6 +36,7 @@ export const PlayDemo = () => {
   const [displayHowToPlay, setDisplayHowToPlay] = useState<boolean>(false);
   const [displayLoadingCursor, setDisplayLoadingCursor] =
     useState<boolean>(false);
+  const [isFirstTimeDemo, setIsFirstTimeDemo] = useState<boolean>(false);
 
   useEffect(() => {
     // Get current challenge from unprotected endpoint
@@ -70,6 +71,7 @@ export const PlayDemo = () => {
     if (token) {
       getSubmitResponseData(token);
     } else {
+      setIsFirstTimeDemo(true);
       setDisplayHowToPlay(true);
     }
     setIsBackgroundDisabled(true);
@@ -200,6 +202,13 @@ export const PlayDemo = () => {
   const handleHtpClose = () => {
     setDisplayHowToPlay(false);
     setIsBackgroundDisabled(false);
+    setIsFirstTimeDemo(true);
+  };
+
+  const handleHtpLetsGo = () => {
+    setIsFirstTimeDemo(false);
+    setDisplayHowToPlay(false);
+    setIsBackgroundDisabled(false);
   };
 
   return (
@@ -257,7 +266,13 @@ export const PlayDemo = () => {
           />
         )}
 
-        {displayHowToPlay && <HowToPlay handleHtpClose={handleHtpClose} />}
+        {displayHowToPlay && (
+          <HowToPlay
+            handleHtpClose={handleHtpClose}
+            isFirstTimeDemo={isFirstTimeDemo}
+            handleHtpLetsGo={handleHtpLetsGo}
+          />
+        )}
       </div>
     </>
   );
