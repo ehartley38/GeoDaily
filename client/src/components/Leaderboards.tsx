@@ -7,6 +7,7 @@ type TopDailyType = {
   playerId: string;
   player: {
     username: string;
+    profilePicture: number;
   };
   totalScore: number;
 };
@@ -15,12 +16,14 @@ type HighestStreakType = {
   id: string;
   username: string;
   challengeStreak: number;
+  profilePicture: number;
 };
 
 type TotalScoreType = {
   id: string;
   username: string;
   totalScoreSum: number;
+  profilePicture: number;
 };
 
 type LeaderboardType = "topDaily" | "totalScore" | "highestStreak";
@@ -261,7 +264,16 @@ export const Leaderboards = () => {
                 {topDailyData && selectedType === "topDaily" ? (
                   topDailyData.map((submission, i) => (
                     <div className="submission" key={i}>
-                      <div>{`${i + 1} ${submission.player.username}`}</div>
+                      <div className="submission-left">
+                        <div>{i + 1}</div>
+                        <img
+                          src={`https://geodaily.s3.eu-west-2.amazonaws.com/avatars/${submission.player.profilePicture}.png`}
+                          alt="avatar"
+                        ></img>
+
+                        <div> {submission.player.username}</div>
+                      </div>
+
                       <div>{submission.totalScore}</div>
                     </div>
                   ))
@@ -272,7 +284,16 @@ export const Leaderboards = () => {
                 {highestStreakData && selectedType === "highestStreak" ? (
                   highestStreakData.map((user, i) => (
                     <div className="submission" key={i}>
-                      <div>{`${i + 1} ${user.username}`}</div>
+                      <div className="submission-left">
+                        <div>{i + 1}</div>
+                        <img
+                          src={`https://geodaily.s3.eu-west-2.amazonaws.com/avatars/${user.profilePicture}.png`}
+                          alt="avatar"
+                        ></img>
+
+                        <div> {user.username}</div>
+                      </div>
+
                       <div>{user.challengeStreak}</div>
                     </div>
                   ))
@@ -285,7 +306,16 @@ export const Leaderboards = () => {
                 selectedTimeframe === "allTime" ? (
                   totalScoreData.map((user, i) => (
                     <div className="submission" key={i}>
-                      <div>{`${i + 1} ${user.username}`}</div>
+                      <div className="submission-left">
+                        <div>{i + 1}</div>
+                        <img
+                          src={`https://geodaily.s3.eu-west-2.amazonaws.com/avatars/${user.profilePicture}.png`}
+                          alt="avatar"
+                        ></img>
+
+                        <div> {user.username}</div>
+                      </div>
+
                       <div>{user.totalScoreSum}</div>
                     </div>
                   ))
@@ -298,7 +328,16 @@ export const Leaderboards = () => {
                 selectedTimeframe === "monthly" ? (
                   totalScoreData.map((user, i) => (
                     <div className="submission" key={i}>
-                      <div>{`${i + 1} ${user.username}`}</div>
+                      <div className="submission-left">
+                        <div>{i + 1}</div>
+                        <img
+                          src={`https://geodaily.s3.eu-west-2.amazonaws.com/avatars/${user.profilePicture}.png`}
+                          alt="avatar"
+                        ></img>
+
+                        <div> {user.username}</div>
+                      </div>
+
                       <div>{user.totalScoreSum}</div>
                     </div>
                   ))

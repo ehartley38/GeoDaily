@@ -127,11 +127,24 @@
 }
 
 .leaderboard-data {
-  height: 100%;
+  /* height: 100%; */
   /* overflow: auto; */
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
 }
 
 .submission {
   display: flex;
   justify-content: space-between;
+}
+
+.submission-left {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.submission-left img {
+  width: 7%;
+  border-radius: 3px;
 }

@@ -60,6 +60,7 @@ leaderboardsRouter.post(
           player: {
             select: {
               username: true,
+              profilePicture: true,
             },
           },
         },
@@ -98,6 +99,7 @@ leaderboardsRouter.post(
           id: true,
           username: true,
           challengeStreak: true,
+          profilePicture: true,
         },
         where: {
           ...(isFriendScope
@@ -146,6 +148,7 @@ leaderboardsRouter.post(
         sqlQuery = prisma.$queryRaw`
           SELECT "UserAccount"."id",
                  "UserAccount"."username",
+                 "UserAccount"."profilePicture",
                  SUM(CAST("ChallengeSubmission"."totalScore" AS BIGINT)) AS "totalScoreSum"
           FROM "UserAccount"
           JOIN "ChallengeSubmission" ON "UserAccount"."id" = "ChallengeSubmission"."playerId"
@@ -160,6 +163,7 @@ leaderboardsRouter.post(
       } else {
         sqlQuery = prisma.$queryRaw`SELECT "UserAccount"."id",
         "UserAccount"."username",
+        "UserAccount"."profilePicture",
         SUM(CAST("ChallengeSubmission"."totalScore" AS BIGINT)) AS "totalScoreSum"
     FROM "UserAccount"
     JOIN "ChallengeSubmission" ON "UserAccount"."id" = "ChallengeSubmission"."playerId"
@@ -199,6 +203,7 @@ leaderboardsRouter.post(
         sqlQuery = prisma.$queryRaw`
           SELECT "UserAccount"."id",
                  "UserAccount"."username",
+                 "UserAccount"."profilePicture",
                  SUM(CAST("ChallengeSubmission"."totalScore" AS BIGINT)) AS "totalScoreSum"
           FROM "UserAccount"
           JOIN "ChallengeSubmission" ON "UserAccount"."id" = "ChallengeSubmission"."playerId"
@@ -214,6 +219,7 @@ leaderboardsRouter.post(
       } else {
         sqlQuery = prisma.$queryRaw`SELECT "UserAccount"."id",
         "UserAccount"."username",
+        "UserAccount"."profilePicture",
         SUM(CAST("ChallengeSubmission"."totalScore" AS BIGINT)) AS "totalScoreSum"
     FROM "UserAccount"
     JOIN "ChallengeSubmission" ON "UserAccount"."id" = "ChallengeSubmission"."playerId"
