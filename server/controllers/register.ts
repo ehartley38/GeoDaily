@@ -20,6 +20,9 @@ registerRouter.post("/", async (req: Request, res: Response) => {
   const saltRounds = 10;
   const passwordHash = await bcrypt.hash(password, saltRounds);
 
+  // Generate random number between 1 and 14 (14 is the number of profile pictures available)
+  const randomProfilePictureNum = Math.floor(Math.random() * 15);
+
   try {
     // Create the user
     const user = await prisma.userAccount.create({
@@ -28,6 +31,7 @@ registerRouter.post("/", async (req: Request, res: Response) => {
         username: username,
         passwordHash: passwordHash,
         roleList: ["BASIC"],
+        profilePicture: randomProfilePictureNum,
       },
     });
 
