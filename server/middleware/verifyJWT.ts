@@ -11,6 +11,7 @@ const verifyJWT = (req: customRequest, res: Response, next: NextFunction) => {
     return res.status(401).json({ error: "Unauthorized" });
   }
   const token = (authHeader as string).split(" ")[1];
+  // console.log(token);
 
   jwt.verify(
     token,

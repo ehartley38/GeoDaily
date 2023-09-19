@@ -163,7 +163,7 @@ export const PlayDaily = () => {
           console.log(err);
         });
     } else if (questions && questions.length === 0) {
-      console.log("Finished");
+      navigate("/");
     }
   }, [questions]);
 
