@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "../../services/axios";
 import useAuth from "../../hooks/useAuth";
+import IMAGES from "../../images/images";
 
 export const Login = () => {
   const [email, setEmail] = useState("");
@@ -43,8 +44,8 @@ export const Login = () => {
 
   return (
     <div className="bg-grey-lighter min-h-screen flex flex-col">
-      <button onClick={() => navigate("/play-demo")}>Try Demo</button>
       <div className="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
+        <img src={IMAGES.logo} className="w-2/4 mb-6"></img>
         <div className="bg-white px-6 py-8 rounded shadow-md text-black w-full">
           <h1 className="mb-8 text-3xl text-center">Login</h1>
           <input
@@ -90,9 +91,13 @@ export const Login = () => {
         </div>
 
         <div className="text-grey-dark mt-6">
-          <p className="no-underline border-b border-blue text-blue">
+          <span className="no-underline border-b border-blue text-blue">
             <Link to="/register">Create an account</Link>
-          </p>
+          </span>
+          <span> or </span>
+          <span className="no-underline border-b border-blue text-blue">
+            <Link to="/play-demo">Try the demo</Link>
+          </span>
         </div>
       </div>
     </div>

@@ -6,6 +6,7 @@ import {
   useNavigate,
   useSearchParams,
 } from "react-router-dom";
+import IMAGES from "../../images/images";
 
 export const Register = () => {
   const [email, setEmail] = useState("");
@@ -46,10 +47,25 @@ export const Register = () => {
   return (
     <div className="bg-grey-lighter min-h-screen flex flex-col">
       <div className="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
+        <img src={IMAGES.logo} className="w-2/4 mb-6"></img>
         <div className="bg-white px-6 py-8 rounded shadow-md text-black w-full">
+          <div className="flex justify-center">
+            <a
+              onClick={() => navigate("/play-demo")}
+              className="inline-flex items-center justify-center w-full px-8 py-4 text-base font-bold leading-6 text-white bg-[rgb(51,157,255)] border border-transparent rounded-full md:w-auto cursor-pointer hover:bg-[rgb(71,177,255)] focus:outline-none focus:ring-2 focus:ring-offset-2"
+            >
+              Play Demo
+            </a>
+          </div>
+
+          {/* Divider */}
+          <div className="my-4 flex items-center before:mt-0.5 before:flex-1 before:border-t before:border-neutral-300 after:mt-0.5 after:flex-1 after:border-t after:border-neutral-300">
+            <p className="mx-4 mb-0 text-center font-semibold">OR</p>
+          </div>
+
           <h1 className="mb-8 text-3xl text-center">Sign up</h1>
           {displaySignupMsg ? (
-            <h2 className="text-center text-amber-300">
+            <h2 className="text-center text-amber-300 mb-4">
               You must create an account to continue playing!
             </h2>
           ) : (
