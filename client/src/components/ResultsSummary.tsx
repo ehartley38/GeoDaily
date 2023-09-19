@@ -1,6 +1,7 @@
 import { Loader } from "@googlemaps/js-api-loader";
 import { useEffect, useRef } from "react";
 import IMAGES from "../images/images";
+import CountUp from "react-countup";
 
 type LatLngType = {
   lat: number;
@@ -114,7 +115,9 @@ export const ResultsSummary = ({
           <p>{Math.round(distance / 1609)} miles</p>
         )}
 
-        <p>{score} points</p>
+        <p>
+          <CountUp end={score} duration={2} /> points
+        </p>
         {isComplete ? (
           <button className="next-question summary" onClick={handleSeeSummary}>
             See Summary
