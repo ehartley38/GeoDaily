@@ -8,10 +8,6 @@ type SubmissionPanelProps = {
 export const SubmissionPanel = ({ submission }: SubmissionPanelProps) => {
   const navigate = useNavigate();
 
-  // const handleClick = () => {
-  //   navigate(submission.parentChallengeId);
-  // };
-
   return (
     <a className="history-submission">
       <div className="history-submission-header">

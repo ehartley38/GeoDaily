@@ -61,9 +61,13 @@ export const PlayDemo = () => {
   useEffect(() => {
     // Get current challenge from unprotected endpoint
     const getCurrentChallenge = async () => {
-      const currentChallenge = await axios.get("playDemo");
-      setCurrentChallenge(currentChallenge.data);
-      setQuestion(currentChallenge.data.currentChallenge.questions[0]);
+      try {
+        const currentChallenge = await axios.get("playDemo");
+        setCurrentChallenge(currentChallenge.data);
+        setQuestion(currentChallenge.data.currentChallenge.questions[0]);
+      } catch (err) {
+        console.log();
+      }
     };
 
     // Get submit response data, if user has a token in local storage.

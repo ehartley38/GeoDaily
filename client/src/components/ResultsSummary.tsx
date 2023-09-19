@@ -49,52 +49,56 @@ export const ResultsSummary = ({
 
     const pathCoords = [correctPos, markerPos];
 
-    loader.load().then(async (loadedGoogle) => {
-      let bounds = new google.maps.LatLngBounds();
-      bounds.extend(correctPos);
-      bounds.extend(markerPos);
+    try {
+      loader.load().then(async (loadedGoogle) => {
+        let bounds = new google.maps.LatLngBounds();
+        bounds.extend(correctPos);
+        bounds.extend(markerPos);
 
-      const mapInstance = new loadedGoogle.maps.Map(
-        resultMapDivRef.current!,
-        mapOptions
-      );
+        const mapInstance = new loadedGoogle.maps.Map(
+          resultMapDivRef.current!,
+          mapOptions
+        );
 
-      // Dashed line
-      mapInstance.fitBounds(bounds);
+        // Dashed line
+        mapInstance.fitBounds(bounds);
 
-      const lineSymbol = {
-        path: "M 0,-1 0,1",
-        strokeOpacity: 1,
-        strokeWeight: 2,
-        scale: 4,
-      };
+        const lineSymbol = {
+          path: "M 0,-1 0,1",
+          strokeOpacity: 1,
+          strokeWeight: 2,
+          scale: 4,
+        };
 
-      const path = new google.maps.Polyline({
-        path: pathCoords,
-        icons: [
-          {
-            icon: lineSymbol,
-            offset: "0",
-            repeat: "20px",
-          },
-        ],
-        strokeColor: "#FF0000",
-        strokeOpacity: 0,
-        strokeWeight: 1,
+        const path = new google.maps.Polyline({
+          path: pathCoords,
+          icons: [
+            {
+              icon: lineSymbol,
+              offset: "0",
+              repeat: "20px",
+            },
+          ],
+          strokeColor: "#FF0000",
+          strokeOpacity: 0,
+          strokeWeight: 1,
+        });
+        path.setMap(mapInstance);
+
+        // Markers
+        new google.maps.Marker({
+          position: correctPos,
+          map: mapInstance,
+        });
+
+        new google.maps.Marker({
+          position: markerPos,
+          map: mapInstance,
+        });
       });
-      path.setMap(mapInstance);
-
-      // Markers
-      new google.maps.Marker({
-        position: correctPos,
-        map: mapInstance,
-      });
-
-      new google.maps.Marker({
-        position: markerPos,
-        map: mapInstance,
-      });
-    });
+    } catch (err) {
+      console.log(err);
+    }
   }, []);
 
   return (
