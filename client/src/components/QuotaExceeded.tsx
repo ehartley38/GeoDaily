@@ -20,7 +20,7 @@ export const QuotaExceeded = ({
       <p>
         This application uses the Google Maps API service to retrieve maps and
         streetview data. For the sake of my wallet, I put a daily quota on the
-        number of requests this website could make to the service each day.
+        number of requests that could be made to the service each day.
       </p>
       <h3>What can I do now?</h3>
       <p>
@@ -34,11 +34,9 @@ export const QuotaExceeded = ({
         </div>
       ) : (
         <div className="lets-go-button" onClick={handleQeHome}>
-          Home
+          Return Home
         </div>
       )}
-
-      <div className="qe-content"></div>
     </div>
   );
 };

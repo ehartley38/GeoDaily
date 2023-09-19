@@ -11,6 +11,8 @@ import "./playDaily.css";
 import IMAGES from "../images/images";
 import { HowToPlay } from "./HowToPlay";
 import useIsBackgroundDisabled from "../hooks/useIsBackgroundDisabled";
+import { useTimeout } from "../hooks/useTimeout";
+import { QuotaExceeded } from "./QuotaExceeded";
 
 type submitResponseType = {
   distance: number;
@@ -42,6 +44,24 @@ export const PlayDaily = () => {
   const [displayHowToPlay, setDisplayHowToPlay] = useState<boolean>(false);
   const [displayLoadingCursor, setDisplayLoadingCursor] =
     useState<boolean>(false);
+  const [displayQuotaExceeded, setDisplayQuotaExceeded] = useState<boolean>();
+
+  // First check if the Google maps quota has been reached. Display error if so
+  const checkQuota = () => {
+    var dismissButton = document.querySelector("button.dismissButton");
+    if (dismissButton) {
+      setDisplayHowToPlay(false);
+      setDisplayQuotaExceeded(true);
+      setIsBackgroundDisabled(true);
+    }
+    if (!dismissButton) return;
+  };
+
+  useTimeout(checkQuota, 1000);
+  useTimeout(checkQuota, 5000);
+  useTimeout(checkQuota, 10000);
+
+  // Main code
 
   useEffect(() => {
     const getSubmissionData = async () => {
@@ -215,6 +235,12 @@ export const PlayDaily = () => {
     setDisplayHowToPlay(false);
   };
 
+  const handleQeHome = () => {
+    setIsBackgroundDisabled(false);
+    setDisplayQuotaExceeded(false);
+    navigate("/");
+  };
+
   return (
     <>
       <div className="play-daily-container">
@@ -270,6 +296,10 @@ export const PlayDaily = () => {
 
         {displayHowToPlay && (
           <HowToPlay handleHtpClose={handleHtpClose} isFirstTimeDemo={false} />
+        )}
+
+        {displayQuotaExceeded && (
+          <QuotaExceeded handleQeHome={handleQeHome} isDemo={false} />
         )}
       </div>
     </>

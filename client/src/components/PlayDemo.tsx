@@ -41,7 +41,7 @@ export const PlayDemo = () => {
   const [displayQuotaExceeded, setDisplayQuotaExceeded] = useState<boolean>();
   const [isFirstTimeDemo, setIsFirstTimeDemo] = useState<boolean>(false);
 
-  // First check if the Google maps quota has been reached. Displauy error if so
+  // First check if the Google maps quota has been reached. Display error if so
   const checkQuota = () => {
     var dismissButton = document.querySelector("button.dismissButton");
     if (dismissButton) {
@@ -55,6 +55,8 @@ export const PlayDemo = () => {
   useTimeout(checkQuota, 1000);
   useTimeout(checkQuota, 5000);
   useTimeout(checkQuota, 10000);
+
+  // Main code
 
   useEffect(() => {
     // Get current challenge from unprotected endpoint
