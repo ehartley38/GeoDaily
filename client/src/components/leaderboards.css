@@ -142,9 +142,12 @@
 .submission-left {
   display: flex;
   gap: 0.5rem;
+  align-items: center;
 }
 
 .submission-left img {
-  width: 7%;
+  width: 1.3rem;
+  height: 1.3rem;
   border-radius: 3px;
+  border: 1px solid black;
 }
