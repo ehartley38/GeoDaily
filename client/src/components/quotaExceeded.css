@@ -1,0 +1,54 @@
+.qe-container {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  width: 45%;
+  height: auto;
+  z-index: 20;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  border-radius: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0rem 2.5rem 2.5rem 2.5rem;
+  overflow: auto;
+  pointer-events: all;
+  border: 1px solid black;
+}
+
+.qe-content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+}
+
+.error-msg {
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 3px 3px 3px 3px;
+  color: #d8000c;
+  background-color: #ffbaba;
+}
+
+.qe-container .logo {
+  width: 35%;
+}
+
+.qe-container h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+@media (height > 600px) {
+  .qe-container {
+    height: 50%;
+  }
+}
+
+@media (width > 1200px) {
+  .qe-container {
+    width: 30%;
+  }
+}

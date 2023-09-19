@@ -7,7 +7,9 @@ import { Loader } from "@googlemaps/js-api-loader";
 import IMAGES from "../images/images";
 import { ResultsSummary } from "./ResultsSummary";
 import { HowToPlay } from "./HowToPlay";
+import { QuotaExceeded } from "./QuotaExceeded";
 import useIsBackgroundDisabled from "../hooks/useIsBackgroundDisabled";
+import { useTimeout } from "../hooks/useTimeout";
 
 type submitResponseType = {
   distance: number;
@@ -36,7 +38,23 @@ export const PlayDemo = () => {
   const [displayHowToPlay, setDisplayHowToPlay] = useState<boolean>(false);
   const [displayLoadingCursor, setDisplayLoadingCursor] =
     useState<boolean>(false);
+  const [displayQuotaExceeded, setDisplayQuotaExceeded] = useState<boolean>();
   const [isFirstTimeDemo, setIsFirstTimeDemo] = useState<boolean>(false);
+
+  // First check if the Google maps quota has been reached. Displauy error if so
+  const checkQuota = () => {
+    var dismissButton = document.querySelector("button.dismissButton");
+    if (dismissButton) {
+      setDisplayHowToPlay(false);
+      setDisplayQuotaExceeded(true);
+      setIsBackgroundDisabled(true);
+    }
+    if (!dismissButton) return;
+  };
+
+  useTimeout(checkQuota, 1000);
+  useTimeout(checkQuota, 5000);
+  useTimeout(checkQuota, 10000);
 
   useEffect(() => {
     // Get current challenge from unprotected endpoint
@@ -211,6 +229,12 @@ export const PlayDemo = () => {
     setIsBackgroundDisabled(false);
   };
 
+  const handleQeRegister = () => {
+    setIsBackgroundDisabled(false);
+    setDisplayQuotaExceeded(false);
+    navigate("/register");
+  };
+
   return (
     <>
       <div
@@ -272,6 +296,10 @@ export const PlayDemo = () => {
             isFirstTimeDemo={isFirstTimeDemo}
             handleHtpLetsGo={handleHtpLetsGo}
           />
+        )}
+
+        {displayQuotaExceeded && (
+          <QuotaExceeded handleQeRegister={handleQeRegister} isDemo={true} />
         )}
       </div>
     </>
