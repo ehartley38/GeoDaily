@@ -22,6 +22,7 @@ model UserAccount {
   challengeStreak        Int                   @default(0)
   challengeSubmissions   ChallengeSubmission[]
   questionSubmissions    QuestionSubmission[]
+  profilePicture         Int                   @default(1)
   friends                UserAccount[]         @relation("friends")
   friendsRelation        UserAccount[]         @relation("friends")
   sentFriendRequests     FriendRequest[]       @relation("sender")

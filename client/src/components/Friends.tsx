@@ -173,8 +173,6 @@ export const Friends = () => {
   };
 
   const handleRemoveFriend = async (friendId: string) => {
-    console.log("Friend data: ", friendData);
-
     try {
       const removeFriend = await axiosPrivate.post(
         "/users/remove-friend",
@@ -254,7 +252,7 @@ export const Friends = () => {
                     <div key={user.id} className="friend">
                       <div className="friend-left">
                         <img
-                          src={IMAGES.profilePicture}
+                          src={`https://geodaily.s3.eu-west-2.amazonaws.com/avatars/${user.profilePicture}.png`}
                           alt="avatar"
                           className="friend-avatar"
                         ></img>

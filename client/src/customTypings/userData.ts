@@ -6,4 +6,5 @@ export type UserDataType = {
   refreshToken: string;
   roleList: string[];
   challengeStreak: number;
+  profilePicture: number;
 };

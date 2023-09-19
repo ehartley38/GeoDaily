@@ -32,7 +32,10 @@ export const MainContent = () => {
             <div className="user-info-wrapper">
               <div className="user-info">
                 <div className="avatar">
-                  <img src={IMAGES.profilePicture} alt="avatar"></img>
+                  <img
+                    src={`https://geodaily.s3.eu-west-2.amazonaws.com/avatars/${userData?.profilePicture}.png`}
+                    alt="avatar"
+                  ></img>
                 </div>
                 <div className="username"> {userData?.username}</div>
               </div>
