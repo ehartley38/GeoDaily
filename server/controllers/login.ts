@@ -11,7 +11,7 @@ loginRouter.post("/", async (req: Request, res: Response) => {
   const { email, password } = req.body;
 
   if (!email || !password)
-    return res.status(401).json({ message: "invalid username or password" });
+    return res.status(401).json({ message: "Invalid username or password" });
 
   try {
     const user = await prisma.userAccount.findUnique({
@@ -24,7 +24,7 @@ loginRouter.post("/", async (req: Request, res: Response) => {
 
     if (!(user && passwordCorrect)) {
       return res.status(401).json({
-        message: "invalid username or password",
+        message: "Invalid username or password",
       });
     }
 

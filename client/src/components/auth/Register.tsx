@@ -15,6 +15,7 @@ export const Register = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [displaySignupMsg, setDisplaySignupMsg] = useState<boolean>(false);
   const [searchParams, setSearchParams] = useSearchParams();
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   let navigate = useNavigate();
   const location = useLocation();
@@ -40,7 +41,7 @@ export const Register = () => {
 
       navigate("/");
     } catch (err: any) {
-      console.log(err.response.data);
+      setErrorMsg(err.response.data.message);
     }
   };
 
@@ -48,6 +49,7 @@ export const Register = () => {
     <div className="bg-grey-lighter min-h-screen flex flex-col">
       <div className="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
         <img src={IMAGES.logo} className="w-2/4 mb-6"></img>
+        {errorMsg && <div className="error-msg">Error: {errorMsg}</div>}
         <div className="bg-white px-6 py-8 rounded shadow-md text-black w-full">
           <div className="flex justify-center">
             <a
@@ -76,7 +78,10 @@ export const Register = () => {
             className="block border border-grey-light w-full p-3 rounded mb-4"
             name="email"
             placeholder="Email"
-            onChange={({ target }) => setEmail(target.value)}
+            onChange={({ target }) => {
+              setEmail(target.value);
+              setErrorMsg(null);
+            }}
           />
 
           <input
@@ -84,7 +89,10 @@ export const Register = () => {
             className="block border border-grey-light w-full p-3 rounded mb-4"
             name="username"
             placeholder="Username"
-            onChange={({ target }) => setUsername(target.value)}
+            onChange={({ target }) => {
+              setUsername(target.value);
+              setErrorMsg(null);
+            }}
           />
 
           <input
@@ -92,14 +100,20 @@ export const Register = () => {
             className="block border border-grey-light w-full p-3 rounded mb-4"
             name="password"
             placeholder="Password"
-            onChange={({ target }) => setPassword(target.value)}
+            onChange={({ target }) => {
+              setPassword(target.value);
+              setErrorMsg(null);
+            }}
           />
           <input
             type="password"
             className="block border border-grey-light w-full p-3 rounded mb-4"
             name="confirmPassword"
             placeholder="Confirm Password"
-            onChange={({ target }) => setConfirmPassword(target.value)}
+            onChange={({ target }) => {
+              setConfirmPassword(target.value);
+              setErrorMsg(null);
+            }}
           />
 
           <button
