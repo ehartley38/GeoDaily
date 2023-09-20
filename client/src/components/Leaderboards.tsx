@@ -265,7 +265,7 @@ export const Leaderboards = () => {
                   topDailyData.map((submission, i) => (
                     <div className="submission" key={i}>
                       <div className="submission-left">
-                        <div>{i + 1}</div>
+                        <div className="submission-number">{i + 1}</div>
                         <img
                           src={`https://geodaily.s3.eu-west-2.amazonaws.com/avatars/${submission.player.profilePicture}.png`}
                           alt="avatar"
@@ -285,7 +285,7 @@ export const Leaderboards = () => {
                   highestStreakData.map((user, i) => (
                     <div className="submission" key={i}>
                       <div className="submission-left">
-                        <div>{i + 1}</div>
+                        <div className="submission-number">{i + 1}</div>
                         <img
                           src={`https://geodaily.s3.eu-west-2.amazonaws.com/avatars/${user.profilePicture}.png`}
                           alt="avatar"
@@ -307,7 +307,7 @@ export const Leaderboards = () => {
                   totalScoreData.map((user, i) => (
                     <div className="submission" key={i}>
                       <div className="submission-left">
-                        <div>{i + 1}</div>
+                        <div className="submission-number">{i + 1}</div>
                         <img
                           src={`https://geodaily.s3.eu-west-2.amazonaws.com/avatars/${user.profilePicture}.png`}
                           alt="avatar"
@@ -329,7 +329,7 @@ export const Leaderboards = () => {
                   totalScoreData.map((user, i) => (
                     <div className="submission" key={i}>
                       <div className="submission-left">
-                        <div>{i + 1}</div>
+                        <div className="submission-number">{i + 1}</div>
                         <img
                           src={`https://geodaily.s3.eu-west-2.amazonaws.com/avatars/${user.profilePicture}.png`}
                           alt="avatar"

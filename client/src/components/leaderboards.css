@@ -145,6 +145,11 @@
   align-items: center;
 }
 
+.submission-number {
+  width: 1.5rem;
+  align-items: right;
+}
+
 .submission-left img {
   width: 1.3rem;
   height: 1.3rem;
