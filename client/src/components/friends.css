@@ -192,6 +192,24 @@
 .friend-right {
 }
 
+.friend-right button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  background-color: rgb(216, 0, 12);
+  color: #fff;
+  border-radius: 5px;
+  transition: all 0.3s;
+  padding: 0.5rem 1rem 0.5rem 1rem;
+}
+
+.friend-right button:hover {
+  background: rgb(246, 30, 42);
+  color: #fff;
+  box-shadow: 0 4px 4px rgba(83, 100, 255, 0.32);
+}
+
 .friend-request-card-wrapper {
   height: 100%;
   width: 30%;
