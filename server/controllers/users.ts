@@ -207,6 +207,7 @@ usersRouter.post(
         msg: "Friend request accepted",
         senderId: sender.id,
         senderUsername: sender.username,
+        senderProfilePicture: sender.profilePicture,
       });
     } catch (err) {
       console.log(err);

@@ -15,6 +15,7 @@ type friendRequestType = {
 type friendDataType = {
   id: string;
   username: string;
+  profilePicture: number;
 };
 
 export const Friends = () => {
@@ -118,6 +119,7 @@ export const Friends = () => {
       updatedFriendData?.push({
         id: responseData.senderId,
         username: senderUsername,
+        profilePicture: responseData.senderProfilePicture,
       });
 
       setFriendData(updatedFriendData);
