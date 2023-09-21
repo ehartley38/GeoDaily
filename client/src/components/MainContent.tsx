@@ -1,4 +1,4 @@
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import useUserData from "../hooks/useUserData";
 import { NavBar } from "./NavBar";
 import "./mainContent.css";
@@ -12,6 +12,7 @@ export const MainContent = () => {
   const { userData } = useUserData();
   const { isBackgroundDisabled } = useIsBackgroundDisabled();
   const location = useLocation();
+  const navigate = useNavigate();
 
   const isNotPlayDailyRoute = !location.pathname.startsWith("/play-daily");
 
