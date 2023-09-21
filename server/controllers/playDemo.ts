@@ -2,7 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import { Request, Response, Router } from "express";
 import { haversine_distance } from "../utils/haversineDistance.ts";
 
-const prisma = new PrismaClient({});
+const prisma = new PrismaClient();
 const playDemoRouter = Router();
 
 playDemoRouter.get("/", async (req: Request, res: Response) => {
@@ -12,12 +12,15 @@ playDemoRouter.get("/", async (req: Request, res: Response) => {
       where: {
         isActive: true,
       },
-      include: {
-        questions: {
-          take: 1,
-        },
-      },
+      include: { questions: true },
+      // Using take: 1 for the questions takes the second question, not the first, which causes inconsistencies. I have had to resort to getting all questions, then splicing them
+      // include: {
+      //   questions: {
+      //     take: 1,
+      //   },
+      // },
     });
+    currentChallenge?.questions.splice(1);
 
     if (!currentChallenge) {
       return res.status(400).json({ msg: "No current challenge found" });

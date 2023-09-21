@@ -68,6 +68,7 @@ registerRouter.post("/", async (req: Request, res: Response) => {
             },
           }
         );
+        console.log("Question submission is", createQuestionSubmission);
       }
     }
 
