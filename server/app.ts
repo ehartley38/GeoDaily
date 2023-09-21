@@ -1,24 +1,25 @@
 import express, { Express } from "express";
-const cors = require("cors");
-const corsOptions = require("./utils/corsOptions");
-const cookieParser = require("cookie-parser");
+import cors from "cors";
+import { corsOptions } from "./utils/corsOptions.ts";
+
+import cookieParser from "cookie-parser";
 const app: Express = express();
 
-import { requestLogger } from "./middleware/requestLogger";
-import { credentials } from "./middleware/credentials";
-const verifyJWT = require("./middleware/verifyJWT");
+import { requestLogger } from "./middleware/requestLogger.ts";
+import { credentials } from "./middleware/credentials.ts";
+import { verifyJWT } from "./middleware/verifyJWT.ts";
 
 /* Routers */
-const usersRouter = require("./controllers/users");
-const loginRouter = require("./controllers/login");
-const registerRouter = require("./controllers/register");
-const refreshTokensRouter = require("./controllers/refreshTokens");
-const logoutRouter = require("./controllers/logout");
-const challengesRouter = require("./controllers/challenges");
+import usersRouter from "./controllers/users.ts";
+import loginRouter from "./controllers/login.ts";
+import registerRouter from "./controllers/register.ts";
+import refreshTokensRouter from "./controllers/refreshTokens.ts";
+import logoutRouter from "./controllers/logout.ts";
+import challengesRouter from "./controllers/challenges.ts";
 // const questionsRouter = require("./controllers/questions");
-const playRouter = require("./controllers/play");
-const leaderboardsRouter = require("./controllers/leaderboards");
-const playDemoRouter = require("./controllers/playDemo");
+import playRouter from "./controllers/play.ts";
+import leaderboardsRouter from "./controllers/leaderboards.ts";
+import playDemoRouter from "./controllers/playDemo.ts";
 
 app.use(credentials);
 app.use(cors(corsOptions));
@@ -34,11 +35,11 @@ app.use("/api/logout", logoutRouter);
 app.use("/api/playDemo", playDemoRouter);
 
 /* Protected routes */
-app.use(verifyJWT.verifyJWT);
+app.use(verifyJWT);
 app.use("/api/users", usersRouter);
 app.use("/api/challenges", challengesRouter);
 // app.use("/api/questions", questionsRouter);
 app.use("/api/play", playRouter);
 app.use("/api/leaderboards", leaderboardsRouter);
 
-module.exports = app;
+export default app;

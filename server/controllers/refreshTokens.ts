@@ -1,17 +1,25 @@
-import { Request, Response } from "express";
+import { Request, Response, Router } from "express";
 import { decodedResult } from "../customTypings/decodedResult";
-const { PrismaClient } = require("@prisma/client");
+import { PrismaClient } from "@prisma/client";
 
-const jwt = require("jsonwebtoken");
-const config = require("../utils/config");
+import jwt from "jsonwebtoken";
+import { config } from "../utils/config.ts";
 const prisma = new PrismaClient();
 
-const refreshTokensRouter = require("express").Router();
+const refreshTokensRouter = Router();
 
 refreshTokensRouter.get("/", async (req: Request, res: Response) => {
   const cookies = req.cookies;
   if (!cookies?.jwt) return res.sendStatus(401);
   const refreshToken = cookies.jwt;
+
+  const accessTokenSecret = config.ACCESS_TOKEN_SECRET;
+  const refreshTokenSecret = config.REFRESH_TOKEN_SECRET;
+  if (!accessTokenSecret || !refreshTokenSecret) {
+    return res.status(500).json({
+      error: "Internal Server Error - Secret's not defined",
+    });
+  }
 
   try {
     const user = await prisma.userAccount.findFirst({
@@ -23,17 +31,22 @@ refreshTokensRouter.get("/", async (req: Request, res: Response) => {
     if (!user) return res.sendStatus(403);
     jwt.verify(
       refreshToken,
-      config.REFRESH_TOKEN_SECRET,
-      (err: any, decoded: decodedResult) => {
+      config.REFRESH_TOKEN_SECRET!,
+      (err: any, decoded: any) => {
+        // Ideally, use type decodedResult instead of any
         if (err || user.email !== decoded.email) return res.sendStatus(404);
         const roleList = user.roleList;
         const userForToken = {
           email: decoded.email,
           roleList: roleList,
         };
-        const accessToken = jwt.sign(userForToken, config.ACCESS_TOKEN_SECRET, {
-          expiresIn: "1d",
-        });
+        const accessToken = jwt.sign(
+          userForToken,
+          config.ACCESS_TOKEN_SECRET!,
+          {
+            expiresIn: "1d",
+          }
+        );
         res.status(200).json({ roleList, accessToken });
       }
     );
@@ -42,4 +55,4 @@ refreshTokensRouter.get("/", async (req: Request, res: Response) => {
   }
 });
 
-module.exports = refreshTokensRouter;
+export default refreshTokensRouter;

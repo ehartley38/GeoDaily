@@ -1,18 +1,17 @@
-import { Request, Response } from "express";
+import { Request, Response, Router } from "express";
 import { customRequest } from "../customTypings/customRequest";
-
 import { PrismaClient } from "@prisma/client";
-import { getValidStreetView } from "../utils/getValidStreetView";
-import { verifyRoles } from "../middleware/verifyRoles";
+import { getValidStreetView } from "../utils/getValidStreetView.ts";
+import { verifyRoles } from "../middleware/verifyRoles.ts";
 
 const prisma = new PrismaClient({});
-const challengesRouter = require("express").Router();
+const challengesRouter = Router();
 
 // Get a users challenge submission for current challenge
 challengesRouter.get(
   "/current-submission",
   verifyRoles(["BASIC"]),
-  async (req: customRequest, res: Response) => {
+  async (req: any, res: Response) => {
     try {
       const currentChallenge = await prisma.challenge.findFirst({
         where: {
@@ -45,7 +44,7 @@ challengesRouter.get(
 challengesRouter.get(
   "/current-submission/isComplete",
   verifyRoles(["BASIC"]),
-  async (req: customRequest, res: Response) => {
+  async (req: any, res: Response) => {
     try {
       const currentChallenge = await prisma.challenge.findFirst({
         where: {
@@ -79,7 +78,7 @@ challengesRouter.get(
 challengesRouter.get(
   "/history",
   verifyRoles(["BASIC"]),
-  async (req: customRequest, res: Response) => {
+  async (req: any, res: Response) => {
     try {
       // I cant seem to work out how to order by a nested property...
       const submissionHistory = await prisma.challengeSubmission.findMany({
@@ -102,7 +101,7 @@ challengesRouter.get(
 challengesRouter.get(
   "/summary/:challengeId",
   verifyRoles(["BASIC"]),
-  async (req: customRequest, res: Response) => {
+  async (req: any, res: Response) => {
     const challengeId = req.params.challengeId;
     try {
       const challengeSubmission = await prisma.challengeSubmission.findFirst({
@@ -135,7 +134,7 @@ challengesRouter.get(
 challengesRouter.post(
   "/",
   verifyRoles(["ADMIN"]),
-  async (req: customRequest, res: Response) => {
+  async (req: any, res: Response) => {
     const body = req.body;
 
     const challengeData = {
@@ -160,7 +159,7 @@ challengesRouter.post(
 challengesRouter.post(
   "/create-daily",
   verifyRoles(["ADMIN"]),
-  async (req: customRequest, res: Response) => {
+  async (req: any, res: Response) => {
     const challengeData = {
       startDate: new Date(),
       endDate: new Date(Date.now() + 3600 * 1000 * 24),
@@ -239,4 +238,4 @@ challengesRouter.post(
   }
 );
 
-module.exports = challengesRouter;
+export default challengesRouter;

@@ -1,6 +1,7 @@
-const axios = require("axios").default;
-let convert = require("xml-js");
-const config = require("./config");
+import axios from "axios";
+
+// let convert = require("xml-js");
+import { config } from "./config.ts";
 
 type CoordinatesType = {
   lat: number;
@@ -9,19 +10,20 @@ type CoordinatesType = {
 
 const getRandomPoint = async () => {
   try {
-    const response = await axios.get(
-      "https://api.3geonames.org/?randomland=yes"
-    );
+    // const response = await axios.get(
+    //   "https://api.3geonames.org/?randomland=yes"
+    // );
 
-    const location = convert.xml2js(response.data, {
-      compact: true,
-      spaces: 4,
-    });
+    // const location = convert.xml2js(response.data, {
+    //   compact: true,
+    //   spaces: 4,
+    // });
 
-    const lat = location.geodata.major.latt._text;
-    const lng = location.geodata.major.longt._text;
+    // const lat = location.geodata.major.latt._text;
+    // const lng = location.geodata.major.longt._text;
 
-    return { lat: lat, lng: lng };
+    // return { lat: lat, lng: lng };
+    return { lat: 1, lng: 1 };
   } catch (err) {
     console.log(err);
   }

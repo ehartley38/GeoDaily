@@ -1,8 +1,8 @@
-import { Request, Response } from "express";
-const { PrismaClient } = require("@prisma/client");
+import { Request, Response, Router } from "express";
+import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
-const logoutRouter = require("express").Router();
+const logoutRouter = Router();
 
 logoutRouter.get("/", async (req: Request, res: Response) => {
   const cookies = req.cookies;
@@ -45,4 +45,4 @@ logoutRouter.get("/", async (req: Request, res: Response) => {
   }
 });
 
-module.exports = logoutRouter;
+export default logoutRouter;

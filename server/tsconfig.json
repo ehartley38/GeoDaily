@@ -6,13 +6,17 @@
 
   "compilerOptions": {
     "lib": ["es2023"],
-    "module": "Node16",
+    "module": "ES6",
     "target": "es2022",
-
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "moduleResolution": "node"
+  },
+  "ts-node": {
+    "esm": true
   }
 }

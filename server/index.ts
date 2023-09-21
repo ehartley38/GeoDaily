@@ -1,5 +1,7 @@
-const app = require("./app");
-const config = require("./utils/config");
+// const app = require("./app");
+import app from "./app.ts";
+
+import { config } from "./utils/config.ts";
 import http from "http";
 
 const server = http.createServer(app);

@@ -1,14 +1,15 @@
-const { PrismaClient } = require("@prisma/client");
+import { PrismaClient } from "@prisma/client";
+import { Request, Router } from "express";
 import { Response } from "express";
 import { customRequest } from "../customTypings/customRequest";
 const prisma = new PrismaClient();
-const usersRouter = require("express").Router();
-import { verifyRoles } from "../middleware/verifyRoles";
+const usersRouter = Router();
+import { verifyRoles } from "../middleware/verifyRoles.ts";
 
 usersRouter.get(
   "/",
   verifyRoles(["ADMIN"]),
-  async (req: customRequest, res: Response) => {
+  async (req: Request, res: Response) => {
     try {
       const users = await prisma.userAccount.findMany();
       res.status(200).json(users).end();
@@ -21,7 +22,7 @@ usersRouter.get(
 usersRouter.get(
   "/data",
   verifyRoles(["BASIC"]),
-  async (req: customRequest, res: Response) => {
+  async (req: any, res: Response) => {
     try {
       const userData = await prisma.userAccount.findUnique({
         where: {
@@ -50,7 +51,7 @@ usersRouter.get(
 usersRouter.get(
   "/get-friend-requests",
   verifyRoles(["BASIC"]),
-  async (req: customRequest, res: Response) => {
+  async (req: any, res: Response) => {
     try {
       const friendRequests = await prisma.friendRequest.findMany({
         where: {
@@ -74,7 +75,7 @@ usersRouter.get(
 usersRouter.post(
   "/send-friend-request",
   verifyRoles(["BASIC"]),
-  async (req: customRequest, res: Response) => {
+  async (req: any, res: Response) => {
     const body = req.body;
     const user = req.user;
 
@@ -157,7 +158,7 @@ usersRouter.post(
 usersRouter.post(
   "/accept-friend-request",
   verifyRoles(["BASIC"]),
-  async (req: customRequest, res: Response) => {
+  async (req: any, res: Response) => {
     const body = req.body;
     const user = req.user;
 
@@ -168,6 +169,8 @@ usersRouter.post(
           username: body.senderUsername,
         },
       });
+
+      if (!sender) return res.status(404).json({ msg: "No sender found" });
 
       // Update the sender and receivers friend list
       const updatedReceiver = await prisma.userAccount.update({
@@ -218,7 +221,7 @@ usersRouter.post(
 usersRouter.post(
   "/reject-friend-request",
   verifyRoles(["BASIC"]),
-  async (req: customRequest, res: Response) => {
+  async (req: any, res: Response) => {
     const body = req.body;
 
     try {
@@ -239,7 +242,7 @@ usersRouter.post(
 usersRouter.post(
   "/remove-friend",
   verifyRoles(["BASIC"]),
-  async (req: customRequest, res: Response) => {
+  async (req: any, res: Response) => {
     const body = req.body;
     const user = req.user;
 
@@ -273,4 +276,4 @@ usersRouter.post(
   }
 );
 
-module.exports = usersRouter;
+export default usersRouter;

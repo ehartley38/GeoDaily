@@ -1,10 +1,11 @@
 import { PrismaClient } from "@prisma/client";
-import { Request, Response } from "express";
+import { Request, Response, Router } from "express";
 
-const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
-const loginRouter = require("express").Router();
-const config = require("../utils/config");
+import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
+const loginRouter = Router();
+import { config } from "../utils/config.ts";
+
 const prisma = new PrismaClient();
 
 loginRouter.post("/", async (req: Request, res: Response) => {
@@ -12,6 +13,14 @@ loginRouter.post("/", async (req: Request, res: Response) => {
 
   if (!email || !password)
     return res.status(401).json({ message: "Invalid username or password" });
+
+  const accessTokenSecret = config.ACCESS_TOKEN_SECRET;
+  const refreshTokenSecret = config.REFRESH_TOKEN_SECRET;
+  if (!accessTokenSecret || !refreshTokenSecret) {
+    return res.status(500).json({
+      error: "Internal Server Error - Secret's not defined",
+    });
+  }
 
   try {
     const user = await prisma.userAccount.findUnique({
@@ -35,13 +44,13 @@ loginRouter.post("/", async (req: Request, res: Response) => {
       roleList: roleList,
     };
 
-    const accessToken = jwt.sign(userForToken, config.ACCESS_TOKEN_SECRET, {
+    const accessToken = jwt.sign(userForToken, config.ACCESS_TOKEN_SECRET!, {
       expiresIn: "1d",
     });
 
     const refreshToken = jwt.sign(
       { email: user.email },
-      config.REFRESH_TOKEN_SECRET,
+      config.REFRESH_TOKEN_SECRET!,
       { expiresIn: "7d" }
     );
 
@@ -67,4 +76,4 @@ loginRouter.post("/", async (req: Request, res: Response) => {
   }
 });
 
-module.exports = loginRouter;
+export default loginRouter;

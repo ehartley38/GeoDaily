@@ -7,6 +7,8 @@ export const SignOut = () => {
 
   const logoutUser = async () => {
     try {
+      console.log("Logout");
+
       await logout();
       navigate("/login");
     } catch (err) {

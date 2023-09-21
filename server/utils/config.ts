@@ -1,4 +1,6 @@
-require("dotenv").config();
+// require("dotenv").config();
+import dotenv from "dotenv";
+dotenv.config();
 
 const PORT = process.env.PORT;
 
@@ -9,10 +11,10 @@ const REFRESH_TOKEN_SECRET = process.env.REFRESH_TOKEN_SECRET;
 
 const MAPS_API_KEY = process.env.MAPS_API_KEY;
 
-module.exports = {
-  PORT,
-  allowedOrigins,
-  ACCESS_TOKEN_SECRET,
-  REFRESH_TOKEN_SECRET,
-  MAPS_API_KEY,
+export const config = {
+  PORT: PORT,
+  allowedOrigins: allowedOrigins,
+  ACCESS_TOKEN_SECRET: ACCESS_TOKEN_SECRET,
+  REFRESH_TOKEN_SECRET: REFRESH_TOKEN_SECRET,
+  MAPS_API_KEY: MAPS_API_KEY,
 };

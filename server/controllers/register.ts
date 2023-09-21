@@ -1,11 +1,10 @@
 import { PrismaClient, Prisma } from "@prisma/client";
-import { Request, Response } from "express";
+import { Request, Response, Router } from "express";
 
-const bcrypt = require("bcrypt");
-const registerRouter = require("express").Router();
+import bcrypt from "bcrypt";
+
 const prisma = new PrismaClient({});
-const jwt = require("jsonwebtoken");
-const config = require("../utils/config");
+const registerRouter = Router();
 
 registerRouter.post("/", async (req: Request, res: Response) => {
   const { email, username, password, confirmPassword, demoToken } = req.body;
@@ -86,4 +85,4 @@ registerRouter.post("/", async (req: Request, res: Response) => {
   }
 });
 
-module.exports = registerRouter;
+export default registerRouter;

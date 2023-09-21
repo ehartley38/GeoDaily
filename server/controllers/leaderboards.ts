@@ -1,17 +1,17 @@
 import { PrismaClient } from "@prisma/client";
 import { customRequest } from "../customTypings/customRequest";
-import { Request, Response } from "express";
+import { Request, Response, Router } from "express";
 import { Sql } from "@prisma/client/runtime";
-import { verifyRoles } from "../middleware/verifyRoles";
+import { verifyRoles } from "../middleware/verifyRoles.ts";
 
 const prisma = new PrismaClient({});
-const leaderboardsRouter = require("express").Router();
+const leaderboardsRouter = Router();
 
 // Get top daily scores
 leaderboardsRouter.post(
   "/top-daily",
   verifyRoles(["BASIC"]),
-  async (req: customRequest, res: Response) => {
+  async (req: any, res: Response) => {
     const isFriendScope = req.body.friendScope;
     const user = req.user;
     let friendIds;
@@ -83,7 +83,7 @@ leaderboardsRouter.post(
 leaderboardsRouter.post(
   "/highest-streak",
   verifyRoles(["BASIC"]),
-  async (req: customRequest, res: Response) => {
+  async (req: any, res: Response) => {
     const isFriendScope = req.body.friendScope;
     const user = req.user;
     let friendIds;
@@ -133,7 +133,7 @@ leaderboardsRouter.post(
 leaderboardsRouter.post(
   "/total-score/all-time",
   verifyRoles(["BASIC"]),
-  async (req: customRequest, res: Response) => {
+  async (req: any, res: Response) => {
     const isFriendScope = req.body.friendScope;
     const user = req.user;
     let friendIds;
@@ -189,7 +189,7 @@ leaderboardsRouter.post(
 leaderboardsRouter.post(
   "/total-score/monthly",
   verifyRoles(["BASIC"]),
-  async (req: customRequest, res: Response) => {
+  async (req: any, res: Response) => {
     const isFriendScope = req.body.friendScope;
     const user = req.user;
     let friendIds;
@@ -241,4 +241,4 @@ leaderboardsRouter.post(
   }
 );
 
-module.exports = leaderboardsRouter;
+export default leaderboardsRouter;

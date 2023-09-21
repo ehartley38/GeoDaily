@@ -1,9 +1,9 @@
 import { PrismaClient } from "@prisma/client";
-import { Request, Response } from "express";
-import { haversine_distance } from "../utils/haversineDistance";
+import { Request, Response, Router } from "express";
+import { haversine_distance } from "../utils/haversineDistance.ts";
 
 const prisma = new PrismaClient({});
-const playDemoRouter = require("express").Router();
+const playDemoRouter = Router();
 
 playDemoRouter.get("/", async (req: Request, res: Response) => {
   try {
@@ -103,4 +103,4 @@ playDemoRouter.post(
   }
 );
 
-module.exports = playDemoRouter;
+export default playDemoRouter;

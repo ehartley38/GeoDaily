@@ -1,8 +1,9 @@
-import { Response, NextFunction } from "express";
+import { Response, NextFunction, Request } from "express";
 import { customRequest } from "../customTypings/customRequest";
 
 export const verifyRoles = (allowedRoles: string[]) => {
-  return (req: customRequest, res: Response, next: NextFunction) => {
+  return (req: any, res: Response, next: NextFunction) => {
+    // Ideally use customRequest instead of any
     if (!req?.roleList) return res.sendStatus(401);
     const rolesArray = [...allowedRoles];
 

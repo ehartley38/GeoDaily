@@ -1,59 +1,55 @@
-import { Request, Response } from "express";
+import { Request, Response, Router } from "express";
 import { customRequest } from "../customTypings/customRequest";
 
 import { PrismaClient } from "@prisma/client";
-import { haversine_distance } from "../utils/haversineDistance";
-import { verifyRoles } from "../middleware/verifyRoles";
+import { haversine_distance } from "../utils/haversineDistance.ts";
+import { verifyRoles } from "../middleware/verifyRoles.ts";
 
 const prisma = new PrismaClient({});
-const playRouter = require("express").Router();
+const playRouter = Router();
 
-playRouter.get(
-  "/",
-  verifyRoles(["BASIC"]),
-  async (req: customRequest, res: Response) => {
-    try {
-      // Get the current challenge
-      const currentChallenge = await prisma.challenge.findFirst({
-        where: {
-          isActive: true,
-        },
-        include: {
-          questions: true,
-        },
-      });
+playRouter.get("/", verifyRoles(["BASIC"]), async (req: any, res: Response) => {
+  try {
+    // Get the current challenge
+    const currentChallenge = await prisma.challenge.findFirst({
+      where: {
+        isActive: true,
+      },
+      include: {
+        questions: true,
+      },
+    });
 
-      if (!currentChallenge) {
-        return res.status(400).json({ msg: "No current challenge found" });
-      }
-
-      // Fetch or Create a challenge submission
-      let challengeSubmission = null;
-      challengeSubmission = await prisma.challengeSubmission.findFirst({
-        where: {
-          parentChallengeId: currentChallenge!.id,
-          playerId: req.user.id,
-        },
-        include: {
-          questionsAnswered: true,
-        },
-      });
-
-      if (!challengeSubmission) {
-        challengeSubmission = await prisma.challengeSubmission.create({
-          data: {
-            playerId: req.user.id,
-            parentChallengeId: currentChallenge!.id,
-          },
-        });
-      }
-
-      res.status(200).json({ currentChallenge, challengeSubmission });
-    } catch (err) {
-      console.log(err);
+    if (!currentChallenge) {
+      return res.status(400).json({ msg: "No current challenge found" });
     }
+
+    // Fetch or Create a challenge submission
+    let challengeSubmission = null;
+    challengeSubmission = await prisma.challengeSubmission.findFirst({
+      where: {
+        parentChallengeId: currentChallenge!.id,
+        playerId: req.user.id,
+      },
+      include: {
+        questionsAnswered: true,
+      },
+    });
+
+    if (!challengeSubmission) {
+      challengeSubmission = await prisma.challengeSubmission.create({
+        data: {
+          playerId: req.user.id,
+          parentChallengeId: currentChallenge!.id,
+        },
+      });
+    }
+
+    res.status(200).json({ currentChallenge, challengeSubmission });
+  } catch (err) {
+    console.log(err);
   }
-);
+});
 
 // Get time until the next challenge is available
 playRouter.get(
@@ -77,7 +73,7 @@ playRouter.get(
 playRouter.post(
   "/submitQuestion",
   verifyRoles(["BASIC"]),
-  async (req: customRequest, res: Response) => {
+  async (req: any, res: Response) => {
     const body = req.body;
     let distance,
       score = 0;
@@ -183,4 +179,4 @@ playRouter.post(
   }
 );
 
-module.exports = playRouter;
+export default playRouter;
