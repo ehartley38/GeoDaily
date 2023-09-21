@@ -8,8 +8,11 @@
     "lib": ["es2023"],
     "module": "ES6",
     "target": "es2022",
-    "allowImportingTsExtensions": true,
-    "noEmit": true,
+    "outDir": "./dist",
+    "rootDir": "./src",
+
+    // "allowImportingTsExtensions": true,
+    // "noEmit": true,
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
