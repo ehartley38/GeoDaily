@@ -5,3 +5,16 @@
 .radial-blue {
   background: radial-gradient(lightyellow, skyblue);
 }
+
+.warning-msg {
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 3px 3px 3px 3px;
+  color: #9f6000;
+  background-color: #feefb3;
+}
+
+.create-account-warning {
+  font-size: 0.8rem;
+  text-align: center;
+}

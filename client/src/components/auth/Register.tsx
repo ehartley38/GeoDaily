@@ -67,9 +67,9 @@ export const Register = () => {
 
           <h1 className="mb-8 text-3xl text-center">Sign up</h1>
           {displaySignupMsg ? (
-            <h2 className="text-center text-amber-300 mb-4">
+            <div className="warning-msg create-account-warning">
               You must create an account to continue playing!
-            </h2>
+            </div>
           ) : (
             <></>
           )}
