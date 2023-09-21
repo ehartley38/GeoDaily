@@ -33,10 +33,6 @@ export const Login = () => {
     localStorage.setItem("persist", persist.toString());
   }, [persist]);
 
-  useEffect(() => {
-    console.log(displayLoginSuccessMsg);
-  }, [displayLoginSuccessMsg]);
-
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
