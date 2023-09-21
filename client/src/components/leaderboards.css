@@ -134,6 +134,14 @@
   gap: 0.3rem;
 }
 
+.no-leaderboard-data {
+  text-align: center;
+}
+
+.no-leaderboard-data p {
+  color: rgb(100, 100, 100);
+}
+
 .submission {
   display: flex;
   justify-content: space-between;

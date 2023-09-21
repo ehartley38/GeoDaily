@@ -39,7 +39,7 @@ export const Register = () => {
         }
       );
 
-      navigate("/");
+      navigate("/login?displaySuccessMsg=true");
     } catch (err: any) {
       setErrorMsg(err.response.data.message);
     }

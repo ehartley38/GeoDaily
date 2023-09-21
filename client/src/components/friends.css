@@ -67,11 +67,11 @@
   cursor: wait !important;
 }
 
-.error-msg {
+.error-msg-friend {
   color: red;
 }
 
-.success-msg {
+.success-msg-friend {
   color: #79c819;
 }
 

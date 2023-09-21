@@ -261,6 +261,11 @@ export const Leaderboards = () => {
               <Loading isFullPage={false} />
             ) : (
               <div className="leaderboard-data">
+                {topDailyData?.length == 0 && selectedType === "topDaily" && (
+                  <div className="no-leaderboard-data">
+                    <p>No data... for now :)</p>
+                  </div>
+                )}
                 {topDailyData && selectedType === "topDaily" ? (
                   topDailyData.map((submission, i) => (
                     <div className="submission" key={i}>
@@ -281,6 +286,13 @@ export const Leaderboards = () => {
                   <></>
                 )}
 
+                {highestStreakData?.length == 0 &&
+                  selectedType === "highestStreak" && (
+                    <div className="no-leaderboard-data">
+                      <p>No data... for now :)</p>
+                    </div>
+                  )}
+
                 {highestStreakData && selectedType === "highestStreak" ? (
                   highestStreakData.map((user, i) => (
                     <div className="submission" key={i}>
@@ -300,6 +312,13 @@ export const Leaderboards = () => {
                 ) : (
                   <></>
                 )}
+
+                {totalScoreData?.length == 0 &&
+                  selectedType === "totalScore" && (
+                    <div className="no-leaderboard-data">
+                      <p>No data... for now :)</p>
+                    </div>
+                  )}
 
                 {totalScoreData &&
                 selectedType === "totalScore" &&

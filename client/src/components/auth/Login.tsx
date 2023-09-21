@@ -1,5 +1,10 @@
 import { useEffect, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import {
+  Link,
+  useLocation,
+  useNavigate,
+  useSearchParams,
+} from "react-router-dom";
 import axios from "../../services/axios";
 import useAuth from "../../hooks/useAuth";
 import IMAGES from "../../images/images";
@@ -10,14 +15,27 @@ export const Login = () => {
   const { setAuth } = useAuth();
   const [persist, setPersist] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [displayLoginSuccessMsg, setDisplayLoginSuccessMsg] =
+    useState<boolean>(false);
 
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
 
   useEffect(() => {
+    const displaySuccessMsg = searchParams.get("displaySuccessMsg");
+
+    setDisplayLoginSuccessMsg(Boolean(displaySuccessMsg));
+  }, []);
+
+  useEffect(() => {
     localStorage.setItem("persist", persist.toString());
   }, [persist]);
+
+  useEffect(() => {
+    console.log(displayLoginSuccessMsg);
+  }, [displayLoginSuccessMsg]);
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -40,6 +58,7 @@ export const Login = () => {
       navigate(from, { replace: true });
     } catch (err: any) {
       setErrorMsg(err.response.data.message);
+      setDisplayLoginSuccessMsg(false);
     }
   };
 
@@ -48,6 +67,9 @@ export const Login = () => {
       <div className="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
         <img src={IMAGES.logo} className="w-2/4 mb-6"></img>
         {errorMsg && <div className="error-msg">Error: {errorMsg}</div>}
+        {displayLoginSuccessMsg && (
+          <div className="success-msg">Registration successful!</div>
+        )}
         <div className="bg-white px-6 py-8 rounded shadow-md text-black w-full">
           <h1 className="mb-8 text-3xl text-center">Login</h1>
           <input

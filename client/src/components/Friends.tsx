@@ -220,12 +220,12 @@ export const Friends = () => {
             </button>
           </form>
           {friendRequestResMsgErr ? (
-            <div className="error-msg">{friendRequestResMsgErr}</div>
+            <div className="error-msg-friend">{friendRequestResMsgErr}</div>
           ) : (
             <></>
           )}
           {friendRequestResMsg ? (
-            <div className="success-msg">{friendRequestResMsg}</div>
+            <div className="success-msg-friend">{friendRequestResMsg}</div>
           ) : (
             <></>
           )}

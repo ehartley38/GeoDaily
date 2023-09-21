@@ -13,8 +13,6 @@ export const NavBar = ({ username }: NavBarProps) => {
   const logout = useLogout();
 
   const logoutUser = async () => {
-    console.log("logout");
-
     await logout();
     navigate("/login");
   };
