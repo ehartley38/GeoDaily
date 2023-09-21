@@ -74,6 +74,8 @@ registerRouter.post("/", async (req: Request, res: Response) => {
 
     return res.status(201).json(user);
   } catch (err) {
+    console.log(err);
+
     if (err instanceof Prisma.PrismaClientKnownRequestError) {
       if (err.code === "P2002") {
         return res
@@ -82,7 +84,6 @@ registerRouter.post("/", async (req: Request, res: Response) => {
       }
       return res.status(500).json({ message: "User registration failed" });
     }
-    console.log(err);
   }
 });
 
