@@ -4,7 +4,8 @@ dotenv.config();
 
 const PORT = process.env.PORT;
 
-const allowedOrigins = ["http://localhost:3000"];
+// const allowedOrigins = ["http://localhost:3000"];
+const allowedOrigins = ["https://main.d7ip2ly93hjk7.amplifyapp.com"];
 
 const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET;
 const REFRESH_TOKEN_SECRET = process.env.REFRESH_TOKEN_SECRET;
