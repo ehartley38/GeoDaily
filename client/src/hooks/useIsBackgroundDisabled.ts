@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import IsBackgroundDisabledContext from "../context/isBackgroundDisabledProvider";
+import IsBackgroundDisabledContext from "../context/IsBackgroundDisabledProvider";
 
 const useIsBackgroundDisabled = () => {
   const context = useContext(IsBackgroundDisabledContext);

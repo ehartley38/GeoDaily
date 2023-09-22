@@ -6,7 +6,7 @@ import { BrowserRouter } from "react-router-dom";
 import { AuthProvider } from "./context/AuthProvider";
 import React from "react";
 import { UserDataProvider } from "./context/UserDataProvider";
-import { IsBackgroundDisabledProvider } from "./context/isBackgroundDisabledProvider";
+import { IsBackgroundDisabledProvider } from "./context/IsBackgroundDisabledProvider";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
