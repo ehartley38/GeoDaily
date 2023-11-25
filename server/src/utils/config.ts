@@ -8,6 +8,7 @@ const PORT = process.env.PORT;
 const allowedOrigins = [
   "http://localhost:3000",
   "https://main.d7ip2ly93hjk7.amplifyapp.com",
+  "https://geodaily-react.fly.dev",
 ];
 
 const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET;
