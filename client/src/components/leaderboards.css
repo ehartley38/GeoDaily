@@ -97,10 +97,6 @@
   overflow: hidden;
 }
 
-.leaderboard-card-outer {
-  /* width: 70%; */
-}
-
 .leaderboard-card-inner-upper {
   display: flex;
   background-color: white;

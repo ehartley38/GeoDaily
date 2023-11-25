@@ -4,8 +4,6 @@ import { NavBar } from "./NavBar";
 import "./mainContent.css";
 import IMAGES from "../images/images";
 import { PlayDaily } from "./PlayDaily";
-import { Loading } from "./Loading";
-import { useEffect } from "react";
 import useIsBackgroundDisabled from "../hooks/useIsBackgroundDisabled";
 
 export const MainContent = () => {
@@ -15,8 +13,6 @@ export const MainContent = () => {
   const navigate = useNavigate();
 
   const isNotPlayDailyRoute = !location.pathname.startsWith("/play-daily");
-
-  // if (!userData) return <Loading isFullPage={true} />;
 
   return (
     userData && (

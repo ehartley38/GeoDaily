@@ -16,7 +16,6 @@ import registerRouter from "./controllers/register.js";
 import refreshTokensRouter from "./controllers/refreshTokens.js";
 import logoutRouter from "./controllers/logout.js";
 import challengesRouter from "./controllers/challenges.js";
-// const questionsRouter = require("./controllers/questions");
 import playRouter from "./controllers/play.js";
 import leaderboardsRouter from "./controllers/leaderboards.js";
 import playDemoRouter from "./controllers/playDemo.js";
@@ -38,7 +37,6 @@ app.use("/api/playDemo", playDemoRouter);
 app.use(verifyJWT);
 app.use("/api/users", usersRouter);
 app.use("/api/challenges", challengesRouter);
-// app.use("/api/questions", questionsRouter);
 app.use("/api/play", playRouter);
 app.use("/api/leaderboards", leaderboardsRouter);
 

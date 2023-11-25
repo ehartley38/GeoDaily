@@ -1,7 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { customRequest } from "../customTypings/customRequest";
-import { Request, Response, Router } from "express";
-import { Sql } from "@prisma/client/runtime";
+import { Response, Router } from "express";
 import { verifyRoles } from "../middleware/verifyRoles.js";
 
 const prisma = new PrismaClient({});

@@ -4,12 +4,7 @@ dotenv.config();
 
 const PORT = process.env.PORT;
 
-// const allowedOrigins = ["http://localhost:3000"];
-const allowedOrigins = [
-  "http://localhost:3000",
-  "https://main.d7ip2ly93hjk7.amplifyapp.com",
-  "https://geodaily-react.fly.dev",
-];
+const allowedOrigins = ["http://localhost:3000", "https://geodaily.online"];
 
 const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET;
 const REFRESH_TOKEN_SECRET = process.env.REFRESH_TOKEN_SECRET;

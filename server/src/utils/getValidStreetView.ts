@@ -1,6 +1,5 @@
 import axios from "axios";
 
-// let convert = require("xml-js");
 import { config } from "./config.js";
 
 type ConvertedType = {

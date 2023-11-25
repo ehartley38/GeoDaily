@@ -4,14 +4,10 @@ import { currentChallenge } from "../customTypings/currentChallenge";
 import { challengeSubmission } from "../customTypings/challengeSubmission";
 import { AxiosResponse } from "axios";
 import { useNavigate } from "react-router-dom";
-import { SignOut } from "./auth/SignOut";
-import { NavBar } from "./NavBar";
 import "./Dashboard.css";
 import { Timer } from "./Timer";
-import { UserDataType } from "../customTypings/userData";
 import useUserData from "../hooks/useUserData";
 import { Loading } from "./Loading";
-import IMAGES from "../images/images";
 
 type ResponseDataType = {
   currentChallenge: currentChallenge;

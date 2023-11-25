@@ -1,6 +1,5 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import "./navbar.css";
-import IMAGES from "../images/images";
 import useLogout from "../hooks/useLogout";
 
 type NavBarProps = {
@@ -57,30 +56,3 @@ export const NavBar = ({ username }: NavBarProps) => {
     // </header>
   );
 };
-
-// <nav className="navbar">
-//   <ul>
-//     <div className="website-title">
-//       <a href="#">DailyGeo</a>
-//     </div>
-
-//     <li>
-//       <a href="#">Play</a>
-//     </li>
-//     <li>
-//       <a href="#">Friends</a>
-//     </li>
-//     <li>
-//       <a href="#">History</a>
-//     </li>
-//     <li>
-//       <a href="#">Leaderboard</a>
-//     </li>
-//     <li>
-//       <a href="#">About </a>
-//     </li>
-//     <li className="last-item">
-//       <a href="#">Profile </a>
-//     </li>
-//   </ul>
-// </nav>

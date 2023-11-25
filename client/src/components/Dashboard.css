@@ -7,8 +7,6 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  /* display: flex;
-  align-items: center; */
 }
 
 .play {
@@ -50,9 +48,6 @@
 
 .play-challenge-button:hover {
   transform: scale(1.1);
-}
-
-.play-complete-button {
 }
 
 .streak span {

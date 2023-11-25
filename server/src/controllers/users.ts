@@ -1,7 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { Request, Router } from "express";
 import { Response } from "express";
-import { customRequest } from "../customTypings/customRequest";
 const prisma = new PrismaClient();
 const usersRouter = Router();
 import { verifyRoles } from "../middleware/verifyRoles.js";

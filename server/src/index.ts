@@ -1,7 +1,6 @@
 // const app = require("./app");
 import app from "./app.js";
 
-import { config } from "./utils/config.js";
 import http from "http";
 
 const server = http.createServer(app);

@@ -1,5 +1,4 @@
-import { Request, Response, Router } from "express";
-import { customRequest } from "../customTypings/customRequest";
+import { Response, Router } from "express";
 import { PrismaClient } from "@prisma/client";
 import { getValidStreetView } from "../utils/getValidStreetView.js";
 import { verifyRoles } from "../middleware/verifyRoles.js";

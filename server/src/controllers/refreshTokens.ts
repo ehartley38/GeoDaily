@@ -1,5 +1,4 @@
 import { Request, Response, Router } from "express";
-import { decodedResult } from "../customTypings/decodedResult";
 import { PrismaClient } from "@prisma/client";
 
 import jwt from "jsonwebtoken";

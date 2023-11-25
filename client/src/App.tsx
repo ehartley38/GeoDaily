@@ -2,10 +2,9 @@ import { useEffect } from "react";
 import { Dashboard } from "./components/Dashboard";
 import { Login } from "./components/auth/Login";
 import { Register } from "./components/auth/Register";
-import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { RequireAuth } from "./components/auth/RequireAuth";
 import useAuth from "./hooks/useAuth";
-import { SignOut } from "./components/auth/SignOut";
 import { Layout } from "./components/auth/Layout";
 import { PersistLogin } from "./components/auth/PersistLogin";
 import { Unauthorized } from "./components/auth/Unauthorized";
@@ -15,21 +14,16 @@ import { PlayDaily } from "./components/PlayDaily";
 import { SpecificChallengeSummary } from "./components/SpecificChallengeSummary";
 import { History } from "./components/History";
 import { Friends } from "./components/Friends";
-import { NavBar } from "./components/NavBar";
 import useUserData from "./hooks/useUserData";
 import useAxiosPrivate from "./hooks/useAxiosPrivate";
 import { Leaderboards } from "./components/Leaderboards";
 import { MainContent } from "./components/MainContent";
 import { PlayDemo } from "./components/PlayDemo";
-import { HowToPlay } from "./components/HowToPlay";
-import { Loading } from "./components/Loading";
-import useIsBackgroundDisabled from "./hooks/useIsBackgroundDisabled";
 import "./index.css";
 
 const App = () => {
   const { auth } = useAuth();
   const { setUserData } = useUserData();
-  const { setIsBackgroundDisabled } = useIsBackgroundDisabled();
   const authType = auth as AuthType;
   const axiosPrivate = useAxiosPrivate();
 
@@ -51,8 +45,6 @@ const App = () => {
 
   return (
     <>
-      {/* {authType.accessToken ? <SignOut /> : <></>} */}
-
       <Routes>
         <Route path="/" element={<Layout />}>
           {/* Public routes */}

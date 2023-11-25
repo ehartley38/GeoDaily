@@ -86,10 +86,6 @@ export const PlayDaily = () => {
   }, []);
 
   useEffect(() => {
-    // console.log("Challenge data:", currentChallenge);
-    // console.log("Submission data:", challengeSubmission);
-    // console.log("Questions:", questions);
-
     if (questions && questions.length > 0) {
       const coords = {
         lat: questions[0].correctPos.lat,

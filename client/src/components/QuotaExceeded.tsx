@@ -1,4 +1,3 @@
-import IMAGES from "../images/images";
 import "./quotaExceeded.css";
 
 type QuotaExceededProps = {
@@ -15,7 +14,6 @@ export const QuotaExceeded = ({
   return (
     <div className="qe-container">
       <div className="error-msg">Warning - API Quota Exceeded</div>
-      {/* <img src={IMAGES.logo} className="logo"></img> */}
       <h3>What does this mean?</h3>
       <p>
         This application uses the Google Maps API service to retrieve maps and
