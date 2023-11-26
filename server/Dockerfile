@@ -1,3 +1,5 @@
+# https://community.fly.io/t/node-prisma-app-failing-to-deploy/13675/6
+
 # syntax = docker/dockerfile:1
 
 # Adjust NODE_VERSION as desired
