@@ -17,3 +17,4 @@ A live demo of the application can be found [here.](https://geodaily.online/logi
 	- [API Endpoint](https://github.com/ehartley38/dailyGeoProject/blob/89d3f7a85fb0cc0ff80d1225f95a1244496e2f28/server/src/controllers/challenges.ts#L157-L238)
 	- [Generate a valid Street View location](https://github.com/ehartley38/dailyGeoProject/blob/89d3f7a85fb0cc0ff80d1225f95a1244496e2f28/server/src/utils/getValidStreetView.ts#L44-L68)
 	
+![Architecture Diagram](GeoDaily-arch-diagram.png)
