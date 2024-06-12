@@ -1,7 +1,5 @@
-# [GeoDaily](https://geodaily.online/login)
+# GeoDaily
 A Google Street View location guessing game, inspired by [geoguessr](https://www.geoguessr.com/). Compete with friends or strangers to earn the highest score! A new challenge is generated every day at midnight GMT.
-
-A live demo of the application can be found [here.](https://geodaily.online/login)
 
 ## The tech stack used
 - **React** - HTML, JavaScript, CSS
